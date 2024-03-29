@@ -1,3 +1,4 @@
+from flask import jsonify
 from utils.routes.articles import articles,article
 from utils.functions.app import app
 from utils.routes.get_data import get_data
@@ -8,15 +9,15 @@ def index():
 
 @app.route('/articles')
 def getArticles():
-    return articles()
+    return jsonify(articles())
 
 @app.route('/get_data')
 def getData():
-    return get_data()
+    return jsonify(get_data())
 
 @app.route('/article/<int:id>')
 def getArticle(id):
-    return article(id)
+    return jsonify(article(id))
 
 if __name__ == '__main__':
     app.run()

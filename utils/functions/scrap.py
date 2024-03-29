@@ -16,7 +16,6 @@ def getArticles(url):
     
     # extract the data
     data = []
-    id = 0
     for article in articles:
         # title
         title = article.find('p', class_='title-publi').text
@@ -32,7 +31,6 @@ def getArticles(url):
         tag = article.find_all('div', class_='news-cms1-item-text-tag')[1].find('div').text.strip()
 
         data.append({
-            'id': id,
             'title': title,
             'date': date,
             'link': link,
@@ -41,8 +39,6 @@ def getArticles(url):
             'tag': tag
         })
         
-        id += 1
-
     return data
 
 def getArticle(URL):
