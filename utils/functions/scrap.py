@@ -44,3 +44,32 @@ def getArticles(url):
         id += 1
 
     return data
+
+def getArticle(URL):
+    """
+    Scrap the article from the given URL
+    """
+    
+    article = requests.get(URL)
+    soup = BeautifulSoup(article.content, 'html.parser')
+    
+    # Extracting author's information
+    author_div = soup.find('div', class_='div-block-16')
+    author_name = author_div.find('h6').text
+    author_position = author_div.find('div', class_='text-block-6').text
+    author_image = soup.find('img', class_='image-439')['src']
+    
+    # Extracting article content
+    article_content = soup.find('div', class_='text-rich-text w-richtext')
+    
+    return {
+        'title': soup.find('h1', class_='h3-32-mobile').text,
+        'description': soup.find('p', class_='subtitle-1 blog').text,
+        'date': soup.find('p', class_='paragraph-16').text,
+        'author': {
+            'name': author_name,
+            'position': author_position,
+            'image': author_image
+        },
+        'article': str(article_content)
+    }

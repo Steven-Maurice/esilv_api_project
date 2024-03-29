@@ -1,18 +1,18 @@
 import sys
 sys.path.append('..')
 from flask import jsonify
-from utils.functions.scrap import getArticles
+from utils.functions.scrap import getArticles, getArticle
 from utils.functions.app import app, printLog
 
-URL = "https://www.craft.ai/blog"
+URL = "https://www.craft.ai/"
 
 def articles():
-    data = getArticles(URL)
-    printLog(data)
+    data = getArticles(URL+ 'blog')
     return jsonify(data)
 
 def article(index):
-    data = getArticles(URL)
+    data = getArticles(URL+'blog')
     if index >= len(data):
         return jsonify({'error': 'Index out of range'})
-    return jsonify(data[index])
+    article = getArticle(URL+data[index]['link'])
+    return jsonify(article)
