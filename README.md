@@ -49,6 +49,12 @@ This API is using Python 3. We recommand using Python 3.11. To install our proje
   python3 server.py
 ```
 
+If you want to use our API in dev mode, please launch our API with this command:
+
+```bash
+flask --app server.py --debug run
+```
+
 #### Endpoints
 
 - /articles : Fetch all articles basic informations on craft.ai blog
