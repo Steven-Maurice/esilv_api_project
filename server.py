@@ -10,7 +10,7 @@ def index():
     return 'Hello, World!'
 
 #Root pour exécuter le script de scrapping
-@app.route('/api/get_data')
+@app.route('/get_data')
 def get_data():
    scrape()
    return "Scrapping done"
