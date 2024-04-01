@@ -41,7 +41,7 @@ Our API introduces four distinct endpoints, each designed to serve a specific pu
 
 - **/articles**: Utilizing this endpoint, users can obtain detailed information about the articles fetched by `/get_data`. It provides essential details such as the article's ID, title, abstract, authors' names, and the URL.
 
-- **/articles/<number>**: This endpoint offers a more focused interaction by allowing users to specify an article of interest through its number (as identified in the data fetched by `/get_data`). The selected article is then opened in the user's default web browser, facilitating immediate access to the full text.
+- **/articles/number**: This endpoint offers a more focused interaction by allowing users to specify an article of interest through its number (as identified in the data fetched by `/get_data`). The selected article is then opened in the user's default web browser, facilitating immediate access to the full text.
 
 - **/ml**: Drawing upon Natural Language Processing (NLP) algorithms, this endpoint synthesizes a concise set of keywords summarizing the abstracts of articles obtained via `/get_data`. This feature aids in quickly grasping the overarching themes and focal points of the compiled research.
 
