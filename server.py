@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return 'Hello, World!'
-
+#nathan' comment
 #Root pour exécuter le script de scrapping
 @app.route('/get_data')
 def get_data():
