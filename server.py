@@ -15,6 +15,7 @@ def get_data():
    scrape()
    return "Scrapping done"
 
+#Fonction qui calcule le numéro de l'article
 def add_article_numbers(data):
     for i, article in enumerate(data, start=1):
         article['article_number'] = i
@@ -42,6 +43,7 @@ def get_categories_count():
 
    return {'categories': dict(categories)}
 
+#ROot pour donner les infos des articles d'une certaine catégorie
 @app.route('/categories/<string:category>')
 def get_category_articles(category):
     with open('articles.json') as f:
@@ -71,8 +73,8 @@ def get_articles_urls():
 def get_article_info(url):
     with open('articles.json') as f:
         data = json.load(f)
-
-    for article in data:
+        data_with_numbers = add_article_numbers(data)
+    for article in data_with_numbers:
         if article['url'] == url:
             return article
 
