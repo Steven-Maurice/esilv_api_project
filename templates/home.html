@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - arXiv API</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur l'API arXiv</h1>
+        <p>Cette API vous permet d'interagir avec le vaste réservoir de connaissances scientifiques d'arXiv.</p>
+    </header>
+    <section>
+        <h2>À propos de l'API</h2>
+        <p>L'API arXiv vous permet de :</p>
+        <ul>
+            <li>Rechercher les dernières publications dans tous les domaines de la recherche.</li>
+            <li>Rechercher des publications sur un thème spécifique.</li>
+            <li>Découvrir les publications les plus populaires ou les plus vues dans un domaine spécifique.</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Comment utiliser l'API</h2>
+        <p>Utilisez les routes suivantes pour accéder aux données :</p>
+        <ul>
+            <li><strong>Dernières publications :</strong> <code>/search/last</code></li>
+            <li><strong>Dernières publications par thème :</strong> <code>/search/last/[votre_theme]</code></li>
+            <li><strong>Publications les plus populaires par thème :</strong> <code>/search/popular/[votre_theme]</code> (fonctionnalité à venir)</li>
+        </ul>
+    </section>
+    <footer>
+        <p>Cette API est construite en utilisant les données fournies par arXiv en respectant leur utilisation et en les rendant plus accessibles pour les développeurs et les chercheurs.</p>
+    </footer>
+</body>
+</html>

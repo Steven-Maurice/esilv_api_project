@@ -2,21 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latest Publications</title>
+    <title>Dernières Publications - API arXiv</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Latest Publications</h1>
-    <ul>
-        {% for entry in entries %}
-            <li>
-                <strong>Title:</strong> {{ entry.title }}<br>
-                <strong>Authors:</strong> {{ entry.authors }}<br>
-                <strong>Summary:</strong> {{ entry.summary }}<br>
-                <strong>Published:</strong> {{ entry.published }}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Dernières Publications</h1>
+        {% if entries %}
+            <div class="entries">
+                {% for entry in entries %}
+                    <div class="entry">
+                        <h2 class="title">{{ entry.title }}</h2>
+                        <p class="authors"><strong>Authors:</strong> {{ entry.authors }}</p>
+                        <p class="summary">{{ entry.summary }}</p>
+                        <p class="published"><strong>Published:</strong> {{ entry.published }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+    </div>
 </body>
 </html>
