@@ -66,6 +66,18 @@ def get_articles_urls():
 
    return {'url des articles': urls}
 
+#Root pour donner les infos selon un certain URL
+@app.route('/url/<path:url>')
+def get_article_info(url):
+    with open('articles.json') as f:
+        data = json.load(f)
+
+    for article in data:
+        if article['url'] == url:
+            return article
+
+    return {'error': 'Article not found for the given URL'}, 404
+
 #Root pour récupérer les titres des articles
 @app.route('/title')
 def get_title():
