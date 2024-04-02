@@ -15,6 +15,11 @@ def get_data():
    scrape()
    return "Scrapping done"
 
+def add_article_numbers(data):
+    for i, article in enumerate(data, start=1):
+        article['article_number'] = i
+    return data
+
 #Root pour récupérer le nombre d'articles dans ma BDD, cad la longeur du json   
 @app.route('/nb_articles')  
 def get_nb_articles():
@@ -36,6 +41,19 @@ def get_categories_count():
       categories[article['category']] += 1
 
    return {'categories': dict(categories)}
+
+@app.route('/categories/<string:category>')
+def get_category_articles(category):
+    with open('articles.json') as f:
+        data = json.load(f)
+        data_with_numbers = add_article_numbers(data)
+
+    articles_in_category = [article for article in data_with_numbers if article['category'] == category]
+
+    if articles_in_category:
+        return {'articles_in_category': articles_in_category}
+    else:
+        return {'error': 'Category not found'}, 404
 
 #Root pour récupérer tous les url des articles
 @app.route('/url')
@@ -88,10 +106,6 @@ def get_info():
 
    return {'Informations of the articles': articles_info}
 
-def add_article_numbers(data):
-    for i, article in enumerate(data, start=1):
-        article['article_number'] = i
-    return data
 
 @app.route('/article/<int:number>')
 def get_article_description(number):
@@ -104,6 +118,7 @@ def get_article_description(number):
         return {'Publication_Date':article['date'],'Title':article['title'],'Category':article['category'],'Description': article['description']}
     else:
         return {'error': 'Article number out of range'}, 404
+
 
 
 if __name__ == '__main__':
