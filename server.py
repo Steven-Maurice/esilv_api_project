@@ -48,6 +48,17 @@ def get_articles_urls():
 
    return {'url des articles': urls}
 
+#Root pour récupérer les titres des articles
+@app.route('/title')
+def get_title():
+
+   with open('articles.json') as f:
+      data = json.load(f)
+
+   title= [article['title'] for article in data]
+
+   return {'Title of the articles': title}
+
 if __name__ == '__main__':
     app.run()
 
