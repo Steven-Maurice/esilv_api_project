@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - arXiv API</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_about.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('search') }}" class="button">Search</a>
+        <h1>Welcome to the arXiv API</h1>
+        <p>This API allows you to interact with the vast reservoir of scientific knowledge from arXiv.</p>
+    </header>
+    <section>
+        <h2>About the API</h2>
+        <p>The arXiv API allows you to:</p>
+        <ul>
+            <li>Search for the latest publications across all research domains.</li>
+            <li>Search for publications on a specific topic.</li>
+            <li>Discover the most popular or viewed publications in a specific field.</li>
+        </ul>
+    </section>
+    <!-- Replace the old <section> with this one -->
+    <section>
+        <h2>What is arXiv?</h2>
+        <p>arXiv is an open-access archive and distribution of research preprints covering the fields of mathematics, physics, astronomy, computer science, biology, finance, and statistics. arXiv is open to all and allows researchers to share their work before peer review.</p>
+
+        <h2>API Features</h2>
+        <p>Our arXiv API provides programmable access to arXiv data, enabling developers and researchers to:</p>
+        <ul>
+            <li>Search for articles by keywords, publication date, author, and more.</li>
+            <li>Download articles in PDF format directly from the API.</li>
+            <li>Get recommendations based on machine learning algorithms.</li>
+            <li>Receive notifications for new publications in specific areas of interest.</li>
+            <li>Explore research trends and statistics through advanced analytics tools.</li>
+        </ul>
+
+        <h2>Getting Started with the API</h2>
+        <p>Access our <a href="{{ url_for('search') }}">advanced search tool</a> to start exploring the wealth of scientific data available on arXiv.</p>
+    </section>
+
+    <footer>
+        <p>This API is built using data provided by arXiv, respecting their usage and making it more accessible for developers and researchers.</p>
+    </footer>
+</body>
+</html>

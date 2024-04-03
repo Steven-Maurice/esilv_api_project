@@ -1,0 +1,61 @@
+<!-- search.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Search Results - arXiv API</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_search.css') }}">
+</head>
+<body>
+    <!-- Inside <body>, before <h1> -->
+    <header>
+
+        <a href="{{ url_for('about') }}" class="button">About</a>
+
+        <h1>Advanced Search Results</h1>
+    </header>
+
+    <form action="{{ url_for('search') }}" method="get">
+        <label for="query">Enter search keywords:</label>
+        <input type="text" id="query" name="query" placeholder="Example: Bitcoin">
+            
+        <label for="start">Start from result:</label>
+        <input type="number" id="start" name="start" value="0" min="0">
+        <p> </p>
+        <label for="max_results">Number of results:</label>
+        <input type="number" id="max_results" name="max_results" value="10" min="1">
+            
+        <label for="sortBy">Sort by:</label>
+        <select id="sortBy" name="sortBy">
+            <option value="lastUpdatedDate">Last Updated Date</option>
+            <option value="relevance">Relevance</option>
+            <option value="submittedDate">Submitted Date</option>
+        </select>
+
+        <label for="sortOrder">Sort Order:</label>
+        <select id="sortOrder" name="sortOrder">
+            <option value="descending">Descending</option>
+            <option value="ascending">Ascending</option>
+        </select>
+            
+        <button type="submit">Search</button>
+    </form>
+
+    {% if entries %}
+        <div class="results">
+            {% for entry in entries %}
+                <div class="result">
+                    <h2 class="title">{{ entry.title }}</h2>
+                    <p class="authors">Authors: {{ entry.authors }}</p>
+                    <p class="summary">{{ entry.summary }}</p>
+                    <p class="published">Published: {{ entry.published }}</p>
+                    <a href="{{ entry.id }}">Link to publication</a>
+                    <a href="{{ url_for('download_pdf', paper_id=entry.arxiv_id) }}">Download PDF</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+</body>
+</html>
