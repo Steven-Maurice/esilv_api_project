@@ -5,28 +5,17 @@ from bs4 import BeautifulSoup
 
 def fetch_article_details(entry):
     article = {}
-    article['id'] = entry.find('id').text
-    article['title'] = entry.find('title').text.strip()
-    article['published_date'] = entry.find('published').text
-    article['updated_date'] = entry.find('updated').text
-    article['summary'] = entry.find('summary').text.strip()
+    article['title'] = entry.find('title').text.strip() if entry.find('title') is not None else ""
+    article['published_date'] = entry.find('published').text if entry.find('published') is not None else ""
     
     authors = []
     for author_tag in entry.find_all('author'):
-        authors.append(author_tag.find('name').text)
+        authors.append(author_tag.find('name').text if author_tag.find('name') is not None else "")
     article['authors'] = authors
-    
-    article['doi'] = entry.find('arxiv:doi').text
-    
-    article['comment'] = entry.find('arxiv:comment').text
-    article['journal_ref'] = entry.find('arxiv:journal_ref').text
-    
-    article['pdf_link'] = entry.find('link', title='pdf')['href']
-    article['arxiv_link'] = entry.find('link', rel='alternate')['href']
     
     return article
 
-def fetch_articles(query, max_results=10):
+def fetch_articles(query, max_results=5):
     url = f"http://export.arxiv.org/api/query?search_query={query}&max_results={max_results}"
     response = requests.get(url)
     
@@ -45,16 +34,11 @@ def fetch_articles(query, max_results=10):
         return []
 
 query = "all:electron"
-max_results = 1
+max_results = 5
 articles = fetch_articles(query, max_results)
 
 for article in articles:
     print("Titre:", article['title'])
     print("Date de publication:", article['published_date'])
     print("Auteurs:", ", ".join(article['authors']))
-    print("Résumé:", article['summary'])
-    print("DOI:", article['doi'])
-    print("Commentaire:", article['comment'])
-    print("Journal de référence:", article['journal_ref'])
-    print("Lien PDF:", article['pdf_link'])
-    print("Lien arXiv:", article['arxiv_link'])
+    print()
