@@ -86,7 +86,34 @@ def article(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+pip install textblob
 
+from textblob import TextBlob
+
+@app.route('/ml/sentiment', methods=['GET'])
+def ml_sentiment_analysis():
+    try:
+        max_results = request.args.get('max_results', 5, type=int)
+        response_text = get_arxiv_data(max_results=max_results)
+        if response_text:
+            articles = parse_arxiv_response(response_text)
+            sentiments = []
+
+            for article in articles:
+                blob = TextBlob(article['summary'])
+                sentiment = blob.sentiment
+                sentiments.append({
+                    'id': article['id'],
+                    'title': article['title'],
+                    'polarity': sentiment.polarity,
+                    'subjectivity': sentiment.subjectity,
+                })
+
+            return jsonify(sentiments), 200
+        else:
+            return jsonify({'error': 'Failed to fetch articles for sentiment analysis'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
