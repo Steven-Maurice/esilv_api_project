@@ -79,5 +79,3 @@ def article(number):
 
 if __name__ == '__main__':
     app.run()
-    
-    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
