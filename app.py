@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
-
 from flask import Flask, request, Response, render_template
 import requests
 import feedparser
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import nltk
+
+nltk.download('vader_lexicon')
+
+sid = SentimentIntensityAnalyzer()
+
 
 app = Flask(__name__)
 
@@ -37,13 +43,21 @@ def search():
 
     entries = []
     for entry in feed.entries:
+        sentiment = sid.polarity_scores(entry.summary)
+        sentiment_class = 'Neutral'
+        if sentiment['compound'] >= 0.05:
+            sentiment_class = 'Positive'
+        elif sentiment['compound'] <= -0.05:
+            sentiment_class = 'Negative'
+
         authors = [author.name for author in entry.authors] if entry.authors else 'Anonymous'
         entry_data = {
             'title': entry.title,
             'authors': ', '.join(authors),
             'summary': entry.summary,
             'published': entry.published,
-            'link': entry.link
+            'link': entry.link,
+            'sentiment': sentiment_class  
         }
         entry_data['arxiv_id'] = entry.id.split('/abs/')[-1]  
         entries.append(entry_data)
@@ -54,7 +68,6 @@ def search():
 def download_pdf(paper_id):
     pdf_url = f"https://arxiv.org/pdf/{paper_id}.pdf"
     response = requests.get(pdf_url)
-    # Ensure the request was successful before returning the response
     if response.status_code == 200:
         return Response(
             response.content,
@@ -63,6 +76,7 @@ def download_pdf(paper_id):
         )
     else:
         return f"Error downloading PDF: Status {response.status_code}", 500
+
 
 
 if __name__ == '__main__':
