@@ -16,8 +16,12 @@ app = Flask(__name__)
 
 articles_data = []
 # Charger le pipeline de résumé
+sentiment_analysis = pipeline("sentiment-analysis")
 summarizer = pipeline("summarization")
 
+
+#OpenIA Key
+openai.api_key = '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'
 # Replace 'YOUR_API_KEY_HERE' with your actual News API key
 NEWS_API_KEY = 'b795726f8b0b4da3ab52350844a3a901'
 NEWS_API_URL = 'https://newsapi.org/v2/everything'
@@ -90,29 +94,31 @@ def analyze_trends(text):
 
 @app.route('/ml', methods=['GET'])
 @app.route('/ml/<int:number>', methods=['GET'])
+
 def ml_analysis(number=None):
-    if number:
-        # Trouve l'article par son ID et effectue l'analyse sur cet article
+    if number is not None:
         article = next((item for item in articles_data if item["id"] == number), None)
         if article:
             full_content = fetch_full_article_content(article['url'])
-            if not full_content.startswith("Failed"):
-                trends = analyze_trends(full_content)
-                return jsonify({"id": number, "trends": trends})
-            else:
-                return jsonify({"error": "Failed to fetch full content"}), 404
-        else:
-            return jsonify({"error": "Article not found"}), 404
-    else:
-        # Effectue l'analyse sur tous les articles
-        all_trends = []
-        for article in articles_data:
-            full_content = fetch_full_article_content(article['url'])
-            if not full_content.startswith("Failed"):
-                trends = analyze_trends(full_content)
-                all_trends.append({"id": article["id"], "trends": trends})
-        return jsonify({"all_trends": all_trends})
+            if full_content and not full_content.startswith("Failed"):
+                # Prendre les premiers 512 tokens pour éviter de dépasser la capacité du modèle
+                tokens = word_tokenize(full_content)[:512]
+                truncated_content = " ".join(tokens)
 
+                # Générer le résumé avec des paramètres ajustés pour éviter les erreurs
+                try:
+                    summary = summarizer(truncated_content, max_length=100, min_length=25, do_sample=False)[0]["summary_text"]
+                except Exception as e:
+                    return jsonify({"error": f"Erreur de génération du résumé : {str(e)}"})
+
+                return jsonify({"id": number, "summary": summary})
+            else:
+                return jsonify({"error": "Impossible de récupérer le contenu complet."}), 404
+        else:
+            return jsonify({"error": "Article non trouvé."}), 404
+    else:
+        return jsonify({"error": "Veuillez spécifier un numéro d'article."}), 400
+    
 def fetch_full_article_content(url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -156,5 +162,10 @@ def summarize_article(number):
             return jsonify({"error": "Failed to fetch full content or article content is empty"}), 404
     else:
         return jsonify({"error": "Article not found"}), 404
+
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
