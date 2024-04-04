@@ -6,8 +6,9 @@ app = Flask(__name__)
 
 ARXIV_API_URL = "http://export.arxiv.org/api/query"
 
-def extract_id(url):
-    return url.split('/')[-1]
+def extract_id_and_link(entry):
+    id_url = entry.find('{http://www.w3.org/2005/Atom}id').text
+    return id_url.split('/')[-1], id_url
 
 def get_arxiv_data(search_query="all:ai", max_results=5):
     params = {
@@ -27,7 +28,7 @@ def parse_arxiv_response(response_text):
     
     articles_data = []
     for entry in entries:
-        article_id = extract_id(entry.find('{http://www.w3.org/2005/Atom}id').text)
+        article_id, link = extract_id_and_link(entry)
         title = entry.find('{http://www.w3.org/2005/Atom}title').text
         publication_date = entry.find('{http://www.w3.org/2005/Atom}published').text
         summary = entry.find('{http://www.w3.org/2005/Atom}summary').text
@@ -36,7 +37,8 @@ def parse_arxiv_response(response_text):
             'id': article_id,
             'title': title.strip(),
             'publication_date': publication_date,
-            'summary': summary.strip()
+            'summary': summary.strip(),
+            'link': link
         })
     
     return articles_data
