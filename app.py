@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from flask import Flask, request, Response, render_template
 import requests
 import feedparser
@@ -22,12 +23,19 @@ def about():
 @app.route('/search')
 def search():
     query = request.args.get('query', '')
+    author = request.args.get('author', '')
     start = request.args.get('start', '0')
     max_results = request.args.get('max_results', '10')
     sortBy = request.args.get('sortBy', 'lastUpdatedDate')
     sortOrder = request.args.get('sortOrder', 'descending')  
+
+    if author:
+        search_query = f"all:{query} AND au:{author}" if query else f"e AND au:{author}"
+    else:
+        search_query = f"all:{query}" if query else "e"
+
     params = {
-        "search_query": query if query else "e",
+        "search_query": search_query,
         "start": start, 
         "max_results": max_results,
         "sortBy": sortBy, 
@@ -43,6 +51,9 @@ def search():
 
     entries = []
     for entry in feed.entries:
+
+        published_date = entry.published.replace('T', ' ').replace('Z', '')
+
         sentiment = sid.polarity_scores(entry.summary)
         sentiment_class = 'Neutral'
         if sentiment['compound'] >= 0.05:
@@ -55,11 +66,11 @@ def search():
             'title': entry.title,
             'authors': ', '.join(authors),
             'summary': entry.summary,
-            'published': entry.published,
+            'published': published_date,
             'link': entry.link,
-            'sentiment': sentiment_class  
+            'sentiment': sentiment_class,
+            'arxiv_id': entry.id.split('/abs/')[-1] 
         }
-        entry_data['arxiv_id'] = entry.id.split('/abs/')[-1]  
         entries.append(entry_data)
 
     return render_template('search.html', entries=entries)
@@ -76,8 +87,6 @@ def download_pdf(paper_id):
         )
     else:
         return f"Error downloading PDF: Status {response.status_code}", 500
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
