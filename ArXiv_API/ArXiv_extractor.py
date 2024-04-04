@@ -1,19 +1,34 @@
+<<<<<<< HEAD
 # 1. _getdata
 
 # Rainie0000: Yufei
+=======
+print("Hello world")
+
+# _getdata
+
+# Rainie0000: Yufei Li
+>>>>>>> 27b71a8 (Update)
 from os import abort
 from flask import Flask, jsonify, redirect # type: ignore
 import requests # type: ignore
 import xml.etree.ElementTree as ET
 
+<<<<<<< HEAD
 
+=======
+# création de l'instance de Flask
+>>>>>>> 27b71a8 (Update)
 app = Flask(__name__)
 
+# Je récupère les articles à partir de l'API ArXiv
+# On prend 25 articles
 def retrieve_articles():
     url = 'http://export.arxiv.org/api/query?search_query=cat:cs.CV&max_results=25'
     response = requests.get(url)
     response_xml = ET.fromstring(response.content)
 
+# J'extrais quelques informations de chaque article
     articles = []
     for entry in response_xml.iter('{http://www.w3.org/2005/Atom}entry'):
         title = entry.find('{http://www.w3.org/2005/Atom}title').text
@@ -42,12 +57,22 @@ def retrieve_articles():
 def get_data():
     articles = retrieve_articles()
 
+<<<<<<< HEAD
     # Récupérez les 25 premiers articles
+=======
+    # On récupère les 25 premiers articles
+>>>>>>> 27b71a8 (Update)
     five_articles = articles[:25]
 
-    # Retournez les articles en tant que réponse JSON
+    # On retourne les articles en tant que réponse JSON
     return jsonify(five_articles)
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 27b71a8 (Update)
 # valentinf75 : Valentin Fried
 @app.route('/articles')
 def articles():
@@ -78,4 +103,8 @@ def article(number):
         abort(404)  # Si l'article n'existe pas, renvoie une erreur 404
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run()
+=======
+    app.run()
+>>>>>>> 27b71a8 (Update)
