@@ -1,28 +1,23 @@
-<<<<<<< HEAD
-# 1. _getdata
-
-# Rainie0000: Yufei
-=======
-print("Hello world")
 
 # _getdata
 
 # Rainie0000: Yufei Li
->>>>>>> 27b71a8 (Update)
+
+
 from os import abort
 from flask import Flask, jsonify, redirect # type: ignore
 import requests # type: ignore
 import xml.etree.ElementTree as ET
 
-<<<<<<< HEAD
 
-=======
+
 # création de l'instance de Flask
->>>>>>> 27b71a8 (Update)
+
 app = Flask(__name__)
 
 # Je récupère les articles à partir de l'API ArXiv
-# On prend 25 articles
+# J'ai initialement pris 5 articles mais finalement on décide de prendre 25 articles
+# le code est comme avant mais avec "25" au lieu de "5" que j'ai mis
 def retrieve_articles():
     url = 'http://export.arxiv.org/api/query?search_query=cat:cs.CV&max_results=25'
     response = requests.get(url)
@@ -57,22 +52,17 @@ def retrieve_articles():
 def get_data():
     articles = retrieve_articles()
 
-<<<<<<< HEAD
-    # Récupérez les 25 premiers articles
-=======
+
     # On récupère les 25 premiers articles
->>>>>>> 27b71a8 (Update)
+
     five_articles = articles[:25]
 
     # On retourne les articles en tant que réponse JSON
     return jsonify(five_articles)
 
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> 27b71a8 (Update)
 # valentinf75 : Valentin Fried
 @app.route('/articles')
 def articles():
@@ -87,6 +77,8 @@ def articles():
     
     return jsonify(articles_info)
 
+# Ici si on veut avoir accès à un article, on remplace <int:number> par son numéro 
+# par exemple "3" pour le troisième article
 @app.route('/articles/<int:number>')
 # def article(number):
 #     articles = retrieve_articles()
@@ -103,8 +95,4 @@ def article(number):
         abort(404)  # Si l'article n'existe pas, renvoie une erreur 404
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     app.run()
-=======
-    app.run()
->>>>>>> 27b71a8 (Update)
