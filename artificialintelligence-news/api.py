@@ -75,3 +75,10 @@ def get_data():
     url = "https://www.actuia.com/actualite/"
     articles = get_articles_from_page(url, 5)
     return jsonify(articles)
+
+@app.route('/articles', methods=['GET'])
+def articles():
+    url = "https://www.actuia.com/actualite/"
+    articles = get_articles_from_page(url, 5)
+    articles_info = [{"number": idx+1, "title": article["title"], "date_published": article["date_published"], "url": article["url"]} for idx, article in enumerate(articles)]
+    return jsonify(articles_info)
