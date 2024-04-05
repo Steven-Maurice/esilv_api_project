@@ -10,13 +10,25 @@
         <header>
             <a href="{{ url_for('search') }}" class="button">Search</a>
             <h1>Welcome to the arXiv API</h1>
-            <p>The arXiv API is a gateway to a comprehensive collection of scientific papers across a multitude of disciplines, including physics, mathematics, computer science, quantitative biology, quantitative finance, statistics, electrical engineering and systems science, and economics. It offers programmatic access to all of arXiv's rich data, from detailed article metadata to direct links to PDF versions of the work.</p>
-            <p>Through this API, researchers, developers, and enthusiasts can tap into the vast repository of knowledge that arXiv represents. It enables you to effortlessly search for articles, read abstracts, track citations, download papers, and explore the latest trends in various fields of science and technology.</p>
-            <p>Designed with the intention of making scientific information more accessible and integrated into the digital age, the arXiv API provides a robust platform for academic institutions, tech companies, and independent scholars to expand the reach and impact of their work.</p>
-            <p>Join us in this endeavor to foster innovation and discovery by utilizing the power of collective knowledge with the arXiv API.</p>
 
+            <div>
+                <p>The arXiv API is a gateway to a comprehensive collection of scientific papers across a multitude of disciplines, including physics, mathematics, computer science, quantitative biology, quantitative finance, statistics, electrical engineering and systems science, and economics. It offers programmatic access to all of arXiv's rich data, from detailed article metadata to direct links to PDF versions of the work.</p>
+                <p>Through this API, researchers, developers, and enthusiasts can tap into the vast repository of knowledge that arXiv represents. It enables you to effortlessly search for articles, read abstracts, track citations, download papers, and explore the latest trends in various fields of science and technology.</p>
+                <p>Designed with the intention of making scientific information more accessible and integrated into the digital age, the arXiv API provides a robust platform for academic institutions, tech companies, and independent scholars to expand the reach and impact of their work.</p>
+                <p>Join us in this endeavor to foster innovation and discovery by utilizing the power of collective knowledge with the arXiv API.</p>
+
+            </div>
+            
         </header>
         <section>
+            <h2>What is arXiv?</h2>
+            <p>arXiv represents a fundamental shift in the dissemination of scholarly work, providing a free-to-access platform that hosts a vast collection of preprints across a multitude of scientific disciplines. Established in 1991, it serves as a crucial repository for researchers worldwide, offering early versions of research papers before they undergo the formal peer review process.</p>
+
+            <p>The repository covers a rich tapestry of fields such as mathematics, physics, astronomy, computer science, quantitative biology, finance, and statistics. By facilitating open access, arXiv breaks down barriers to knowledge sharing and accelerates the pace of discovery. It empowers authors to present their findings promptly to the global scientific community and receive feedback that can refine their work further. For readers and fellow researchers, it serves as a real-time pulse of the latest scientific advancements.</p>
+
+            <p>Embraced by academics and researchers as a key resource, arXiv fosters a collaborative environment where ideas are exchanged freely, critiqued constructively, and built upon robustly. It stands as a testament to the collective drive for knowledge advancement and the democratization of information in the digital age.</p>
+
+
             <h2>About the API</h2>
             <p>The arXiv API is a versatile and powerful tool designed to democratize access to scientific information. Here’s what you can do with it:</p>
             <ul>
@@ -27,36 +39,27 @@
             <p>Each function of the arXiv API is designed with the intent to streamline your research workflow, promote academic collaboration, and ignite inspiration by exposing you to the wealth of knowledge housed within the arXiv repository. Whether for individual research, academic teaching, or collaborative projects, the API offers an indispensable resource for scholarly engagement.</p>
 
         </section>
+        
         <section>
-            <h2>What is arXiv?</h2>
-            <p>arXiv represents a fundamental shift in the dissemination of scholarly work, providing a free-to-access platform that hosts a vast collection of preprints across a multitude of scientific disciplines. Established in 1991, it serves as a crucial repository for researchers worldwide, offering early versions of research papers before they undergo the formal peer review process.</p>
-
-            <p>The repository covers a rich tapestry of fields such as mathematics, physics, astronomy, computer science, quantitative biology, finance, and statistics. By facilitating open access, arXiv breaks down barriers to knowledge sharing and accelerates the pace of discovery. It empowers authors to present their findings promptly to the global scientific community and receive feedback that can refine their work further. For readers and fellow researchers, it serves as a real-time pulse of the latest scientific advancements.</p>
-
-            <p>Embraced by academics and researchers as a key resource, arXiv fosters a collaborative environment where ideas are exchanged freely, critiqued constructively, and built upon robustly. It stands as a testament to the collective drive for knowledge advancement and the democratization of information in the digital age.</p>
-
             <h2>API Features</h2>
-            <p>Our arXiv API is a gateway to a programmable interface that connects you directly to the data streams of arXiv's comprehensive repository. It is meticulously crafted to meet the needs of developers, data scientists, and researchers who aim to integrate and harness the wealth of scientific data in their projects and analyses. Here’s what you can achieve with our API:</p>
+            <p>Our arXiv API is a gateway to a programmable interface that connects you directly to the data streams of arXiv's comprehensive repository. It is meticulously crafted to meet the needs of developers, data scientists, and researchers who aim to integrate and harness the wealth of scientific data in their projects and analyses.</p>
+            <p>Here’s what you can achieve with our API:</p>
             <ul>
                 <li><strong>Advanced Search Capabilities:</strong> Utilize a robust set of parameters to conduct precise searches. Filter results by keywords, publication dates, authors, and other metadata to hone in on the articles that matter to you.</li>
                 <li><strong>Direct PDF Downloads:</strong> Access the full text of scientific papers with direct PDF downloads, providing a seamless way to gather the information you need without leaving the API environment.</li>
-                <li><strong>Personalized Recommendations:</strong> Leverage the power of machine learning algorithms to receive article suggestions tailored to your research interests, helping you stay ahead in your field.</li>
-                <li><strong>Real-Time Alerts:</strong> Set up notifications to be promptly informed about the latest publications in your chosen domains, ensuring that you never miss an important update.</li>
-                <li><strong>Trend Analysis Tools:</strong> Dig into the data with advanced analytical tools that unveil research trends, citation statistics, and patterns, giving you a macroscopic view of scientific progress.</li>
-            </ul>
-            <p>With these capabilities, the arXiv API stands as a versatile tool, opening up new possibilities for data integration, academic research, and the dissemination of scientific knowledge.</p>
-
-
-            <h2>Getting Started with the API</h2>
-            <p>Embark on your journey through the expansive universe of scientific knowledge with our API. Starting is as simple as clicking through to our <a href="{{ url_for('search') }}">advanced search tool</a>. This feature-rich portal is designed to provide you with a powerful suite of options to tailor your search experience:</p>
-            <ul>
                 <li><strong>Intuitive Interface:</strong> Our user-friendly search interface makes it easy to navigate the extensive arXiv database. Whether you're a seasoned researcher or just starting, you'll find the tools you need to get the results you want.</li>
                 <li><strong>Customizable Filters:</strong> With customizable search parameters, you can refine your queries based on various criteria such as author names, paper titles, subject categories, and more. Drill down to the exact research you're seeking, or broaden your search to discover new fields and ideas.</li>
                 <li><strong>Save and Export:</strong> Mark the papers of interest and export your search results for further analysis or sharing with peers. Our API provides you with the flexibility to work with the data as you see fit, facilitating a seamless research process.</li>
             </ul>
+            <p>We are currently developing additional features:</p>
+            <ul>
+                <li><strong>Personalized Recommendations:</strong> Leverage the power of machine learning algorithms to receive article suggestions tailored to your research interests, helping you stay ahead in your field.</li>
+                <li><strong>Real-Time Alerts:</strong> Set up notifications to be promptly informed about the latest publications in your chosen domains, ensuring that you never miss an important update.</li>
+            </ul>
             <p>To get the full experience, register for an API key, which unlocks the potential to automate queries, integrate search functionality into your own applications, and access an elevated level of interaction with arXiv's services. Ready to dive in? <a href="{{ url_for('search') }}">Start your search</a> and connect with the latest developments in your field right away.</p>
-
         </section>
+        
+        
 
         <footer>
             <p>This API is built using data provided by arXiv, respecting their usage and making it more accessible for developers and researchers.</p>

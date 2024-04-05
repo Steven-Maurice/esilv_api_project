@@ -1,0 +1,54 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_dashboard.css') }}">
+</head>
+<body>
+    <div class="nav-links">
+        <a href="{{ url_for('search') }}">Go to Search Page</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <h1>Dashboard</h1>
+    <p>Welcome to your dashboard, Admin!</p>
+
+    <!-- Add User Form -->
+    <div class="add-user-form">
+        <h3>Add New User</h3>
+        <form action="{{ url_for('add_user') }}" method="POST">
+            <input type="email" name="email" placeholder="Enter email" required>
+            <input type="password" name="password" placeholder="Enter password" required>
+            <button type="submit">Add User</button>
+        </form>
+    </div>
+
+    <!-- Tableau pour afficher les utilisateurs -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Boucle pour afficher chaque utilisateur -->
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <!-- Bouton pour éditer un utilisateur -->
+                    <a href="{{ url_for('edit_user', user_id=user.id) }}">Edit</a>
+                    <!-- Bouton pour supprimer un utilisateur -->
+                    <a href="{{ url_for('delete_user', user_id=user.id) }}" onclick="return confirm('Are you sure?');">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

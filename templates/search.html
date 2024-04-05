@@ -6,9 +6,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_search.css') }}">
 </head>
 <body>
+
+
     <header>
 
-        <a href="{{ url_for('about') }}" class="button">About</a>
+        <div class="left-corner">
+            <a href="{{ url_for('about') }}" class="button">About</a>
+        </div>
+
+        <div class="right-corner">
+            <a href="{{ url_for('logout') }}" class="logout-button">Log Out</a>
+        </div>
+
 
         <h1>Advanced Search Results</h1>
     </header>
@@ -43,6 +52,7 @@
     </form>
 
     {% if entries %}
+    
         <div class="results">
             {% for entry in entries %}
                 <div class="result">
