@@ -1,29 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
 
-page_number = 1
-# URL du blog DeepMind
-url = f"https://deepmind.google/discover/blog?page={page_number}"
+# URL d'un blog DeepMind
+url = f"https://deepmind.google/discover/blog/sima-generalist-ai-agent-for-3d-virtual-environments/"
 
 # Envoyer une requête HTTP pour obtenir le contenu de la page
 response = requests.get(url)
 soup = BeautifulSoup(response.text, 'html.parser')
 
 # Recherche de tous les éléments qui contiennent les articles
-# Cette étape dépend fortement de la structure de la page et peut nécessiter des ajustements
-list_articles = soup.findAll('ul', {'class': 'cards'})
-articles = list_articles[0].findAll('li', {'class': 'glue-grid__col'})
-for article in articles:
-    # Extraction du label
-    label = article.find('p', {'class': 'glue-label'}).text.strip()
+main = soup.find('main')
+title = main.find('h1', {'class': 'article-cover__title'})
+p_elements_with_data_block_key = main.findAll(lambda tag: tag.name == 'p' and tag.has_attr('data-block-key'))
 
-    # Extraction du titre de l'article
-    title = article.find('p', {'class': 'glue-headline'}).text.strip()
-    
-    # Extraction de l'URL de l'article
-    link = article.find('a')['href'].strip()
-    
-    # Extraction de la date de publication
-    date = article.find('time')['datetime'].strip()
-    
-    print(f"Label: {label}, Titre: {title}, Lien: {link}, Date: {date}")
+for p in p_elements_with_data_block_key:
+    print(title.text.strip())
+    print(p.text.strip())

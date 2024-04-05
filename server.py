@@ -2,7 +2,7 @@ from flask import Flask, request
 import requests
 from bs4 import BeautifulSoup
 
-DEEPMIND_URL = "https://deepmind.google/discover/blog"
+DEEPMIND_URL = "https://deepmind.google"
 app = Flask(__name__)
 
 def fetch_articles(article_number):
@@ -11,7 +11,7 @@ def fetch_articles(article_number):
     page_number = 1
     blog_end = False
     while len(articles_data) < article_number:
-        url = f"{DEEPMIND_URL}?page={page_number}"
+        url = f"{DEEPMIND_URL}/discover/blog?page={page_number}"
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
         list_articles = soup.findAll('ul', {'class': 'cards'})
@@ -46,6 +46,32 @@ def fetch_articles(article_number):
         page_number += 1
     return articles_data
 
+def scrap_content(number_article):
+    # Il a 12 articles par page
+    page = number_article // 12
+    index = number_article % 12
+    url = f"{DEEPMIND_URL}?page={page}"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    list_articles = soup.findAll('ul', {'class': 'cards'})
+    articles = list_articles[0].findAll('li', {'class': 'glue-grid__col'})
+    article = articles[index - 1]
+    # On récupère le lien de l'article
+    link = article.find('a')['href'].strip()
+    blog_url = f"{DEEPMIND_URL}{link}"
+    blog_response = requests.get(blog_url)
+    blog_soup = BeautifulSoup(blog_response.text, 'html.parser')
+    # On extrait tout les paragraphes de l'article
+    main = blog_soup.find('main')
+    title = main.find('h1', {'class': 'article-cover__title'})
+    p_elements_with_data_block_key = main.findAll(lambda tag: tag.name == 'p' and tag.has_attr('data-block-key'))
+    # Transformer les données en chaîne pour l'affichage
+    blog_str = ""
+    blog_str += f"{title.text.strip()}\n\n"
+    for p in p_elements_with_data_block_key:
+        blog_str += f"{p.text.strip()}\n\n"
+    return blog_str
+
 @app.route('/')
 def index():
     return 'Hello, World!'
@@ -79,8 +105,9 @@ def articles():
         articles_str += f"Article {article['article_number']} Label: {article['label']}, Titre: {article['title']}, Description: {article['description']}, Date: {article['date']}\n\n"
     return articles_str
 
-# @app.route('/article/<number>')
-# def articles_number():
+@app.route('/article/<number>')
+def articles_number(number):
+    return scrap_content(int(number))
 
 
 if __name__ == '__main__':
