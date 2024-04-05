@@ -1,6 +1,7 @@
 from flask import Flask
 from function_get_data import get_data
 from function_articles import articles
+from function_ml import ml_positive, ml_negative
 
 app = Flask(__name__)
 
