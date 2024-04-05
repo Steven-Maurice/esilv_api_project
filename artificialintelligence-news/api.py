@@ -9,6 +9,8 @@ Original file is located at
 import requests
 from bs4 import BeautifulSoup
 
+app = Flask(__name__)
+
 def get_article_content(article_url):
     response = requests.get(article_url)
     if response.status_code == 200:
@@ -67,3 +69,9 @@ for article in articles:
     print("URL:", article["url"])
     print("Auteur:", article["author_description"])
     print('Contenu:', article['content'])
+
+@app.route('/get_data', methods=['GET'])
+def get_data():
+    url = "https://www.actuia.com/actualite/"
+    articles = get_articles_from_page(url, 5)
+    return jsonify(articles)
