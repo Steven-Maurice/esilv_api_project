@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import requests
 import xml.etree.ElementTree as ET
+from textblob import TextBlob
 
 app = Flask(__name__)
 
@@ -86,9 +87,8 @@ def article(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-pip install textblob
 
-from textblob import TextBlob
+
 
 @app.route('/ml/sentiment', methods=['GET'])
 def ml_sentiment_analysis():
@@ -106,7 +106,7 @@ def ml_sentiment_analysis():
                     'id': article['id'],
                     'title': article['title'],
                     'polarity': sentiment.polarity,
-                    'subjectivity': sentiment.subjectity,
+                    'subjectivity': sentiment.subjectivity,
                 })
 
             return jsonify(sentiments), 200
