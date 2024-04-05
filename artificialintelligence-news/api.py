@@ -15,7 +15,7 @@ def get_data(url):
         soup = BeautifulSoup(response.content, "html.parser")
         articles = []
         article_tags = soup.find_all("article", class_="post")
-        for article_tag in article_tags[:10]:  # Limite à 10 articles pour cet exemple
+        for article_tag in article_tags[:10]:  
             title_tag = article_tag.find("a", rel="bookmark")
             date_tag = article_tag.find("span", class_="post-date")
             if title_tag:
@@ -33,7 +33,7 @@ def get_data(url):
 url = "https://www.artificialintelligence-news.com/"
 articles = get_data(url)
 for article in articles:
-    print("Title:", article["title"])
-    print("URL:", article["url"])  # Affiche l'URL de chaque article
-    print("Date:", article["date"])
+    print("Title:", article["title"]) #Titre de chaque article
+    print("URL:", article["url"])  #URL de chaque article
+    print("Date:", article["date"]) #Date de chaque article
     print("--------------------")
