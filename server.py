@@ -18,11 +18,12 @@ articles_data = []
 # Charger le pipeline de résumé
 sentiment_analysis = pipeline("sentiment-analysis")
 summarizer = pipeline("summarization")
-
+ner = pipeline("ner")
 
 #OpenIA Key
 openai.api_key = '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'
-# Replace 'YOUR_API_KEY_HERE' with your actual News API key
+
+
 NEWS_API_KEY = 'b795726f8b0b4da3ab52350844a3a901'
 NEWS_API_URL = 'https://newsapi.org/v2/everything'
 
@@ -78,47 +79,8 @@ def article(number):
 
 
 
+#Fonctions utiles pour la root /ml
 
-
-
-def analyze_trends(text):
-    words = word_tokenize(text.lower())  # Tokenize le texte et le convertit en minuscules
-    filtered_words = [word for word in words if word.isalnum()]  # Enlève la ponctuation
-    stop_words = set(stopwords.words('english'))  # Obtient les stopwords en anglais
-    filtered_words = [word for word in filtered_words if not word in stop_words]  # Enlève les stopwords
-
-    # Compte et retourne les mots les plus communs
-    word_counts = Counter(filtered_words)
-    most_common_words = word_counts.most_common(10)  # Obtient les 10 mots les plus fréquents
-    return most_common_words
-
-@app.route('/ml', methods=['GET'])
-@app.route('/ml/<int:number>', methods=['GET'])
-
-def ml_analysis(number=None):
-    if number is not None:
-        article = next((item for item in articles_data if item["id"] == number), None)
-        if article:
-            full_content = fetch_full_article_content(article['url'])
-            if full_content and not full_content.startswith("Failed"):
-                # Prendre les premiers 512 tokens pour éviter de dépasser la capacité du modèle
-                tokens = word_tokenize(full_content)[:512]
-                truncated_content = " ".join(tokens)
-
-                # Générer le résumé avec des paramètres ajustés pour éviter les erreurs
-                try:
-                    summary = summarizer(truncated_content, max_length=100, min_length=25, do_sample=False)[0]["summary_text"]
-                except Exception as e:
-                    return jsonify({"error": f"Erreur de génération du résumé : {str(e)}"})
-
-                return jsonify({"id": number, "summary": summary})
-            else:
-                return jsonify({"error": "Impossible de récupérer le contenu complet."}), 404
-        else:
-            return jsonify({"error": "Article non trouvé."}), 404
-    else:
-        return jsonify({"error": "Veuillez spécifier un numéro d'article."}), 400
-    
 def fetch_full_article_content(url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -134,38 +96,58 @@ def fetch_full_article_content(url):
     else:
         return "Failed to retrieve the webpage."
 
-def generate_summary(text):
-    response = openai.Completion.create(
-      engine='text-embedding-ada-002',  # Assure-toi d'utiliser le dernier modèle disponible
-      prompt="Résume cet article: \n\n" + text,
-      temperature=0.5,
-      max_tokens=150,
-      top_p=1.0,
-      frequency_penalty=0.0,
-      presence_penalty=0.0
-    )
-    return response.choices[0].text.strip()
 
-@app.route('/summarize/<int:number>', methods=['GET'])
-def summarize_article(number):
-    # Recherche l'article par son ID pour obtenir son URL
-    article = next((item for item in articles_data if item["id"] == number), None)
-    if article:
-        # Récupère le contenu complet de l'article via son URL
-        full_content = fetch_full_article_content(article['url'])
-        
-        # Si le contenu a été trouvé, génère un résumé
-        if full_content and not full_content.startswith("Failed"):
-            summary = generate_summary(full_content)
-            return jsonify({"id": number, "summary": summary})
+
+def analyze_trends(text):
+    words = word_tokenize(text.lower())  # Tokenize le texte et le convertit en minuscules
+    filtered_words = [word for word in words if word.isalnum()]  # Enlève la ponctuation
+    stop_words = set(stopwords.words('english'))  # Obtient les stopwords en anglais
+    filtered_words = [word for word in filtered_words if not word in stop_words]  # Enlève les stopwords
+
+    # Compte et retourne les mots les plus communs
+    word_counts = Counter(filtered_words)
+    most_common_words = word_counts.most_common(10)  # Obtient les 10 mots les plus fréquents
+    return most_common_words
+
+def clean_entity(entity):
+    # Retire les caractères spéciaux des entités
+    return entity.lstrip('#').lstrip('@')
+
+def extract_entities(article_content):
+    entities = ner(article_content)
+    cleaned_entities = {clean_entity(entity["word"]): entity["entity"] for entity in entities}
+    return cleaned_entities
+
+
+@app.route('/ml', methods=['GET'])
+@app.route('/ml/<int:number>', methods=['GET'])
+
+def ml_analysis(number=None):
+    if number is not None:
+        article = next((item for item in articles_data if item["id"] == number), None)
+        if article:
+            full_content = fetch_full_article_content(article['url'])
+            if full_content and not full_content.startswith("Failed"):
+                # Prendre les premiers 512 tokens pour éviter de dépasser la capacité du modèle
+                tokens = word_tokenize(full_content)[:512]
+                truncated_content = " ".join(tokens)
+                #Va analyser les mots les plus utilisés
+                trends = analyze_trends(full_content)
+                entities = extract_entities(full_content)
+
+                # Générer le résumé avec des paramètres ajustés pour éviter les erreurs
+                try:
+                    summary = summarizer(truncated_content, max_length=100, min_length=25, do_sample=False)[0]["summary_text"]
+                except Exception as e:
+                    return jsonify({"error": f"Erreur de génération du résumé : {str(e)}"})
+
+                return jsonify({"id": number, "summary": summary, "trends": trends, "entities": entities})
+            else:
+                return jsonify({"error": "Impossible de récupérer le contenu complet."}), 404
         else:
-            return jsonify({"error": "Failed to fetch full content or article content is empty"}), 404
+            return jsonify({"error": "Article non trouvé."}), 404
     else:
-        return jsonify({"error": "Article not found"}), 404
-
-
-
-
-
+        return jsonify({"error": "Veuillez spécifier un numéro d'article."}), 400
+    
 if __name__ == '__main__':
     app.run(debug=True)
