@@ -8,6 +8,19 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+#liste d'infos et d'articles
+articles = [
+    {"article number": "1", "title": "Article 1", "publication date": "2024-01-01", "content": "Content of Article 1"},
+    {"article number": "2", "title": "Article 2", "publication date": "2024-01-02", "content": "Content of Article 2"}
+    # Add more articles here
+]
+
+def recup_articles():
+    return 0
+
+
+
+
 @app.route("/")
 def home():
     return "Home"
@@ -18,7 +31,13 @@ def get_data():
 
 @app.route("/articles")
 def get_articles():
-    return "Infos about articles"
+    article_data = {
+        "article number": "12",
+        "title" : "Niehehe",
+        "publication date" : "hier",
+        "Author" : "Dada"
+    }
+    return jsonify(article_data)
 
 
 @app.route("/articles/<number>")
