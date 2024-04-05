@@ -82,3 +82,16 @@ def articles():
     articles = get_articles_from_page(url, 5)
     articles_info = [{"number": idx+1, "title": article["title"], "date_published": article["date_published"], "url": article["url"]} for idx, article in enumerate(articles)]
     return jsonify(articles_info)
+
+@app.route('/article/<int:number>', methods=['GET'])
+def article(number):
+    url = "https://www.actuia.com/actualite/"
+    articles = get_articles_from_page(url)
+    if 1 <= number <= len(articles):
+        article = articles[number-1]
+        return jsonify({"title": article["title"], "content": article["content"]})
+    else:
+        return jsonify({"error": "Article not found"}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
