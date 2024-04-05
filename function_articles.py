@@ -1,3 +1,4 @@
+
 from flask import Flask, jsonify, Blueprint
 from eventregistry import *
 
@@ -39,3 +40,29 @@ def get_articles():
         return jsonify(response.json())
     else:
         return jsonify({"error": "Failed to fetch data"}), response.status_code
+
+
+
+article = Blueprint('article', __name__)
+
+
+#The number is uri number of the article
+@article.route('/article/<number>', methods=['GET'])
+def get_article(number):
+    api_url = "http://eventregistry.org/api/v1/article/getArticle"
+    params = {
+        "action": "getArticle",
+        "articleUri": number,
+        "infoArticleBodyLen": -1,
+        "resultType": "info",
+        "apiKey": "36f9340a-b5b7-42dd-bac1-00296478472e"
+    }
+
+    response = requests.post(api_url, json=params)
+
+    if response.status_code == 200:
+
+        return jsonify(response.json())
+    else:
+
+        return jsonify({"error": "Failed to fetch article content"}), response.status_code
