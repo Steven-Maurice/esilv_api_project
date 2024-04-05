@@ -8,6 +8,8 @@ app = Flask(__name__)
 app.register_blueprint(get_data)
 app.register_blueprint(articles)
 app.register_blueprint(article)
+app.register_blueprint(ml_positive)
+app.register_blueprint(ml_negative)
 
 if __name__ == '__main__':
     app.run(debug=True)
