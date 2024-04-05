@@ -9,31 +9,61 @@ Original file is located at
 import requests
 from bs4 import BeautifulSoup
 
-def get_data(url):
+def get_article_content(article_url):
+    response = requests.get(article_url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, "html.parser")
+        
+        date_published = soup.find("div", class_="entry-meta").find("span").get_text(strip=True)
+        
+        author_description = soup.find("span", class_="author-name")
+        author_description_text = author_description.get_text(strip=True) if author_description else "Auteur non disponible"
+        
+        content_div = soup.find("div", class_="entry-content")
+        if content_div:
+            paragraphs = content_div.find_all("p")
+            content_text = ' '.join(p.get_text(strip=True) for p in paragraphs)
+            if content_text: 
+                return {
+                    "date_published": date_published,
+                    "author_description": author_description_text,
+                    "content": content_text
+                }
+        return None
+    else:
+        return None
+
+def get_articles_from_page(url):
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
         articles = []
-        article_tags = soup.find_all("article", class_="post")
-        for article_tag in article_tags[:10]:  
-            title_tag = article_tag.find("a", rel="bookmark")
-            date_tag = article_tag.find("span", class_="post-date")
-            if title_tag:
-                title = title_tag.text.strip()
-                date = date_tag.text.strip() if date_tag else "Date not available"
-                url = title_tag.get('href')  # Récupère l'URL de l'article
-                articles.append({"title": title, "date": date, "url": url})
-            else:
-                print("Failed to extract title from an article.")
+        for article_header in soup.find_all("h3", class_="entry-title"):
+            if len(articles) >= 10:  
+                break
+            article_link = article_header.find("a")
+            if article_link:
+                title = article_link.text.strip()
+                article_url = article_link['href']
+                article_content = get_article_content(article_url)
+                if article_content:  
+                    articles.append({
+                        "title": title,
+                        "url": article_url,
+                        "date_published": article_content["date_published"],
+                        "author_description": article_content["author_description"],
+                        "content": article_content["content"]
+                    })
         return articles
     else:
-        print("Failed to retrieve data from the website.")
+        print("Échec de la récupération de la page.")
         return []
 
-url = "https://www.artificialintelligence-news.com/"
-articles = get_data(url)
+url = "https://www.actuia.com/actualite/"
+articles = get_articles_from_page(url)
 for article in articles:
-    print("Title:", article["title"]) #Titre de chaque article
-    print("URL:", article["url"])  #URL de chaque article
-    print("Date:", article["date"]) #Date de chaque article
-    print("--------------------")
+    print("Titre:", article["title"])
+    print("Date de publication:", article["date_published"])
+    print("URL:", article["url"])
+    print("Auteur:", article["author_description"])
+    print('Contenu:', article['content'])
