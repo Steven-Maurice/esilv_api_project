@@ -52,25 +52,6 @@ def get_articles():
         return jsonify(article_info)
     else:
         return jsonify({"error": "Failed to retrieve data from MIT News."}), 500
-    
-
-
-
-@app.route('/article/<int:number>')
-def get_article(number):
-    # Appeler la fonction de scraping pour récupérer les articles
-    articles = scrape_mit_news()
-    if 0 < number <= len(articles):
-        # Si le numéro d'article est valide, récupérer le contenu de l'article correspondant
-        article_url = articles[number - 1]["link"]
-        article_content = scrape_article_content(article_url)
-        if article_content:
-            return jsonify({"content": article_content})
-        else:
-            return jsonify({"error": "Failed to retrieve article content."}), 500
-    else:
-        # Si le numéro d'article n'est pas valide, retourner un message d'erreur
-        return jsonify({"error": f"Article number {number} not found."}), 404
 
 
 # Fonction de scraping pour récupérer le contenu d'un article spécifique
@@ -91,10 +72,29 @@ def scrape_article_content(url):
     except Exception as e:
         print("Error fetching article content:", e)
         return None
+
+
+@app.route('/article/<int:number>')
+def get_article(number):
+    # Appeler la fonction de scraping pour récupérer les articles
+    articles = scrape_mit_news()
+    if 0 < number <= len(articles):
+        # Si le numéro d'article est valide, récupérer le contenu de l'article correspondant
+        article_url = articles[number - 1]["link"]
+        article_content = scrape_article_content(article_url)
+        if article_content:
+            return jsonify({"content": article_content})
+        else:
+            return jsonify({"error": "Failed to retrieve article content."}), 500
+    else:
+        # Si le numéro d'article n'est pas valide, retourner un message d'erreur
+        return jsonify({"error": f"Article number {number} not found."}), 404
+
+
 # Fonction pour effectuer l'analyse de sentiment sur tous les articles
-def analyze_sentiment(articles):
+def analyze_sentiment(articles, article_texts):
     # Récupérer le texte de tous les articles
-    article_texts = [article['title'] for article in articles]
+    #article_texts = [article['title'] for article in articles]
     # Initialiser le modèle SVM avec CountVectorizer pour la vectorisation
     model = Pipeline([
         ('vectorizer', CountVectorizer()),
@@ -115,16 +115,35 @@ def analyze_sentiment(articles):
 
 # Route pour effectuer l'analyse de sentiment
 @app.route('/ml')
-def ml_analysis():
+def ml_analysis_all():
     # Récupérer les articles
     articles = scrape_mit_news()
     if articles:
+        # Récupérer le contenu de tous les articles
+        article_texts = [scrape_article_content(article['link']) for article in articles]
         # Effectuer l'analyse de sentiment
-        results = analyze_sentiment(articles)
+        results = analyze_sentiment(articles, article_texts)
         return jsonify(results)
     else:
         return jsonify({"error": "Failed to retrieve data from MIT News."}), 500
     
-    
+@app.route('/ml/<int:number>')
+def ml_analysis_one(number):
+    # Récupérer les articles
+    articles = scrape_mit_news()
+    if articles:
+        # Vérifier la validité du numéro d'article
+        if 0 < number <= len(articles):
+            # Récupérer le contenu de l'article spécifié
+            article_content = scrape_article_content(articles[number - 1]["link"])
+            # Effectuer l'analyse de sentiment
+            results = analyze_sentiment([articles[number - 1]], [article_content])
+            return jsonify(results)
+        else:
+            return jsonify({"error": f"Article number {number} not found."}), 404
+    else:
+        return jsonify({"error": "Failed to retrieve data from MIT News."}), 500
+
+
 if __name__ == '__main__':
     app.run(debug=True)
