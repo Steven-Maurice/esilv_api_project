@@ -15,6 +15,10 @@ Here are the roots :
 
 - Get the number of articles in the database (this is more a test root with no real utility for the user other than checking the length of the database)
 - Get the url of the articles : we can imagine that the user wants to have a full view over the articles and check them independently
+    FOr the url, we created a specific root, if we enter a specific URL, we can access to all the infos about this url (Publication date, title, description..)
 - Get the catagories of the articles : one can look at the distribution of the articles categoires (Research articles, articles about a company ...)
-
+    For the categories, we also created a specific root. If we choose a certain category (for example RESEARCH), we can access to all the informations of the certain category.
+- Get the titles of the articles : we can look at the different titles and see which articles seem interesting.
+- Get all the informations on the articles (N°, publication date, title..)
+    We can also select a specific number of article to access to all the informations on this article.
 To test the API, the Flask development server was run. Requests were sent using a web browser to call the different endpoints and get dynamic responses with the queried data.
