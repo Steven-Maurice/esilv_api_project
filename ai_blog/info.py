@@ -5,6 +5,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
 from textblob import TextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 app = Flask(__name__)
 
@@ -114,8 +115,11 @@ def analyze_sentiment(articles, article_texts):
     sentiments = [TextBlob(text).sentiment for text in article_texts]
     polarities = [sentiment.polarity for sentiment in sentiments]
     subjectivities = [sentiment.subjectivity for sentiment in sentiments]
+
+    sentiments_vader = SentimentIntensityAnalyzer()
+    polarities_vader = [sentiments_vader.polarity_scores(text) for text in article_texts]
     # Créer une liste de résultats avec le titre de l'article et le sentiment prédit
-    results = [{"title": articles[i]['title'], "sentiment": predictions[i], "polarity": polarities[i], "subjectivity": subjectivities[i]} for i in range(len(articles))]
+    results = [{"Article": (i+1), "title": articles[i]['title'], "sentiment": predictions[i], "polarity": polarities[i], "subjectivity": subjectivities[i], "Polarity analysis": polarities_vader[i]} for i in range(len(articles))]
     return results
 
 # Route pour effectuer l'analyse de sentiment
