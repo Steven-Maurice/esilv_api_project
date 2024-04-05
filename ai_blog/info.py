@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
+from textblob import TextBlob
 
 app = Flask(__name__)
 
@@ -109,8 +110,12 @@ def analyze_sentiment(articles, article_texts):
     model.fit([data[0] for data in train_data], [data[1] for data in train_data])
     # Prédire les sentiments pour chaque article
     predictions = model.predict(article_texts)
+    # Analyser le sentiment de chaque texte d'article avec TextBlob
+    sentiments = [TextBlob(text).sentiment for text in article_texts]
+    polarities = [sentiment.polarity for sentiment in sentiments]
+    subjectivities = [sentiment.subjectivity for sentiment in sentiments]
     # Créer une liste de résultats avec le titre de l'article et le sentiment prédit
-    results = [{"title": articles[i]['title'], "sentiment": predictions[i]} for i in range(len(articles))]
+    results = [{"title": articles[i]['title'], "sentiment": predictions[i], "polarity": polarities[i], "subjectivity": subjectivities[i]} for i in range(len(articles))]
     return results
 
 # Route pour effectuer l'analyse de sentiment
