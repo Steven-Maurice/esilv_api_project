@@ -37,7 +37,7 @@ site of Deepmind's public research publications page and presenting it to users 
 
 We create a Flask web application to explore publications from Google DeepMind. It includes several endpoints to get publication details and analyze them with a simple machine learning tool. 
 
-##### Endpoints
+#### Endpoints
 Here’s a brief look at what each endpoint does:
 
 1. **Homepage (`/`)**:
@@ -85,7 +85,7 @@ The keywords for the second article:
 
 Each endpoint is tailored to make exploring and understanding DeepMind's research outputs as straightforward as possible. 
 
-##### Functions
+#### Functions
 The functions we’ve used in this application:
 
 1. **`scrape_deepmind_publications()`**:
