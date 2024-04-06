@@ -1,6 +1,6 @@
 Final Project - Python, Git & Linux
 
-file : apgl_project.py
+FILE : apgl_project.py
 
 - Project Objective :
 
@@ -44,7 +44,10 @@ The Flask application exposes several endpoints for interaction:
 /article/<number>: select an article in order to view its content in detail
 /ml and /ml/<number>: displays sentiment analysis on articles, either collectively or individually.
 
-- Running our flask app : 
-Set the FLASK_APP environment variable.
+- Running our flask app (make sure to clone the branch first) :
+Create a virtual environment env : 'python -m venv env'
+Activate the virtual environment : 'env\Scripts\activate' on Windows and 'source env/bin/activate' on macOS and Linux
+Set the FLASK_APP environment variable : 'set FLASK_APP=apgl_project.py' on Windows and 'export FLASK_APP=apgl_project.py' on macOS and Linux 
 Execute 'flask run'.
-Access the endpoints on the web with the provided url by adding the one you desire at the end. It's also possible to use 'curl' followed by that same url to access the desired endpoint (remember to use a different terminal then!).
+Access the endpoints on the web with the provided url.
+It's also possible to use 'curl' followed by that same url to access the specific endpoint (remember to use a different terminal then!).
