@@ -1,6 +1,10 @@
 from flask import Flask, request
 import requests
 from bs4 import BeautifulSoup
+from transformers import pipeline
+
+# Charger le pipeline de résumé avec le modèle pré-entraîné 'facebook/bart-large-cnn'
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 DEEPMIND_URL = "https://deepmind.google"
 app = Flask(__name__)
@@ -28,7 +32,6 @@ def fetch_articles(article_number):
             label = article.find('p', {'class': 'glue-label'}).text.strip()
             title = article.find('p', {'class': 'glue-headline'}).text.strip()
             description = article.find('p', {'class': 'glue-card__description'}).text.strip()
-            link = article.find('a')['href'].strip()
             date = article.find('time')['datetime'].strip()
             # Ajout à la liste articles_data
             articles_data.append({
@@ -36,7 +39,6 @@ def fetch_articles(article_number):
                 "label": label,
                 "title": title,
                 "description": description,
-                "link": link,
                 "date": date
             })
             article_counter += 1
@@ -46,7 +48,7 @@ def fetch_articles(article_number):
         page_number += 1
     return articles_data
 
-def scrap_content(number_article):
+def find_blog(number_article):
     # Il a 12 articles par page
     page = number_article // 12
     index = number_article % 12
@@ -58,6 +60,9 @@ def scrap_content(number_article):
     article = articles[index - 1]
     # On récupère le lien de l'article
     link = article.find('a')['href'].strip()
+    return link
+
+def scrap_content(link):
     blog_url = f"{DEEPMIND_URL}{link}"
     blog_response = requests.get(blog_url)
     blog_soup = BeautifulSoup(blog_response.text, 'html.parser')
@@ -65,12 +70,19 @@ def scrap_content(number_article):
     main = blog_soup.find('main')
     title = main.find('h1', {'class': 'article-cover__title'})
     p_elements_with_data_block_key = main.findAll(lambda tag: tag.name == 'p' and tag.has_attr('data-block-key'))
-    # Transformer les données en chaîne pour l'affichage
-    blog_str = ""
-    blog_str += f"{title.text.strip()}\n\n"
-    for p in p_elements_with_data_block_key:
-        blog_str += f"{p.text.strip()}\n\n"
-    return blog_str
+    return (title, p_elements_with_data_block_key)
+
+def resume(text):
+    max_chars = 4096  # Nombre approximatif de caractères pour rester sous la limite de tokens
+    len_list = len(text) // max_chars
+    divide_text_list = [text[max_chars*(i):max_chars*(i+1)] for i in range(len_list)]
+    divide_text_list.append(text[max_chars*(len_list):])
+    summary = ""
+    # Générer le résumé
+    for i in range(len(divide_text_list)):
+        summarization = summarizer(divide_text_list[i], max_length=256, min_length=32, do_sample=False)
+        summary += summarization[0]["summary_text"]
+    return summary
 
 @app.route('/')
 def index():
@@ -107,8 +119,26 @@ def articles():
 
 @app.route('/article/<number>')
 def articles_number(number):
-    return scrap_content(int(number))
+    link = find_blog(int(number))
+    (title, p_elements_with_data_block_key) = scrap_content(link)
+    # Transformer les données en chaîne pour l'affichage
+    blog_str = ""
+    blog_str += f"{title.text.strip()}\n\n"
+    for p in p_elements_with_data_block_key:
+        blog_str += f"{p.text.strip()}\n\n"
+    return blog_str
 
+# Cette requête peux prendre un certain temps en fonction de la puissance de l'ordinateur
+@app.route('/ml/<number>')
+def resume_article(number):
+    link = find_blog(int(number))
+    (title, p_elements_with_data_block_key) = scrap_content(link)
+    # Transformer les données en chaîne pour le traîtement
+    blog_str = ""
+    blog_str += f"{title.text.strip()}\n"
+    for p in p_elements_with_data_block_key:
+        blog_str += f"{p.text.strip()}\n"
+    return resume(blog_str) + "\n"
 
 if __name__ == '__main__':
     app.run()
