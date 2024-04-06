@@ -25,4 +25,26 @@ It retrieves data from the 10 articles using 'get_articles_from_page' function. 
 content using TextBlob library. Sentiment scores ranging from -1.0 (negative) to 1.0 (positive) are assigned.
 Finally, it returns a JSON object containing each article's title and its sentiment score.
 
+#Run the code 
 
+For the first endpoint '/get_data'
+http://127.0.0.1:5000/get_data
+
+For the second endpoint '/articles'
+http://127.0.0.1:5000/articles
+
+For the third endpoint '/article/<int:number>'
+http://127.0.0.1:5000/article/1
+http://127.0.0.1:5000/article/2
+http://127.0.0.1:5000/article/3
+http://127.0.0.1:5000/article/4
+http://127.0.0.1:5000/article/5
+http://127.0.0.1:5000/article/6
+http://127.0.0.1:5000/article/7
+http://127.0.0.1:5000/article/8
+http://127.0.0.1:5000/article/9
+http://127.0.0.1:5000/article/10
+For the 10 articles
+
+For the last endpoint '/ml'
+http://127.0.0.1:5000/sentiment_analysis
