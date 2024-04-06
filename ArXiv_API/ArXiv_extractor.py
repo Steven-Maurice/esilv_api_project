@@ -1,10 +1,10 @@
 
 
 from os import abort
-from flask import Flask, jsonify, redirect
+from flask import Flask, jsonify, redirect, render_template
+import json
 import requests 
 import xml.etree.ElementTree as ET
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -110,8 +110,10 @@ def article(number):
 # recommende l'article (parmi les 100) qui contient plus probablement les éléments 
 # qui m'intéressent
 
-def retrieve_4_articles():
-    url = 'http://export.arxiv.org/api/query?search_query=cat:cs.CV+AND+ti:"image+processing"&max_results=100'
+def retrieve_4_articles(recommendation):
+
+    recommendation_formatted = recommendation.replace(' ', '+')
+    url = f'http://export.arxiv.org/api/query?search_query=all:{recommendation_formatted}&max_results=100'
     response = requests.get(url)
     response_xml = ET.fromstring(response.content)
 
@@ -132,53 +134,36 @@ def retrieve_4_articles():
 
     return articles_4
 
-# Je récupère mes articles 
-articles_4 = retrieve_4_articles()
 
-# Je crée une représentation vectorielle des articles
-corpus = [article['summary'] for article in articles_4]
-vectorizer = TfidfVectorizer()
-X = vectorizer.fit_transform(corpus)
 
-# Création d'endpoint pour recommander un article
-@app.route('/ml/recommendation')
-def recommend_article():
+def prepare_vector_space(recommendation):
+    articles = retrieve_4_articles(recommendation)
+    corpus = [article['summary'] for article in articles]
+    vectorizer = TfidfVectorizer()
+    X = vectorizer.fit_transform(corpus)
+    return articles, vectorizer, X
+
+@app.route('/ml/<string:recommendation>')
+def recommend_article(recommendation):
+    articles, vectorizer, X = prepare_vector_space(recommendation)
+    top_n = 5  # Nombre d'articles à recommander
+    recommended_articles = perform_recommendation(recommendation, vectorizer, X, articles, top_n)
     
-    # J'ai choisi comme mot clé "image processing"
-    # Après on peut remplacer "image processing" par d'autres mots clés
-    recommended_article_index = perform_recommendation("image processing")
+    pretty_json = json.dumps(recommended_articles, indent=4)
 
-    return redirect_article(recommended_article_index)
+    
+    # Retourne la liste des articles recommandés sous forme de JSON
+    return render_template('pretty_json.html', json_data=pretty_json)
 
-# J'effectue la recommandation d'article
-def perform_recommendation(content):
-    # Je transforme le contenu spécifié en représentation vectorielle
+def perform_recommendation(content, vectorizer, X, articles, top_n):
     content_vector = vectorizer.transform([content])
-
-    # Je calcule les similarités cosinus entre le contenu spécifié et les articles
     similarities = cosine_similarity(content_vector, X).flatten()
 
-    # Je veux l'indice de l'article le plus similaire
-    recommended_article_index = similarities.argmax()
+    # Trouve les indices des top_n articles les plus similaires
+    recommended_article_indices = similarities.argsort()[-top_n:][::-1]
 
-    return recommended_article_index
-
-# Endpoint pour rediriger l'utilisateur vers le lien de l'article
-@app.route('/articles/<int:number>')
-def redirect_article(number):
-    articles = retrieve_4_articles()
-    if 1 <= number <= len(articles):
-        article_link = articles[number-1]['link']
-        return redirect(article_link)  # Rediriger l'utilisateur vers le lien de l'article
-    else:
-        abort(404)  # Si l'article n'existe pas, renvoie une erreur 404
-    
-        
-# Conclusion: lorsque j'exécute le code, j'ai un lien qui me dirige directement vers l'article
-# recommendé parmi les 100 articles
-
-# Par exemple avec le mot clé "Image Processing”,
-# l'article recommandé est "Convolutional Neural Pyramid for Image Processing"
+    # Récupère et retourne les articles recommandés
+    return [articles[i] for i in recommended_article_indices]
 
 
 if __name__ == '__main__':
