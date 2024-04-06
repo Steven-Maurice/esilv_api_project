@@ -43,7 +43,7 @@ def init_app(app):
      
     # Route pour avoir les auteurs d'un article
     @app.route('/authors/<int:number>', methods=['GET'])
-    def list_authors2(number):
+    def list_authors_with_id(number):
         formatted_results = fetch_data()
         authors_list = []
         author_str = formatted_results[number]['author']
