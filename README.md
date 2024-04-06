@@ -34,13 +34,20 @@ This API provides news related to Artificial Intelligence (AI) from ArXiv site b
 
 ### Objectives : 
 -Fetches a list of articles from the ArXiv API.  
+
 -Displays information about each articles (id,title,published date,link...) without its content  
+
 -Accesses the content of a specified article.  
+
 -Executes a Machine Learning script  
+
 
 ### How the code is organised:
                               
 -Installation of Packages
+
 -Importation of required libraries (flack for the creation of our API)
+
 -Initialisation of our API 
--Implementation of our differents endpoints (/get_data,/articles,/article/<id>,/ml)
+
+-Implementation of our differents endpoints (/get_data,/articles,/article/$<id>$,/ml)
