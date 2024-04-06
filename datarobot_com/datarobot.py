@@ -1,7 +1,7 @@
 from flask import Flask, Response
 
 from base.request import Request
-from base.scrapt_content import return_5_most_recent
+from base.scrap_content import return_5_most_recent
 
 app = Flask(__name__)
 

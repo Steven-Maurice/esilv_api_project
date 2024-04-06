@@ -1,4 +1,4 @@
 from . import request
-from . import scrapt_content
+from . import scrap_content
 
-__all__ = ["request", "scrapt_content"]
+__all__ = ["request", "scrap_content"]
