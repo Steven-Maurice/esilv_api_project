@@ -1,6 +1,8 @@
 from flask import Flask, jsonify
 import requests
 import xml.etree.ElementTree as ET
+import re
+from collections import Counter
 
 app = Flask(__name__)
 
@@ -59,6 +61,56 @@ def article(number):
         })
     else:
         return jsonify({'message': 'Article not found'}), 404
+
+def get_main_keyword(summary):
+    # Liste simplifiée des mots courants à exclure
+    stop_words = set(['the', 'and', 'in', 'of', 'to', 'a', 'with', 'for', 'on', 'as', 'is', 'are', 'by', 'that', 'this', 'it', 'an', 'be', 'from', 'which', 'or', 'at', 'not'])
+    words = re.findall(r'\b\w+\b', summary.lower())
+    
+    # Filtrer les stop words et compter la fréquence des mots restants
+    word_counts = Counter([word for word in words if word not in stop_words])
+    
+    if word_counts:
+        # Sélectionnez le mot le plus fréquent
+        main_keyword, _ = word_counts.most_common(1)[0]
+        return main_keyword
+    return None
+
+@app.route('/ml/<article_id>', methods=['GET'])
+def recommend_based_on_keyword(article_id):
+    # Trouvez l'article cible par ID
+    target_article = next((article for article in articles_data if article['id'] == article_id), None)
+    if not target_article:
+        return jsonify({'message': 'Article not found'}), 404
+    
+    main_keyword = get_main_keyword(target_article['summary'])
+    if not main_keyword:
+        return jsonify({'message': 'No main keyword found for the target article'}), 404
+    
+    # Recherchez d'autres articles contenant le mot-clé principal
+    recommended_articles = [
+        article for article in articles_data
+        if main_keyword in article['summary'].lower() and article['id'] != article_id
+    ]
+    
+    # Retournez les articles recommandés (vous pouvez choisir de retourner l'ID, le titre, etc.)
+    return jsonify([{'id': art['id'], 'title': art['title']} for art in recommended_articles])
+
+
+@app.route('/search_by_keyword/<keyword>', methods=['GET']) #2ème fonction de ML en plus
+def search_by_keyword(keyword):
+    keyword = keyword.lower()  # Convertir le mot-clé en minuscules pour une recherche insensible à la casse
+    # Filtrer les articles contenant le mot-clé dans leur résumé
+    filtered_articles = [
+        {'id': article['id'], 'title': article['title']}
+        for article in articles_data
+        if keyword in article['summary'].lower()
+    ]
+
+    if filtered_articles:
+        return jsonify(filtered_articles)
+    else:
+        return jsonify({'message': 'No articles found containing the keyword'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
