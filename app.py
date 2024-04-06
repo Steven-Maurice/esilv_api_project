@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, Response, render_template, redirect, url_for, flash
+from flask import Flask, request, Response, render_template, redirect, url_for, flash, jsonify
 import requests
 import feedparser
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import nltk
+from bs4 import BeautifulSoup
 
 nltk.download('vader_lexicon')
-
-sid = SentimentIntensityAnalyzer()
 
 app = Flask(__name__)
 
@@ -23,11 +22,37 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+def fetch_arxiv_data(search_query, start=0, max_results=10, sortBy='submittedDate', sortOrder='descending'):
+    params = {
+        "search_query": search_query,
+        "start": start, 
+        "max_results": max_results,
+        "sortBy": sortBy, 
+        "sortOrder": sortOrder
+    }
+    response = requests.get(ARXIV_API_URL, params=params)
+    return feedparser.parse(response.content)
+
+def analyze_sentiment(text):
+    sia = SentimentIntensityAnalyzer()
+    sentiment_result = sia.polarity_scores(text)
+    if sentiment_result['compound'] >= 0.05:
+        return sentiment_result,'Positive'
+    elif sentiment_result['compound'] <= -0.05:
+        return sentiment_result,'Negative'
+    else:
+        return sentiment_result,'Neutral'
+
+
+
+
 @app.route('/about')
+@login_required
 def about():
     return render_template('about.html')
 
 @app.route('/search')
+@login_required
 def search():
     query = request.args.get('query', '')
     author = request.args.get('author', '')
@@ -41,17 +66,7 @@ def search():
     else:
         search_query = f"all:{query}" if query else "all:e"
 
-    params = {
-        "search_query": search_query,
-        "start": start, 
-        "max_results": max_results,
-        "sortBy": sortBy, 
-        "sortOrder": sortOrder
-        
- 
-    }
-    response = requests.get(ARXIV_API_URL, params=params)
-    feed = feedparser.parse(response.content)
+    feed = fetch_arxiv_data(search_query, start, max_results, sortBy, sortOrder)
 
     if not feed.entries:
         return render_template('search.html', entries=[], message="No results found.")
@@ -61,12 +76,7 @@ def search():
 
         published_date = entry.published.replace('T', ' ').replace('Z', '')
 
-        sentiment = sid.polarity_scores(entry.summary)
-        sentiment_class = 'Neutral'
-        if sentiment['compound'] >= 0.05:
-            sentiment_class = 'Positive'
-        elif sentiment['compound'] <= -0.05:
-            sentiment_class = 'Negative'
+        _,sentiment_class = analyze_sentiment(entry.summary)
 
         authors = [author.name for author in entry.authors] if entry.authors else 'Anonymous'
         entry_data = {
@@ -83,6 +93,7 @@ def search():
     return render_template('search.html', entries=entries)
 
 @app.route('/download/pdf/<paper_id>')
+@login_required
 def download_pdf(paper_id):
     pdf_url = f"https://arxiv.org/pdf/{paper_id}.pdf"
     response = requests.get(pdf_url)
@@ -108,6 +119,10 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+    
+    @property
+    def is_admin(self):
+        return self.email in admins_list
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -126,7 +141,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)  
-        return redirect(url_for('search'))  
+        return redirect(url_for('about'))  
     return render_template('signup.html')
 
 admins_list = {
@@ -143,7 +158,7 @@ def login():
             login_user(user)
             if email in admins_list:
                 return redirect(url_for('dashboard'))
-            return redirect(url_for('search'))
+            return redirect(url_for('about'))
         else:
             flash('Invalid email or password')
     return render_template('login.html')
@@ -158,6 +173,9 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    if not current_user.is_admin:
+            flash("Accès non autorisé : vous devez être administrateur.")
+            return redirect(url_for('about'))
     users = User.query.all()  
     return render_template('dashboard.html', users=users) 
 
@@ -202,6 +220,125 @@ def add_user():
     db.session.commit()
     flash('New user added successfully.')
     return redirect(url_for('dashboard'))
+
+
+def scrape_article_details(article_url):
+    response = requests.get(article_url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    if response.status_code != 200:
+            return jsonify({'error': 'Article not found or failed to load'}), response.status_code
+    
+    title = soup.find('h1', class_='title').text.replace("Title:", "").strip()
+    summary = soup.find('blockquote', class_='abstract').text.replace("Abstract:", "").strip()
+    authors = [tag.text.strip() for tag in soup.find_all('div', class_='authors')]
+    published_date = soup.find('div', class_='dateline').text
+    link = article_url
+
+    return {
+        'title': title,
+        'summary': summary,
+        'authors': authors,
+        'published_date': published_date,
+        'link': link
+    }
+
+
+
+@app.route('/get_data/', defaults={'topic': 'AI'})
+@app.route('/get_data/<topic>')
+@login_required
+def get_article_ids(topic):
+    search_query = f'all:{topic}'
+    feed = fetch_arxiv_data(search_query)
+    articles_data = []
+    for entry in feed.entries:
+        arxiv_id = entry.id.split('/abs/')[-1]
+        article_url = f'https://arxiv.org/abs/{arxiv_id}'
+        article_details = scrape_article_details(article_url)
+
+        articles_data.append({
+            'id': arxiv_id,
+            'title': article_details['title']
+        })
+    
+    return jsonify(articles_data), 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+@app.route('/articles')
+@login_required
+def articles():
+    topic = 'AI'  
+    search_query = f'all:{topic}'
+    feed = fetch_arxiv_data(search_query)
+    articles_data = []
+    for entry in feed.entries:
+        arxiv_id = entry.id.split('/abs/')[-1]
+        article_url = f'https://arxiv.org/abs/{arxiv_id}'
+        article_details = scrape_article_details(article_url)
+    
+        articles_data.append({
+            'title': article_details['title'],
+            'authors': article_details['authors'],
+            'published': article_details['published_date'],
+            'link': article_details['link'],
+            'id': arxiv_id
+        })
+
+    return jsonify(articles_data), 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+
+@app.route('/article/', defaults={'number': '2404.03624v1'})
+@app.route('/article/<number>')
+@login_required
+def article(number):
+     
+    article_url = f'https://arxiv.org/abs/{number}'
+    article_details = scrape_article_details(article_url)
+    
+    article_data = []
+
+    article_data.append({
+        'title': article_details['title'],
+        'authors': article_details['authors'],
+        'summary': article_details['summary'],
+        'published_date': article_details['published_date'],
+        'link': article_details['link'],
+        'id': number,
+    })
+
+    return jsonify(article_data), 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+@app.route('/ml/', defaults={'article_id': '2404.03624v1'})
+@app.route('/ml/<article_id>')
+@login_required
+def ml_sentiment_analysis(article_id):
+    article_url = f'https://arxiv.org/abs/{article_id}'
+    response = requests.get(article_url)
+
+    if response.status_code != 200:
+        return jsonify({'error': 'Article not found or failed to load'}), response.status_code
+
+    soup = BeautifulSoup(response.content, 'html.parser')
+
+    summary = soup.find('blockquote', class_='abstract').text.replace("Abstract:", "").strip()
+    
+    sentiment_result,sentiment_estimation = analyze_sentiment(summary)
+
+
+    result = {
+        'arxiv_id': article_id,
+        'title': soup.find('h1', class_='title').text.replace("Title:", "").strip(), 
+        'sentiment': {
+            'compound_average': sentiment_result,  
+            'estimation': sentiment_estimation
+        }
+    }
+
+    return jsonify(result), 200, {'Content-Type': 'application/json; charset=utf-8'}
+
+@app.route('/endpoints')
+@login_required
+def endpoints():
+    return render_template('endpoints.html')
 
 
 

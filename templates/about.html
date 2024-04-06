@@ -8,8 +8,11 @@
     </head>
     <body>
         <header>
-            <a href="{{ url_for('search') }}" class="button">Search</a>
+            <a href="{{ url_for('search') }}" class="button left-button">Search Arxiv API</a>
+            <a href="{{ url_for('endpoints') }}" class="button right-button">Endpoints with Scraping</a> 
+            <p></p>
             <h1>Welcome to the arXiv API</h1>
+            <p></p>
 
             <div>
                 <p>The arXiv API is a gateway to a comprehensive collection of scientific papers across a multitude of disciplines, including physics, mathematics, computer science, quantitative biology, quantitative finance, statistics, electrical engineering and systems science, and economics. It offers programmatic access to all of arXiv's rich data, from detailed article metadata to direct links to PDF versions of the work.</p>
@@ -49,7 +52,7 @@
                 <li><strong>Direct PDF Downloads:</strong> Access the full text of scientific papers with direct PDF downloads, providing a seamless way to gather the information you need without leaving the API environment.</li>
                 <li><strong>Intuitive Interface:</strong> Our user-friendly search interface makes it easy to navigate the extensive arXiv database. Whether you're a seasoned researcher or just starting, you'll find the tools you need to get the results you want.</li>
                 <li><strong>Customizable Filters:</strong> With customizable search parameters, you can refine your queries based on various criteria such as author names, paper titles, subject categories, and more. Drill down to the exact research you're seeking, or broaden your search to discover new fields and ideas.</li>
-                <li><strong>Save and Export:</strong> Mark the papers of interest and export your search results for further analysis or sharing with peers. Our API provides you with the flexibility to work with the data as you see fit, facilitating a seamless research process.</li>
+                <li><strong>Scraping for Enhanced Data Retrieval:</strong> Employ scrapping methods to fetch and display data in JSON format, enhancing the capability to access and analyze article details directly from the arXiv website, including metadata and full-text contents.</li>
             </ul>
             <p>We are currently developing additional features:</p>
             <ul>
