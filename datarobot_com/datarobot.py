@@ -6,6 +6,7 @@ from base.scrapt_content import return_5_most_recent
 app = Flask(__name__)
 
 
+@app.route("/get_data")
 def get_data():
     file_path = f"./windows/article_{0}.html"
 
