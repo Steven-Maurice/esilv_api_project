@@ -76,6 +76,44 @@ for article in articles:     ## renvoie les principales caractéristiques des ar
     print("Auteur:", article["author_description"])
     print('Contenu:', article['content'])
 
+@app.route('/', methods=['GET'])
+def home():
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>AI News API</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            h1 { color: #333366; }
+            p { color: #666; }
+            a { color: #1A5276; text-decoration: none; }
+            a:hover { text-decoration: underline; }
+            ul { list-style-type: none; padding: 0; }
+            li { padding: 8px; }
+            .endpoint { background-color: #f2f2f2; border: 1px solid #ddd; padding: 15px; }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to the AI News API</h1>
+        <p>This API allows you to fetch the latest articles on artificial intelligence from a variety of sources.</p>
+        
+        <h2>How to Use the API</h2>
+        <p>Below are the endpoints available. Click on each to fetch data or learn more about how they work.</p>
+        
+        <ul>
+            <li class="endpoint"><strong>GET /get_data</strong> - Fetch data on the latest articles. <a href="/get_data">Try it now</a></li>
+            <li class="endpoint"><strong>GET /articles</strong> - View information about the articles including title and publication date. <a href="/articles">Try it now</a></li>
+            <li class="endpoint"><strong>GET /article/number</strong> - Retrieve the content of a specific article by its number. Replace "number" with the actual article number in the URL to use this endpoint.</li>
+            <li class="endpoint"><strong>GET /ml</strong> - Perform sentiment analysis on the articles. <a href="/ml">Try it now</a></li>
+        </ul>
+        
+        <h2>About Sentiment Analysis</h2>
+        <p>The sentiment analysis endpoint (/ml) evaluates the overall sentiment of each article's content, providing a score from -1.0 to 1.0. A score closer to 1.0 indicates a positive sentiment, a score closer to -1.0 indicates a negative sentiment, and a score around 0 suggests a neutral sentiment. </p>
+    </body>
+    </html>
+    '''
+
 ## Premier endpoint qui récupère les données d'un nombre d'article
 @app.route('/get_data', methods=['GET'])
 def get_data():
