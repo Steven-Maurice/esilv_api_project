@@ -5,6 +5,8 @@ from base.scrap_content import return_5_most_recent
 import codecs
 from bs4 import BeautifulSoup
 from datetime import datetime
+from textblob import TextBlob
+from base.interpretation import interpretation
 
 app = Flask(__name__)
 
@@ -87,6 +89,39 @@ def article(a_number):
         html_content = file.read()
 
     return Response(html_content, mimetype="text/html")
+
+
+@app.route("/ml", defaults={"number": None})
+@app.route("/ml/<number>")
+def machine_learning(number):
+    dossier_html = "./windows"
+    html_response = (
+        "<html><head><title>Analyse de Sentiment des Articles</title></head><body>"
+    )
+    html_response += "<h1>Résultats de l'Analyse de Sentiment</h1><ul>"
+
+    if number:
+        articles = [f"article_{number}.html"]
+    else:
+
+        articles = [f"article_{i}.html" for i in range(1, 6)]
+
+    for article in articles:
+        filepath = os.path.join(dossier_html, article)
+        try:
+            with codecs.open(filepath, "r", "utf-8") as file:
+                soup = BeautifulSoup(file.read(), "html.parser")
+                text = soup.get_text()
+                analysis = TextBlob(text)
+                interpretation_resultat = interpretation(
+                    analysis.sentiment.polarity, analysis.sentiment.subjectivity
+                )
+                html_response += f"<li><strong>{article}</strong>: Polarity = {analysis.sentiment.polarity}, Subjectivity = {analysis.sentiment.subjectivity}, Interpretation = {interpretation_resultat}</li>"
+        except FileNotFoundError:
+            continue
+
+    html_response += "</ul></body></html>"
+    return Response(html_response, mimetype="text/html")
 
 
 if __name__ == "__main__":
