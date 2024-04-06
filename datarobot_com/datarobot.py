@@ -52,12 +52,28 @@ def articles():
                 date = date_time_obj.strftime("%Y-%m-%d")
             else:
                 date = "Date non trouvée"
-            articles_data.append({"title": title, "date": date})
+
+            about_author_div = soup.find(
+                "div",
+                text="About the author",
+                class_="uk-text-overline uk-text-muted uk-margin-remove-top uk-margin-bottom",
+            )
+            if about_author_div:
+                author_span = about_author_div.find_next_sibling("div").find(
+                    "span", class_="uk-h5 uk-margin-remove-bottom"
+                )
+                author = (
+                    author_span.text.strip() if author_span else "Auteur non trouvé"
+                )
+            else:
+                author = "Auteur non trouvé"
+
+            articles_data.append({"title": title, "date": date, "author": author})
 
     html_response = "<html><head><title>Liste des Articles</title></head><body>"
     html_response += "<h1>Articles</h1><ul>"
     for article in articles_data:
-        html_response += f"<li><strong>Titre :</strong> {article['title']} - <strong>Date :</strong> {article['date']}</li>"
+        html_response += f"<li><strong>Title :</strong> {article['title']} - <strong>Date :</strong> {article['date']} - <strong>Author :</strong> {article['author']}</li>"
     html_response += "</ul></body></html>"
 
     return Response(html_response, mimetype="text/html")
