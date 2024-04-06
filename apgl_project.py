@@ -16,8 +16,6 @@ Team : Charles FRANCOIS ; Paul BECK ; Lucas-Aleksander FURJES
 - /ml or /ml/<number>: Executes a machine learning script. Depending on the desired goal, it applies to either all articles or a single one. For example, sentiment analysis.
 """
 
-#pip install textblob
-
 # packages
 from flask import Flask, jsonify, request
 from textblob import TextBlob
@@ -32,8 +30,7 @@ base_url = 'http://export.arxiv.org/api/query?'
 
 # function to retrieve articles from arXiv
 def fetch_articles():
-  start_index = random.randint(0, 1000) # random index
-  search_query = f'search_query=all:AI&start={start_index}&max_results=5'
+  search_query = 'search_query=all:AI&start=0&max_results=15'
   query_url = f"{base_url}{search_query}"
   # we send the HTTP GET request to the API
   response = requests.get(query_url)
