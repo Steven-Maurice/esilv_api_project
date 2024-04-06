@@ -32,12 +32,72 @@ You can choose website about many subject like:
 
 **ATTILA Guillaume, GIRAUDON Baptiste**
 
-### API on 
+### API on IA News
 
-In this project, we decided to make an API to fetch news about in IA
-
-### Objectives
+In this project, we have developed an API to fetch news about AI published on 'https://hacker-news.firebaseio.com/'. Hacker News is a platform that allows anyone to share their research/projects with the community. Our API aims to recover AI-related news from this platform, making it easier for users to find the latest developments and discussions in the field of AI.
 
 ### Endpoints
 
+    - /get_data: Fetches a list of articles about AI in the 200 recents posts on hacker-news.
+    - /articles: Displays information about all of the articles, including the article number, title, publication date, etc., but not the content itself.
+    - /article/<id>: Accesses the content of a specified article.
+    - /ml : Executes a machine learning script of sentiment analysis on all articles fetched and display it (use of textblob)
+    - /ml/<idr>: Executes a machine learning script of sentiment analysis on a specified article and display it (use of textblob)
+
 ### Exemples
+
+After use the route to '/get_data', articles are fetched.
+
+'/articles' load a page with : 
+      
+      {
+        "number": 39953707,
+        "publication_date": 1712422802,
+        "title": "Zep AI (YC W24) Is Hiring a Founding Go Engineer"
+      },
+      {
+        "number": 39953861,
+        "publication_date": 1712424092,
+        "title": "AI eye-tracking to determine whether child has autism"
+      },
+      {
+        "number": 39946169,
+        "publication_date": 1712345430,
+        "title": "AI and the Problem of Knowledge Collapse"
+      }, 
+      
+      ....
+
+'/article/39953707' gives details about the article 'Zep AI (YC W24) Is Hiring a Founding Go Engineer' :
+    
+    {
+      "by": "roseway4",
+      "id": 39953707,
+      "score": 1,
+      "time": 1712422802,
+      "title": "Zep AI (YC W24) Is Hiring a Founding Go Engineer",
+      "type": "job",
+      "url": "https://jobs.gem.com/zep/am9icG9zdDre4RbzEeB4wYY7s9TjXwhp"
+    }
+
+'/ml/39953707' gives us the sentiment of this articles :
+    
+    {
+      "number": 39953707,
+      "sentiment": "neutre"
+    }
+
+'/ml/' will display the sentiment for all articles :
+    
+    {
+      "39918245": "neutre",
+      "39918500": "négatif",
+      "39921673": "neutre",
+      "39934696": "négatif",
+      "39938126": "neutre",
+      "39945104": "neutre",
+      "39946169": "neutre",
+      "39947967": "neutre",
+      "39953707": "neutre",
+      "39953861": "neutre"
+    }
