@@ -174,7 +174,7 @@ def logout():
 @login_required
 def dashboard():
     if not current_user.is_admin:
-            flash("Accès non autorisé : vous devez être administrateur.")
+            flash("Unauthorized access: you must be an administrator.")
             return redirect(url_for('about'))
     users = User.query.all()  
     return render_template('dashboard.html', users=users) 
