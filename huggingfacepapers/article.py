@@ -1,19 +1,17 @@
 import requests 
 from bs4 import BeautifulSoup
 
-from sentence_transformers import SentenceTransformer
-
-model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
-
 class Article:
-    def __init__(self, url, title=None, img=None, upvotes=None, authors=None):
+    def __init__(self, id, title=None, img=None, upvotes=None, n_authors=None):
         self.title = title
         self.img = img
         self.upvotes = upvotes
-        self.authors = authors
-        self.url = url
+        self.n_authors = n_authors
+        self.id = id
+        self.url = "https://huggingface.co/papers/" + self.id
         self.abstract = None
-
+        self.embedding = None
+        self.authors = []
 
     def load(self):
         response = requests.get(self.url)
@@ -42,14 +40,13 @@ class Article:
             "url": self.url,
             "authors": self.authors,
             "abstract": self.abstract,
-            "pdfUrl": self.pdfUrl,
-            "embedding": self.embedding.tolist(),
+            "pdfUrl": self.pdfUrl
         }
         
-    def compute_embedding(self):
+    def compute_embedding(self, sentenceTransformerModel):
         if self.embedding is not None:
             return
         if self.abstract is None: 
             self.load()
-        embeddings = model.encode([self.title, self.abstract])
+        embeddings = sentenceTransformerModel.encode([self.title, self.abstract])
         self.embedding = embeddings[0] * 0.6 + embeddings[1] * 0.4

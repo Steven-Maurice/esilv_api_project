@@ -6,18 +6,27 @@ from pandas import date_range
 import re
 from huggingfacepapers.article import Article
 
+from sentence_transformers import SentenceTransformer, util
+from sklearn.decomposition import PCA
+
+import plotly_express as px 
 
 class Articles:
-    def _init_(self):
+    def __init__(self):
         self.articles = {}
 
-    def loadArticles(self, start=None,   end=None):
+        print("Loading SentenceTransformer model")
+        self.sentenceTransformerModel = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+        print("Model loaded")
+
+    def loadArticles(self, start=None, end=None):
         if start is None:
             start = datetime.date.today()
         if end is None:
             end = datetime.date.today()
         for date in date_range(start=start, end=end, freq="D"):
-            response = requests.get("https://huggingface.co/papers")
+            print(date)
+            response = requests.get(f"https://huggingface.co/papers?date={date}")
             if response.status_code != 200:
                 raise Exception("Request error")
             articles = self.parseArticles(response)
@@ -48,14 +57,14 @@ class Articles:
         for article in self.articles.values():
             preview.append(article.preview())
         return preview
-    
-    def details(self): 
+
+    def details(self):
         details = []
         for article in self.articles.values():
             details.append(article.detail())
         return details
 
-    def getById(self, id):
+    def get_by_id(self, id):
         if id in self.articles:
             return self.articles[id]
         else:
@@ -66,4 +75,32 @@ class Articles:
 
     def compute_embeddings(self):
         for article in tqdm(self.articles.values()):
-            article.compute_embedding()
+            article.compute_embedding(self.sentenceTransformerModel)
+
+    def get_by_query(self, query):
+        queryEmbedding = self.sentenceTransformerModel.encode(query)
+        results = []
+        for article in self.articles.values():
+            if article.embedding is None:
+                article.compute_embedding(self.sentenceTransformerModel)
+            results.append(
+                {
+                    "article": article.detail(),
+                    "score": util.cos_sim(queryEmbedding, article.embedding).tolist()[0][0],
+                }
+            )
+        print(results)
+        return sorted(results, key=lambda result: result["score"], reverse=True)
+
+    def viz(self): 
+        X = []
+        for article in self.articles.values():
+            if article.embedding is None: 
+                article.compute_embedding(self.sentenceTransformerModel)
+            X.append(article.embedding)
+    
+        pca = PCA(n_components=2)
+        X_2d = pca.fit_transform(X)
+        fig = px.scatter(x=[pos[0] for pos in X_2d], y=[pos[1] for pos in X_2d],text=[article.title for article in self.articles.values()], size_max=30, width=1500, height=1500)
+        fig.update_traces(textposition='top center')
+        return fig.to_image()
