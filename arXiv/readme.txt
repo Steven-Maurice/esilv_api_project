@@ -1,5 +1,7 @@
 Final Project - Python, Git & Linux
 
+file : apgl_project.py
+
 - Project Objective :
 
 This project aims to create a simple and efficient way to retrieve and display the latest research articles on AI from the arXiv website. Using the arXiv API, our Python-based Flask application provides quick access to recent AI articles, making it easier to search the archive.
@@ -9,7 +11,10 @@ This project aims to create a simple and efficient way to retrieve and display t
 The application is structured into modular functions and Flask routes to provide a clean and understandable codebase. Below is a summary of the key components and their functions:
 
 fetch_articles()
-Fetches a list of AI-related articles from arXiv using a search query. It introduces randomness in selecting articles by varying the start index, ensuring a wide range of articles are covered. Each article's title, summary, publication date, authors, and link to the PDF are collected.
+Fetches a list of AI-related articles from arXiv using a search query. It used to include randomness in selecting articles by varying the start index but we removed that to simplify our code. 
+To compensate, we decided to take a list of 15 articles instead of 5, ensuring a wide range of articles to be covered. 
+However, this randomness feature is still present in the no_flask.ipynb file, the exact same code but with no Flask implementation, using print to replace endpoints. It is simply a backup file in case there was a problem with the Flask API. 
+Each article's title, summary, publication date, authors, and link to the PDF are collected.
 
 get_data()
 Displays a simple list of fetched article titles in a JSON format. It serves as an initial touchpoint for users to see what articles have been retrieved.
@@ -41,5 +46,5 @@ The Flask application exposes several endpoints for interaction:
 
 - Running our flask app : 
 Set the FLASK_APP environment variable.
-Execute flask run.
-Access the endpoints.
+Execute 'flask run'.
+Access the endpoints on the web with the provided url by adding the one you desire at the end. It's also possible to use 'curl' followed by that same url to access the desired endpoint (remember to use a different terminal then!).
