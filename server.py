@@ -27,6 +27,7 @@ def article(article_id):
 
   
     article = articles[article_id - 1] 
+    print(article)
     return render_template('article.html', article=article)
 
 @app.route('/machine_learning')

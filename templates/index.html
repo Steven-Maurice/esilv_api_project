@@ -1,16 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Accueil</title>
-</head>
-<body>
-    <h1>Accueil</h1>
-    <ul>
-        {% for article in articles %}
-        <li><a href="/article/{{ loop.index }}">{{ article.title }}</a></li>
-        {% endfor %}
+  </head>
+  <body>
+    <ul class="article-list">
+      <h1 class="title1">Accueil</h1>
+      {% for article in articles %}
+      <li><a href="/article/{{ loop.index }}">{{ article.title }}</a></li>
+      {% endfor %}
     </ul>
-</body>
+  </body>
 </html>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+  }
+
+  .title {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .article-list {
+    padding: 0;
+    list-style: none;
+  }
+
+  .article-list li {
+    margin-bottom: 10px;
+  }
+
+  .article-list li a {
+    display: block;
+    padding: 10px;
+    background-color: #f0f0f0;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+  }
+
+  .article-list li a:hover {
+    background-color: #ccc;
+  }
+
+  .title1 {
+    margin-left: 13vw;
+    margin-bottom: 5vh;
+  }
+</style>
