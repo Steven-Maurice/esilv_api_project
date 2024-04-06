@@ -4,6 +4,7 @@ from base.request import Request
 from base.scrap_content import return_5_most_recent
 import codecs
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -30,19 +31,28 @@ def get_data():
 
 @app.route("/articles")
 def articles():
-    dossier_html = "/Users/pierrecavalli/Projects/A4/python/esilv_api_project/datarobot_com/windows"
+    dossier_html = "./windows"
     articles_data = []
 
-    for filename in os.listdir(dossier_html):
-        if filename.endswith(".html"):
-            filepath = os.path.join(dossier_html, filename)
-            with codecs.open(filepath, "r", "utf-8") as file:
-                soup = BeautifulSoup(file.read(), "html.parser")
-                title = soup.title.string if soup.title else "Titre non trouvé"
+    for i in range(1, 6):
+        filepath = os.path.join(dossier_html, f"article_{i}.html")
+        with codecs.open(filepath, "r", "utf-8") as file:
+            soup = BeautifulSoup(file.read(), "html.parser")
+            title = soup.title.string if soup.title else "Titre non trouvé"
+            if soup.title:
+                title = soup.title.string.split("|")[0].strip()
+            else:
+                itle = "Titre non trouvé"
 
-                meta_tag = soup.find("meta", property="article:modified_time")
-                date = meta_tag["content"] if meta_tag else "Date non trouvée"
-                articles_data.append({"title": title, "date": date})
+            meta_tag = soup.find("meta", property="article:modified_time")
+            if meta_tag:
+                date_time_obj = datetime.strptime(
+                    meta_tag["content"], "%Y-%m-%dT%H:%M:%S%z"
+                )
+                date = date_time_obj.strftime("%Y-%m-%d")
+            else:
+                date = "Date non trouvée"
+            articles_data.append({"title": title, "date": date})
 
     html_response = "<html><head><title>Liste des Articles</title></head><body>"
     html_response += "<h1>Articles</h1><ul>"
