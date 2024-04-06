@@ -1,6 +1,10 @@
 import requests 
 from bs4 import BeautifulSoup
 
+from sentence_transformers import SentenceTransformer
+
+model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+
 class Article:
     def __init__(self, url, title=None, img=None, upvotes=None, authors=None):
         self.title = title
@@ -41,3 +45,11 @@ class Article:
             "pdfUrl": self.pdfUrl,
             "embedding": self.embedding.tolist(),
         }
+        
+    def compute_embedding(self):
+        if self.embedding is not None:
+            return
+        if self.abstract is None: 
+            self.load()
+        embeddings = model.encode([self.title, self.abstract])
+        self.embedding = embeddings[0] * 0.6 + embeddings[1] * 0.4

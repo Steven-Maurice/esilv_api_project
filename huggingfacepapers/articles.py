@@ -63,3 +63,7 @@ class Articles:
             article.load()
             self.articles[id] = article
             return article
+
+    def compute_embeddings(self):
+        for article in tqdm(self.articles.values()):
+            article.compute_embedding()
