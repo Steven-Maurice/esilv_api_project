@@ -10,6 +10,7 @@ Original file is located at
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask,jsonify
+from textblob import TextBlob
 app = Flask(__name__)       ## créer une instance de l'application Flask pour la création d'API
 
 def get_article_content(article_url):
@@ -39,13 +40,13 @@ def get_article_content(article_url):
     else:
         return None
 
-def get_articles_from_page(url, number_of_articles=5):
+def get_articles_from_page(url, number_of_articles=10):
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
         articles = []
         for article_header in soup.find_all("h3", class_="entry-title"): ## fonction recherche tous les éléments <h3> ayant la classe "entry-title", soit les titres des articles
-            if len(articles) >= 10:  
+            if len(articles) >= number_of_articles:  
                 break
             article_link = article_header.find("a")
             if article_link:
@@ -118,7 +119,7 @@ def home():
 @app.route('/get_data', methods=['GET'])
 def get_data():
     url = "https://www.actuia.com/actualite/"
-    articles = get_articles_from_page(url, 5)
+    articles = get_articles_from_page(url, 10)
     return jsonify(articles)
 
 
@@ -126,7 +127,7 @@ def get_data():
 @app.route('/articles', methods=['GET'])
 def articles():
     url = "https://www.actuia.com/actualite/"
-    articles = get_articles_from_page(url, 5)
+    articles = get_articles_from_page(url, 10)
     articles_info = [{"number": idx+1, "title": article["title"], "date_published": article["date_published"], "url": article["url"]} for idx, article in enumerate(articles)]
     return jsonify(articles_info)
 
@@ -142,6 +143,19 @@ def article(number):
         return jsonify({"title": article["title"], "content": article["content"]})
     else:
         return jsonify({"error": "Article not found"}), 404
+
+# 4 ème Endpoint pour l'analyse de sentiment
+@app.route('/ml', methods=['GET'])
+def sentiment_analysis():
+    articles = get_articles_from_page(url, 10)
+    sentiments = []
+    for article in articles:
+        analysis = TextBlob(article["content"])
+        sentiments.append({
+            "title": article["title"],
+            "sentiment": analysis.sentiment.polarity  # -1.0 (négatif) à 1.0 (positif)
+        })
+    return jsonify(sentiments)
 
 if __name__ == '__main__':
     app.run(debug=True)
