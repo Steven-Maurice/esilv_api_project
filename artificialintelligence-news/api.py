@@ -39,20 +39,19 @@ def get_article_content(article_url):
     else:
         return None
 
-def get_articles_from_page(url):
+def get_articles_from_page(url, number_of_articles=5):
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
         articles = []
-        for article_header in soup.find_all("h3", class_="entry-title"):   ## fonction recherche tous les éléments <h3> ayant la classe "entry-title", soit les titres des articles
+        for article_header in soup.find_all("h3", class_="entry-title"): ## fonction recherche tous les éléments <h3> ayant la classe "entry-title", soit les titres des articles
             if len(articles) >= 10:  
                 break
             article_link = article_header.find("a")
             if article_link:
                 title = article_link.text.strip()
                 article_url = article_link['href']
-                article_content = get_article_content(article_url)    ## utilise la précédente fonction pour récuperer le contenu des articles via leur url
-                
+                article_content = get_article_content(article_url) ## utilise la précédente fonction pour récuperer le contenu des articles via leur url
                 ## Si le contenu de l'article est récupéré, les informations de l'article sont stockées dans un dictionnaire et ajoutées à la liste "articles"
                 if article_content:  
                     articles.append({
