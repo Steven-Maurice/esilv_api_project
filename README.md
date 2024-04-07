@@ -128,6 +128,7 @@ Quand un numéro d'article est fourni, la fonction commence par chercher cet art
 
 Une fois le contenu de l'article récupéré, nous effectuons trois analyses principales :
 
+
 Analyse des tendances :
 ```
 def analyze_trends(text):
