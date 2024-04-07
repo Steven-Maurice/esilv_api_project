@@ -32,13 +32,27 @@ You can choose website about many subject like:
 
 The API we implemented fetches the papers highlighted by HuggingFace, and computes a vector embedding of each of these papers. The embeddings can then be used to perform sementic search or visualisation. 
 
+__Code__ 
+
+The routes are coded in the server.py file, and make use of the Articles and Article classes. Those two classes were implemented in the huggingfacepapers directory, and contain the logic of our code. 
+
+To run the project, first install the required packages with 
+```
+pip install -r requirements.txt
+```
+Then launch the server with 
+```
+python server.py
+```
+Starting the server may take a while, as it first needs to load the machine learning model.  
+
 __Endpoints__
 
 ```http
 GET /get_data?start_date=2024-01-01&end_date=2024-04-06
 ```
 
-Retrieves papers from https://huggingface.co/papers
+Retrieves papers from https://huggingface.co/papers. 
 
 | Query parameter | Type | Description |
 | :--- | :--- | :--- |
@@ -59,7 +73,7 @@ Returns the list of article previews.
 GET /article/<id>
 ```
 
-Returns the details of an article 
+Fetches the details of a paper and returns it. 
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
@@ -79,7 +93,7 @@ Runs the vector embedding algorithm on each articles.
 GET /ml/<id>
 ```
 
-Runs the vector embedding algorithm on a specific article. 
+Runs the vector embedding algorithm on a specific article, and returns its embedding. 
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
