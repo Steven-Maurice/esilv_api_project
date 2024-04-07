@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 import re 
 
 
-n = 30 #int(input("Entrez le nombre d'articles à récupérer : "))
+n = 15 #int(input("Entrez le nombre d'articles à récupérer : "))
 
 def articles_dispo():
     site = "https://www.actuia.com/"
@@ -102,7 +102,10 @@ def scrap_me(n):
     return articles_data
 
 articles_data = scrap_me(n)
-#print(articles_data)
+
+articles_data_sans_bug = [article for article in articles_data if article['Numéro'] not in [3, 4]]
+
+print(articles_data)
 
 
 def scrapping_content(url):
@@ -238,7 +241,7 @@ def get_data():
 
 @app.route("/get_data/keyword/<word>")
 def keyword(word):
-    matching_articles = research_keyword(word, articles_data)
+    matching_articles = research_keyword(word, articles_data_sans_bug)
     return jsonify(matching_articles)
 
 
