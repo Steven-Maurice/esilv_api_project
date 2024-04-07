@@ -9,7 +9,7 @@
     <div class="container">
         <article>
             <div class="row">
-                <p><a href="/get_data" class="mr">Retour</a></p>
+                <p><a href="/get_data" class="button">Retour</a></p>
                 <h1 class="article-title">{{ article.title }}</h1>
             </div>            
             <p class="article-meta">Date de publication: {{ article.date_published }}</p>
@@ -90,15 +90,28 @@ a:hover {
 .row {
     display: flex;
     flex-direction: row;
-    align-items: center; /* Align items vertically center */
+    align-items: center;
 }
 
 .row p, .row h1 {
-    margin: 0; /* Remove default margins */
+    margin: 0; 
 }
 
-.mr {
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
     margin-right: 2vw;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #45a049;
 }
 
 </style>
