@@ -80,7 +80,7 @@ Response:
         "title": "Navigating the Challenges and Opportunities of Synthetic Voices"
       }, ...
 
-### /article/ <number>  (IBRAHIM)
+### /article/{number} (IBRAHIM)
 This endpoint returns the content of a specified article. The content is retrieved using web scraping with BeautifulSoup.
 
 To get information about a specific article, send a GET request to http://localhost:8000/article/{arxiv_id}, where {arxiv_id} is the ID of the article you want to retrieve. This will return a JSON object containing the title, authors, and summary of the article.
