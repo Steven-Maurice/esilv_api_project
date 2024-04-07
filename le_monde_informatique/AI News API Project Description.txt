@@ -1,0 +1,30 @@
+AI News API Project Description
+
+This project involves creating a RESTful API that provides a list of articles related to Artificial Intelligence (AI) 
+from the website 'https://www.lemondeinformatique.fr/intelligence-artificielle-154.html'. The API is designed with several endpoints, each serving a specific 
+purpose to fetch and analyze AI-related news articles. Below are the endpoints created in this project along with 
+their uses and examples:
+
+1. /get_data: This endpoint fetches a list of the latest 5 articles from the site. It provides a JSON response 
+   containing the title, link, summary, and publication date for each article. This endpoint is useful for 
+   applications that need to display recent AI news articles without detailed content.
+   Example usage: GET http://127.0.0.1:5000/get_data
+
+2. /articles: Similar to the '/get_data' endpoint but it only displays information about the articles such as the 
+   article number, title, publication date, and link to the full article. This endpoint is useful for providing an 
+   overview of articles without including summaries or full content.
+   Example usage: GET http://127.0.0.1:5000/articles
+
+3. /article/<number>: This endpoint accesses the full content of a specified article by its number. It is useful 
+   for users who want to read the complete article directly via the API.
+   Example usage: GET http://127.0.0.1:5000/article/1 (to fetch the first article)
+
+4. /ml and /ml/<number>: Executes a machine learning script to perform sentiment analysis on the fetched articles. 
+   It can apply to either all retrieved articles or a single specified one. The result includes the sentiment 
+   analysis of the article's content indicating whether the overall sentiment is positive, neutral, or negative.
+   Example usage: GET http://127.0.0.1:5000/ml (for all articles)
+                  GET http://127.0.0.1:5000/ml/1 (for the first article)
+
+These endpoints provide a robust interface for applications to interact with AI news data, catering to different 
+needs such as fetching recent articles, listing article metadata, reading full articles, and performing sentiment 
+analysis on article contents.
