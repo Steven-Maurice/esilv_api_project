@@ -1,0 +1,57 @@
+KERLAOUEZO Erwan, LAINE Geoffroy, GRANGIER Tom
+
+## Useful Imports to Make the Code Work:
+
+- `textrazor`: A text analysis library for extracting insights and entities from text using natural language processing (NLP). It provides an API for tasks like sentiment analysis and topic detection, useful for applications needing advanced text interpretation.
+- `requests`: Used to make HTTP requests to APIs or websites.
+- `datetime`: Utilized for manipulating date and time objects.
+- `BeautifulSoup` (bs4): Aids in parsing HTML and extracting information conveniently.
+- `FastAPI`: A framework for building APIs with Python, known for its speed and ease of use.
+- `HTTPException`: An exception used by FastAPI to handle HTTP errors.
+- `textblob`: A library for processing textual data, used here for sentiment analysis. It provides a simple API for diving into common natural language processing (NLP) tasks such as tagging, noun phrase extraction, and sentiment analysis.
+
+## API Configuration:
+
+- `API_KEY`: A personal key to use the News API.
+- `BASE_URL`: The base URL of the NewsAPI (link: https://newsapi.org/)
+
+The NewsAPI allows access to articles from various press sources. It offers the possibility to search for recent articles on specific topics (AI in our case), check the latest news from certain sources, or discover the main current events.
+
+## Article Search:
+- **Keyword Request**: You can search for articles containing specific keywords or phrases (AI for us).
+- **Source Filtering**: It's possible to limit the search to certain press sources (technologyreview.com for us).
+
+## Advantages of NewsAPI:
+- **Broad Coverage**: The API provides extensive coverage of global news.
+- **Real-Time Updates**: Articles are updated in real time, allowing access to the latest information available.
+- **Customization**: The variety of available filters allows customizing queries to precisely meet your information needs.
+
+## Request Parameters:
+Parameters are defined to target queries towards specific articles on "technologyreview.com" regarding artificial intelligence (AI).
+
+## FastAPI App:
+Initialization of a FastAPI application to create and manage API endpoints.
+
+## `data` Function:
+Performs a request to the NewsAPI and handles the response. Returns the retrieved articles or an error message in case of failure.
+
+## `/` Endpoint: 
+Serving an HTML page that provides a brief introduction to the project and its available endpoints, including descriptions of how to access article data and perform sentiment analysis.
+
+## `/get_data` Endpoint:
+Provides a list of articles with only the title and URL for each article.
+
+## `/articles` Endpoint:
+Adds additional information to the articles, such as a unique number and formatted date. Returns these filtered informations.
+
+## `/article/{nbr}` Endpoint:
+Retrieves and returns the content of a specific article by making a direct request to its URL and extracting the textual content from the HTML.
+
+## `/ml/{nbr}` Endpoint:
+The sentiment analysis function we have developed uses TextBlob to evaluate the specific content of an article, providing two key measures: the polarity and subjectivity of the analyzed text. Polarity measures the degree of positivity or negativity of the content, expressed by a score ranging from -1 to 1. A score of -1 indicates strongly negative content, 0 represents neutrality, and 1 signifies very positive content. Concurrently, subjectivity assesses how much the text is imbued with personal opinions rather than pure facts, with a score ranging from 0 (completely objective) to 1 (highly subjective).
+To provide nuanced analysis, we have segmented each scale into four parts. For polarity, this ranges from very negative (-1 to -0.5), to negative (-0.5 to 0), positive (0 to 0.5), and very positive (0.5 to 1). For subjectivity, the segments range from very objective (0 to 0.25), to somewhat objective (0.25 to 0.5), somewhat subjective (0.5 to 0.75), and very subjective (0.75 to 1). This segmentation allows for a more precise and contextualized interpretation of the scores, offering a richer understanding of the tone and perspective of the analyzed article.
+
+In addition to TextBlob's sentiment analysis, this function employs TextRazor for topic detection within the article. By utilizing TextRazor's topic extraction capabilities, it identifies and returns the most relevant topics, ensuring a deeper understanding of the article's thematic focus alongside its sentiment metrics. This enriches the analysis by highlighting key subjects and themes, providing a comprehensive view of the article's content.
+
+## Execution:
+Code to start the FastAPI development server locally, if the script is executed directly.
