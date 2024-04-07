@@ -41,27 +41,35 @@ def get_articles():
     else:
         return "<h1>Error</h1><p>Failed to retrieve data from MIT News.</p>", 500
 
-
 def get_article(number):
     articles = scrape_mit_news()
     if 0 < number <= len(articles):
         article_url = articles[number - 1]["link"]
         article_content = scrape_article_content(article_url)
         if article_content:
-            return jsonify({"content": article_content})
+            return f"<h1>Article {number}</h1><p>{article_content}</p>"
         else:
-            return jsonify({"error": "Failed to retrieve article content."}), 500
+            return "<h1>Error</h1><p>Failed to retrieve article content.</p>", 500
     else:
-        return jsonify({"error": f"Article number {number} not found."}), 404
+        return f"<h1>Error</h1><p>Article number {number} not found.</p>", 404
 
 def ml_analysis_all():
     articles = scrape_mit_news()
     if articles:
         article_texts = [scrape_article_content(article['link']) for article in articles]
         results = analyze_sentiment(articles, article_texts)
-        return jsonify(results)
+        html_response = "<h1>Sentiment Analysis Results</h1>"
+        for result in results:
+            html_response += f"<p>Article: {result['Article']}</p>"
+            html_response += f"<p>Title: {result['title']}</p>"
+            html_response += f"<p>Sentiment: {result['sentiment']}</p>"
+            html_response += f"<p>Polarity: {result['polarity']}</p>"
+            html_response += f"<p>Subjectivity: {result['subjectivity']}</p>"
+            html_response += f"<p>Vader Polarity Analysis: {result['Polarity analysis']}</p>"
+            html_response += "<hr>"
+        return html_response
     else:
-        return jsonify({"error": "Failed to retrieve data from MIT News."}), 500
+        return "<h1>Error</h1><p>Failed to retrieve data from MIT News.</p>", 500
 
 def ml_analysis_one(number):
     articles = scrape_mit_news()
@@ -69,8 +77,16 @@ def ml_analysis_one(number):
         if 0 < number <= len(articles):
             article_content = scrape_article_content(articles[number - 1]["link"])
             results = analyze_sentiment([articles[number - 1]], [article_content])
-            return jsonify(results)
+            html_response = "<h1>Sentiment Analysis Result</h1>"
+            for result in results:
+                html_response += f"<p>Article: {result['Article']}</p>"
+                html_response += f"<p>Title: {result['title']}</p>"
+                html_response += f"<p>Sentiment: {result['sentiment']}</p>"
+                html_response += f"<p>Polarity: {result['polarity']}</p>"
+                html_response += f"<p>Subjectivity: {result['subjectivity']}</p>"
+                html_response += f"<p>Vader Polarity Analysis: {result['Polarity analysis']}</p>"
+            return html_response
         else:
-            return jsonify({"error": f"Article number {number} not found."}), 404
+            return f"<h1>Error</h1><p>Article number {number} not found.</p>", 404
     else:
-        return jsonify({"error": "Failed to retrieve data from MIT News."}), 500
+        return "<h1>Error</h1><p>Failed to retrieve data from MIT News.</p>", 500
