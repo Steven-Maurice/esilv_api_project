@@ -51,3 +51,6 @@ De plus, nous avons créé un script Python pour faire les installations des dé
 ```bash
     python start.py
 ```
+
+Florine NGUYEN  
+Cyprien MOUTON
