@@ -27,3 +27,17 @@ You can choose website about many subject like:
     2. Inside the branch, create a working directory named after the chosen site.
     3. Add a file named composition.txt that lists the members of the group.
     4. Add a section below these rules to explain your project, describe the created endpoints and their uses, and provide examples.
+
+
+### Project Explanition
+    Before launching project:
+    pip install -r requirements.txt
+
+    We decided to use the News API for our project.
+    It has an everything endpoint: 'https://newsapi.org/v2/everything' that works with a query parameter.
+    This helps to decide what type of articles we are searching for and how many we wants to have.
+    In this project we have 4 endpoints:
+        - get_data: which retrieve all the data about the 5 first articles of the given query sorted by publication dates.
+        - articles: which retrieve same data as the previous endpoint but it formats the given content to not display the content and summary of the article.
+        - articles/{number}: which retrieve the content of a specific article
+        - ml/{number}: which apply machine translation algorithm to translate the article summary from english to french
