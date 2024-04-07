@@ -28,6 +28,8 @@ You can choose website about many subject like:
     3. Add a file named composition.txt that lists the members of the group.
     4. Add a section below these rules to explain your project, describe the created endpoints and their uses, and provide examples.
 
+Pour assurer le bon déroulement de notre projet, nous avons créé une branche "Sacha_Thibault_Mathis_Sauvegarde" qui nous permettait d'avoir une sauvegarde en cas de mauvaise manipulation sur la branche "Sacha_Thibault_Mathis". Nous la mettions à jour régulièrement en utilisant la commande "merge". Cependant notre projet est bien rendu dans la branche "Sacha_Thibault_Mathis".
+
 Résumé de notre projet :
 
 Notre API est basée sur l'interface de programmation (API) d'arXiv et permet plusieurs actions liées à la recherche et à l'interaction avec des articles scientifiques. 
