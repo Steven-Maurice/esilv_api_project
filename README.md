@@ -34,8 +34,21 @@ You can choose website about many subject like:
 
 Introduction:
 Le projet consiste à créer une application web utilisant le framework Flask en Python. L'objectif principal de l'application est de scraper un blog  pour récupérer des articles, puis de fournir une interface permettant d'accéder à ces articles et d'effectuer un sentiment analysis sur les articles.
+Nous avons décider de scrapper  blog- ia.com, un site d'actualité sur l'IA.
 
 Fonctionnalités:
+
+    Fonctions principales:
+
+        scrape_article(url):
+
+        Cette fonction prend une URL d'article en entrée puis Elle envoie une requête HTTP GET à l'URL spécifiée et récupère le contenu de la page web.En utilisant BeautifulSoup, elle extrait le titre de l'article, la date de publication, le contenu et l'auteur de l'article.
+
+        findUrlHref(base_url):
+
+        Cette fonction prend l'URL de base du site web en entrée. Elle parcourt les différentes pages du blog en incrémentant le numéro de la page jusqu'à ce qu'elle ne trouve plus de page suivante.
+        Pour chaque page, elle extrait les URLs des articles en utilisant BeautifulSoup. Puis retourne une liste d'URLs uniques des articles trouvés sur le site.
+
 
     Scraping du Blog:
         Le programme commence par importer deux fonctions, scrape_article et findUrlHref, depuis un module nommé scrape_info. Ces fonctions sont utilisées pour extraire les informations pertinentes des articles du blog.
@@ -53,6 +66,22 @@ Fonctionnalités:
         Les templates HTML (home.html, get_data.html, article.html, ml.html) sont utilisés pour présenter les données récupérées et pour fournir une interface utilisateur.
 
 Exécution:
-Lorsque le script est exécuté, Flask lance un serveur web local. Les utilisateurs peuvent accéder aux différentes roots définies.
+Lorsque le scripts server.py est exécuté, Flask lance un serveur web local. Les utilisateurs peuvent accéder aux différentes roots définies et consulter les articles. 
 
+Ce projet fut très enrichissant :
 
+    La partie scraping :
+    Nous avons compris la structure d'un site et comment avoir accès à certaines informations grâce à des requêtes effectuées sur les balises.
+
+    La partie développement web :
+    Même si nous avons bien conscience que notre projet peut paraître ridicule, nous avons compris l'essence du développement web : partir d'une feuille blanche et confectionner. Le champ des possibles est immense.
+
+Conclusion : La partie scraping a été plutôt réussie, cependant, nous avons rencontré des difficultés avec l'analyse de sentiment. Nous nous interrogeons même sur la pertinence de ce principe sur nos articles qui ne sont ni des commentaires ni des notations.
+
+Nous vous remercions pour votre enseignement de Git/Python/Linux des deux semestres.
+
+Bien à vous,
+
+ Rannou Maxime
+ Pierre Vergote
+ Roussez Antoine
