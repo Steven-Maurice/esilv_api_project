@@ -83,16 +83,16 @@ Response:
 ### /article/{number} (IBRAHIM)
 This endpoint returns the content of a specified article. The content is retrieved using web scraping with BeautifulSoup.
 
-To get information about a specific article, send a GET request to http://localhost:8000/article/{arxiv_id}, where {arxiv_id} is the ID of the article you want to retrieve. This will return a JSON object containing the title, authors, and summary of the article.
+To get information about a specific article, send a GET request to http://localhost:5000/article/{number}, where {number} is the number of the article you want to retrieve. This will return a JSON object containing the content of the chosen article .
 
 Request:
 
-    GET request to http://localhost:8000/article/{arxiv_id}
+    GET request to http://localhost:5000/article/{number}
 
 
 Response:
     
-    "articles": [{"article_id": "2403.20306", "title": "Towards Greener LLMs: Bringing Energy-Efficiency to the Forefront of LLM Inference", "authors":"Jovan Stojkovic, Esha Choukse, Chaojie Zhang, Inigo Goiri, Josep Torrellas", "abstract_url":
+    "articles": xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
  
