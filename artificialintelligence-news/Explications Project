@@ -1,0 +1,50 @@
+#Overview
+This project, based on a few articles about ActuIA, a popular internet website where news about Artificial Intelligence are reported, 
+has the goal to create an API about IA content from these articles. By creating routes, we will provide essentials content about 
+these articles and the user can access them by using the API. He can retrieve the original content, the name of author, the title,
+date of publication for exemple.
+
+#Endpoint
+
+The first Flask endpoint '/get_data' retrieves data from a specified number of articles. It uses the route '/get_data' with a get 
+method. It accesses the webpage 'https://www.actuia.com/actualite/' and fetches information from the specified number of 
+articles (10). Finally, it returns the data in JSON format using Flask's jsonify function.
+
+The second Flask endpoint '/articles' displays information about articles : their number, title, publication date, and URL. 
+It uses the route '/articles' with a get method. It accesses the webpage 'https://www.actuia.com/actualite/' and retrieves 
+information from the specified number of articles (here, 10). Then, it structures this information into a JSON object and returns
+it using Flask's jsonify function.
+
+The third Flask endpoint '/article/int:number' retrieves information about one specific article based on its number. 
+It accepts a parameter 'number' in the URL path. It accesses the webpage 'https://www.actuia.com/actualite/' and retrieves 
+all articles. Then, it checks if the provided 'number' corresponds to a valid article. If so, it returns a JSON object containing 
+the title and content of that article. If not, it returns a JSON object indicating an error with HTTP status code 404.
+
+the last Flask endpoint '/ml' performs sentiment analysis on articles. It uses the route '/ml' with a get method. 
+It retrieves data from the 10 articles using 'get_articles_from_page' function. Then, it analyzes the sentiment of each article's
+content using TextBlob library. Sentiment scores ranging from -1.0 (negative) to 1.0 (positive) are assigned.
+Finally, it returns a JSON object containing each article's title and its sentiment score.
+
+#Run the code 
+
+For the first endpoint '/get_data'
+http://127.0.0.1:5000/get_data
+
+For the second endpoint '/articles'
+http://127.0.0.1:5000/articles
+
+For the third endpoint '/article/<int:number>'
+http://127.0.0.1:5000/article/1
+http://127.0.0.1:5000/article/2
+http://127.0.0.1:5000/article/3
+http://127.0.0.1:5000/article/4
+http://127.0.0.1:5000/article/5
+http://127.0.0.1:5000/article/6
+http://127.0.0.1:5000/article/7
+http://127.0.0.1:5000/article/8
+http://127.0.0.1:5000/article/9
+http://127.0.0.1:5000/article/10
+For the 10 articles
+
+For the last endpoint '/ml'
+http://127.0.0.1:5000/ml
