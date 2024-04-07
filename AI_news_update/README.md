@@ -36,7 +36,7 @@ To get a list of articles, send a GET request to http://localhost:5000/get_data.
 
  Request:
 
-    GET request to http://localhost:5000/get_data
+    GET request to http://127.0.0.1:5000/get_data
 
 Response:
 
@@ -146,11 +146,11 @@ Response:
 
 ### /articles (PAUL-HAKIM)
 This endpoint returns differents informations about articles retrieved in get_data() such as the article number, title, publication date, article categories, author and the url of the article. The articles are retrieved with the web scraping package BeautifulSoup.
-To get a list of all articles with their respective informations, send a GET request to http://localhost:5000/articles. This will return a JSON object containing a list of articles with their titles and authors.
+To get a list of all articles with their respective informations, send a GET request to http://127.0.0.1:5000/articles. This will return a JSON object containing a list of articles with their titles and authors.
 
 Request:
 
-    GET request to http://localhost:5000/articles
+    GET request to http://127.0.0.1:5000/articles
 
 
 Response:   
@@ -184,7 +184,7 @@ Response:
 ### /article/{number} (IBRAHIM)
 This endpoint returns the content of a specified article. The content is retrieved using web scraping with BeautifulSoup.
 
-To get information about a specific article, send a GET request to http://localhost:5000/article/{number}, where {number} is the number of the article you want to retrieve. This will return a JSON object containing the content of the chosen article .
+To get information about a specific article, send a GET request to http://127.0.0.1:5000/article/{number}, where {number} is the number of the article you want to retrieve. This will return a JSON object containing the content of the chosen article .
 
 Request:
 
@@ -203,7 +203,7 @@ Response:
 ### /ml (JOSEPH)
 
 This endpoint returns the sentiment analysis of all articles using machine learning with TextBlob.
-To get the sentiment analysis of all articles, you must send a GET request to http://localhost:5000/ml. This will return a JSON object containing the sentiment analysis of all articles.
+To get the sentiment analysis of all articles, you must send a GET request to http://127.0.0.1:5000/ml. This will return a JSON object containing the sentiment analysis of all articles.
 
 Request: 
 
@@ -217,11 +217,11 @@ Response:
 ### /ml/{number}
 
 This endpoint returns the sentiment analysis of a specific article using machine learning with TextBlob.
-To get the sentiment analysis of a specific article, you must send a GET request to <http://localhost:5000/ml/>. This is the place where we have the ID of the article. This will return a JSON object containing the sentiment analysis of the article.
+To get the sentiment analysis of a specific article, you must send a GET request to http://127.0.0.1:5000/ml/<number>. This is the place where we have the ID of the article. This will return a JSON object containing the sentiment analysis of the article.
 
 Request: 
 
-    GET http://localhost:5000/ml/{article_number}
+    GET http://127.0.0.1:5000/ml/{article_number}
 
 
 Response:
