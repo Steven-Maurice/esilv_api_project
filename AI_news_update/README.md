@@ -14,12 +14,10 @@ The goal is to fetch information from the chosen site, either by scraping or thr
     - /article/<number>: Accesses the content of a specified article.
     - /ml or /ml/<number>: Executes a machine learning script. Depending on the desired goal, it applies to either all articles or a single one. For example, sentiment analysis.
 
-You can choose website about many subject like:
+We have chosen the subject :
 
-    - Updates on new AI tools.
-    - News about image generation.
-    - Information on new models.
-    - Research papers, such as those from ArXiv or Google DeepMind.
+    Updates on new AI tools.
+
 
 
 
