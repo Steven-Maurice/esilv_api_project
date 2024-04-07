@@ -70,7 +70,7 @@ Ce projet fut très enrichissant :
     Même si nous avons bien conscience que notre projet peut paraître ridicule, nous avons compris l'essence du développement web : partir d'une feuille blanche et confectionner. Le champ des possibles est immense.
 
     La partie sentiment analysis :
-    Je n'ai pas réussi à afficher le graphique du sentiment analysis il sera dans le dossier.(sentiment_analysis.png)
+    On n'a pas réussi à afficher le graphique du sentiment analysis il sera dans le dossier.(sentiment_analysis.png)
 
 Conclusion : La partie scraping a été plutôt réussie, cependant, nous avons rencontré des difficultés avec l'analyse de sentiment. Nous nous interrogeons même sur la pertinence de ce principe sur nos articles qui ne sont ni des commentaires ni des notations.
 
