@@ -96,12 +96,18 @@ Afin de naviguer à travers les recherches et qu'elles soient afficher en json, 
 
   La troisième route est définie avec l'URL '/ml/' suivie d'un identifiant d'article en option. Cette route est accessible uniquement aux utilisateurs connectés et permet également d'effectuer une analyse de sentiment sur le résumé d'un article académique de la même manière que la première route. Cependant, en plus de cela, elle vérifie également si l'article associé à l'identifiant spécifié est accessible et a été correctement chargé. Si l'article n'est pas trouvé ou s'il échoue à charger, un message d'erreur est renvoyé avec le code d'état HTTP correspondant. Sinon, les résultats de l'analyse de sentiment sont renvoyés comme décrit précédemment.
 
-  
+- Mise en page de notre application :
 
-utilisation de html / css pour la mise en page de notre api (bouton, connexion entre les pages html)
+L'interface utilisateur de notre API utilise HTML pour structurer le contenu et CSS pour le styliser, créant une expérience riche et interactive pour les utilisateurs. Les fichiers HTML définissent la structure de la page, comme l'en-tête, les sections principales, et le pied de page, tandis que le CSS contrôle l'apparence visuelle, telle que les couleurs, les polices, et la disposition des éléments.
 
-les identifiants du admin pour se connecter sont (admin@gmail.com et mdp: admin , on les retrouve dans le code app.py)
+La page d'accueil, comme illustrée dans 'index.html', sert de point d'entrée, présentant l'API et ses capacités. Avec des boutons, elle guide les utilisateurs vers des actions clés telles que la recherche dans l'API et la découverte des endpoints disponibles.
 
-interdiction en fonction de l'utilisateur d'acceder au dashboard (et interdiction d'acceder au pages si on est pas connecte ou inscrit)
+La page de tableau de bord ('dashboard.html') est un espace réservé aux administrateurs pour gérer les utilisateurs. Elle est accessible via une authentification sécurisée et offre des fonctionnalités telles que l'ajout, la modification et la suppression des utilisateurs.
 
+Les feuilles de style CSS spécifiques à chaque page, référencées dans les balises <link>, assurent que chaque élément de l'interface est cohérent avec l'identité visuelle de l'API et offre une expérience utilisateur intuitive sur tous les appareils et tailles d'écran grâce à des principes de design responsive.
 
+Les pages 'login.html' et 'signup.html' fournissent des formulaires pour que les utilisateurs puissent se connecter ou s'inscrire, respectivement, avec une esthétique épurée et une fonctionnalité claire, renforçant ainsi la facilité d'utilisation et la sécurité.
+
+- Identification et Sécurité de notre application :
+
+Dans notre application, les identifiants de connexion pour le compte administrateur sont prédéfinis dans le code app.py avec l'adresse email admin@gmail.com et le mot de passe admin. Ces identifiants sont utilisés pour se connecter à l'interface administrateur où des actions privilégiées telles que la gestion des utilisateurs peuvent être effectuées. L'accès au tableau de bord administrateur est strictement réservé aux comptes ayant le statut d'administrateur, ce qui est vérifié à travers une liste d'administrateurs ou un attribut spécifique sur l'objet utilisateur. Si un utilisateur non administrateur tente d'accéder au tableau de bord, un mécanisme de protection implémenté par le décorateur @login_required et des vérifications supplémentaires de statut redirige l'utilisateur vers la page de connexion, assurant ainsi que les zones sensibles de l'application restent inaccessibles aux utilisateurs non autorisés. De plus, l'accès aux pages qui requièrent une session utilisateur active est également restreint ; les utilisateurs non connectés ou non inscrits seront redirigés vers des pages de connexion ou d'inscription, renforçant la sécurité de l'application et protégeant les informations sensibles des utilisateurs.
