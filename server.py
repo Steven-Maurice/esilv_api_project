@@ -20,7 +20,7 @@ def get_data():
 @app.route('/nb_articles')  
 def get_nb_articles():
     
-    with open('data.json') as json_file:
+    with open('articles.json') as json_file:
         data = json.load(json_file)
     
     return {'Number of articles': len(data)}
