@@ -1,0 +1,31 @@
+Composition du groupe :
+- Quentin MARTY
+- Alix FACQUES
+- Camille de GUELTZL
+
+Notre Project:
+Notre projet est une application web développée avec Flask qui sert à afficher et analyser des articles sur l'intelligence artificielle à partir du site NewsApi. L'application permet aux utilisateurs de récupérer des articles récents, d'afficher des détails sur des articles spécifiques, et de réaliser une analyse de sentiment sur le contenu des articles.
+
+Organisation du travail:
+Camille a commencé a faire le get_data
+Quentin a pull le code de Camille pour pouvoir travailler sur articles
+Camille a re-pull le code de Quentin pour faire la partie sur les articles en particulier
+Alix a ensuite pull le code de Camille
+Donc on a que merge le code d'Alix sur la branche car elle avait pull à partir de Quentin et Camille.
+
+Objectifs:
+Récupération d'Articles : Permettre aux utilisateurs de consulter les 10 dernières publications sur l'intelligence artificielle à partir d'une API externe.
+Extraction des mots clés des articles: Fournir un outil pour avoir les grandes lignes de l'article avant de le lire. 
+
+Organisation du Code: 
+Le projet est structuré autour de plusieurs routes Flask qui gèrent différentes fonctionnalités de l'application :
+/ (root) : Un point d'entrée principal qui offre une interface utilisateur simple pour naviguer vers d'autres fonctionnalités. Il inclut un formulaire pour accéder à un article spécifique par son numéro.
+/get_data : Cette route utilise l'API NewsAPI pour récupérer les 10 derniers articles sur l'intelligence artificielle et les afficher.
+/articles : Similaire à /get_data, mais formatée différemment pour afficher plus de détails sur chaque article.
+/article/<number> : Permet d'être directement redirigé vers le lien des articles. Nous avons fait le choix de ne pas afficher directement le contenu de l'articlie sur notre API par soucis de plagiat.
+/ml : Un endpoint qui reçoit un texte via une requête POST et utilise Yake pour extraire les mots clés principaux contenus dans l'article. 
+
+Commandes à faire dans le terminal pour pouvoir exécuter l'API:
+pip install Flask
+set FLASK_APP=server.py
+flask --app server.py run
