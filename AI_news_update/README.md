@@ -27,3 +27,16 @@ You can choose website about many subject like:
     2. Inside the branch, create a working directory named after the chosen site.
     3. Add a file named composition.txt that lists the members of the group.
     4. Add a section below these rules to explain your project, describe the created endpoints and their uses, and provide examples.
+
+
+/ml
+
+This endpoint returns the sentiment analysis of all articles using machine learning with TextBlob.
+To get the sentiment analysis of all articles, you must send a GET request to http://localhost:5000/ml. This will return a JSON object containing the sentiment analysis of all articles.
+Request: //localhost:5000/ml
+
+/ml/{number}
+
+This endpoint returns the sentiment analysis of a specific article using machine learning with TextBlob.
+To get the sentiment analysis of a specific article, you must send a GET request to <http://localhost:5000/ml/>. This is the place where we have the ID of the article. This will return a JSON object containing the sentiment analysis of the article.
+Request: http://localhost:5000/ml/{article_number}
