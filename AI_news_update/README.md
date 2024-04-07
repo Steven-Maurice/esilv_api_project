@@ -29,7 +29,7 @@ Endpoints
 Here's some screenshots and explannation for each API endpoints:
 
 
-### /get_data
+### /get_data (Contribution Collective)
 This endpoint returns a list of articles from the Arxiv site. The articles are retrieved using web scraping with BeautifulSoup.
 
 To get a list of articles, send a GET request to http://localhost:5000/get_data. This will return a JSON object containing information about the latest articles in the AI category.
@@ -43,7 +43,7 @@ Response:
     {"articles": [{"article_id": "2403.20306", "title": "Towards Greener LLMs: Bringing Energy-Efficiency to the Forefront of LLM Inference", "authors":"Jovan Stojkovic, Esha Choukse, Chaojie Zhang, Inigo Goiri, Josep Torrellas", "abstract_url":"https://arxiv.org/abs/2403.20306"},{"article_id": "2403.20234","title":"Artificial Neural Networks-based Real-time Classification of ENG Signals for Implanted Nerve Interfaces", "authors":"ntonio Coviello , Francesco Linsalata, Umberto Spagnolini, Maurizio Magarini", "abstract_url":"https://arxiv.org/abs/2403.20234"}, {"article_id": "2403.20212", "title": "On Size and Hardness Generalization in Unsupervised Learning for theTravelling Salesman Problem", "authors"; "Yimeng Min, Carla P. Gomes", "abstract_url":"https://arxiv.org/abs/2403.20212"},{"article_id": "2403.20204","title":"The Future ofCombating Rumors? Retrieval, Discrimination, and Generation", "authors":"Junhao Xu, Longdi Xian, Zening Liu, Mingliang Chen, Qiuyang Yin, Fenghua
 
 
-### /articles
+### /articles (PAUL-HAKIM)
 This endpoint returns differents informations about articles retrieved in get_data() such as the article number, title, publication date, article categories, author and the url of the article. The articles are retrieved with the web scraping package BeautifulSoup.
 To get a list of all articles with their respective informations, send a GET request to http://localhost:5000/articles. This will return a JSON object containing a list of articles with their titles and authors.
 
@@ -80,7 +80,7 @@ Response:
         "title": "Navigating the Challenges and Opportunities of Synthetic Voices"
       }, ...
 
-### /article/
+### /article/<number> (IBRAHIM)
 This endpoint returns the content of a specified article. The content is retrieved using web scraping with BeautifulSoup.
 
 To get information about a specific article, send a GET request to http://localhost:8000/article/{arxiv_id}, where {arxiv_id} is the ID of the article you want to retrieve. This will return a JSON object containing the title, authors, and summary of the article.
@@ -99,7 +99,7 @@ Response:
     
 
 
-### /ml
+### /ml (JOSEPH)
 
 This endpoint returns the sentiment analysis of all articles using machine learning with TextBlob.
 To get the sentiment analysis of all articles, you must send a GET request to http://localhost:5000/ml. This will return a JSON object containing the sentiment analysis of all articles.
