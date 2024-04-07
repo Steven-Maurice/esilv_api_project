@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Response
 import requests
 from bs4 import BeautifulSoup
 from sklearn.feature_extraction.text import CountVectorizer
@@ -32,7 +32,18 @@ def scrape_mit_news():
 
 @app.route('/')
 def index():
-    return "Welcome to the AI News Overview API!"
+    text = "<html><head><title>Page of Antoine and Leo !</title></head><body>"
+    text += "<p>Made by Antoine BUFFANDEAU and Leo DROUIN.</p>"
+    text += "<h1>Welcome to MIT news !</h1>"
+    text += "<p>This is the home page of our website which displays articles from "
+    text += "<a href='https://news.mit.edu/topic/artificial-intelligence2'>MIT News</a>.</p>"
+    text += "<h2>Endpoints:</h2>"
+    text += "<ul><li> <strong>/get_data</strong> : Fetches a list of 5 articles from the site ;</li>"
+    text += "<li> <strong>/articles</strong> : Displays information about the articles, including the article number, title, publication date, etc., but not the content itself ;</li>"
+    text += "<li> <strong>/article/&lt;article_number&gt;</strong> : Accesses the content of a specified article ;</li>"
+    text += "<li> <strong>/ml</strong> or <strong>/ml/&lt;article_number&gt;</strong> : Executes a machine learning script performing sentiment analysis.</li></ul>"
+    text += "</body></html>"
+    return Response(text, mimetype="text/html")
 
 @app.route('/get_data')
 def get_data():
