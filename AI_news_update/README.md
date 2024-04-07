@@ -51,31 +51,33 @@ Request:
     GET request to http://localhost:5000/articles
 
 
-Response:    [
-  {
-    "author": "OpenAI ", 
-    "categories": "Announcements, Product", 
-    "date": "April 4, 2024", 
-    "link": "https://openai.com/blog/introducing-improvements-to-the-fine-tuning-api-and-expanding-our-custom-models-program", 
-    "number": 0, 
-    "title": "Introducing improvements to the fine-tuning API and expanding our custom models program"
-  }, 
-  {
-    "author": "OpenAI ", 
-    "categories": "Announcements, Product", 
-    "date": "April 1, 2024", 
-    "link": "https://openai.com/blog/start-using-chatgpt-instantly", 
-    "number": 1, 
-    "title": "Start using ChatGPT instantly"
-  }, 
-  {
-    "author": "OpenAI ", 
-    "categories": "Product, Announcements", 
-    "date": "March 29, 2024", 
-    "link": "https://openai.com/blog/navigating-the-challenges-and-opportunities-of-synthetic-voices", 
-    "number": 2, 
-    "title": "Navigating the Challenges and Opportunities of Synthetic Voices"
-  }, ...
+Response:   
+
+        [
+      {
+        "author": "OpenAI ", 
+        "categories": "Announcements, Product", 
+        "date": "April 4, 2024", 
+        "link": "https://openai.com/blog/introducing-improvements-to-the-fine-tuning-api-and-expanding-our-custom-models-program", 
+        "number": 0, 
+        "title": "Introducing improvements to the fine-tuning API and expanding our custom models program"
+      }, 
+      {
+        "author": "OpenAI ", 
+        "categories": "Announcements, Product", 
+        "date": "April 1, 2024", 
+        "link": "https://openai.com/blog/start-using-chatgpt-instantly", 
+        "number": 1, 
+        "title": "Start using ChatGPT instantly"
+      }, 
+      {
+        "author": "OpenAI ", 
+        "categories": "Product, Announcements", 
+        "date": "March 29, 2024", 
+        "link": "https://openai.com/blog/navigating-the-challenges-and-opportunities-of-synthetic-voices", 
+        "number": 2, 
+        "title": "Navigating the Challenges and Opportunities of Synthetic Voices"
+      }, ...
 
 ### /article/
 This endpoint returns the content of a specified article. The content is retrieved using web scraping with BeautifulSoup.
