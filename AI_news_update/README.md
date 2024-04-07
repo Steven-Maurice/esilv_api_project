@@ -45,18 +45,39 @@ Response:
 
 
 ### /articles
-This endpoint returns a list of articles with information such as the article number, title, publication date, etc. The articles are retrieved using web scraping with BeautifulSoup.
-
-To get a list of all articles with their titles and authors, send a GET request to http://localhost:8000/articles. This will return a JSON object containing a list of articles with their titles and authors.
+This endpoint returns differents informations about articles retrieved in get_data() such as the article number, title, publication date, article categories, author and the url of the article. The articles are retrieved with the web scraping package BeautifulSoup.
+To get a list of all articles with their respective informations, send a GET request to http://localhost:5000/articles. This will return a JSON object containing a list of articles with their titles and authors.
 
 Request:
 
-    GET request to http://localhost:8000/articles
+    GET request to http://localhost:5000/articles
 
 
-Response:    
-    
-    {"articles": [{"article_id": "2403.20306", "title": "Towards Greener LLMs: Bringing Energy-Efficiency to the Forefront of LLM Inference", "authors":"Jovan Stojkovic, Esha Choukse, Chaojie Zhang, Inigo Goiri, Josep Torrellas", "abstract_url":
+Response:    [
+  {
+    "author": "OpenAI ", 
+    "categories": "Announcements, Product", 
+    "date": "April 4, 2024", 
+    "link": "https://openai.com/blog/introducing-improvements-to-the-fine-tuning-api-and-expanding-our-custom-models-program", 
+    "number": 0, 
+    "title": "Introducing improvements to the fine-tuning API and expanding our custom models program"
+  }, 
+  {
+    "author": "OpenAI ", 
+    "categories": "Announcements, Product", 
+    "date": "April 1, 2024", 
+    "link": "https://openai.com/blog/start-using-chatgpt-instantly", 
+    "number": 1, 
+    "title": "Start using ChatGPT instantly"
+  }, 
+  {
+    "author": "OpenAI ", 
+    "categories": "Product, Announcements", 
+    "date": "March 29, 2024", 
+    "link": "https://openai.com/blog/navigating-the-challenges-and-opportunities-of-synthetic-voices", 
+    "number": 2, 
+    "title": "Navigating the Challenges and Opportunities of Synthetic Voices"
+  }, ...
 
 ### /article/
 This endpoint returns the content of a specified article. The content is retrieved using web scraping with BeautifulSoup.
