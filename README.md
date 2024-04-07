@@ -32,7 +32,7 @@ You can choose website about many subject like:
 ## Antoine BUFFANDEAU - Leo DROUIN
 ## Objective:
 
-The objective of the project is to create a web application that fetches and displays articles from the MIT News website and performs sentiment analysis on the article content. Users can access various endpoints to retrieve article data, view article details, and analyze article sentiment.
+The objective of the project is to create a web application that fetches and displays articles from the [MIT News website](https://news.mit.edu/topic/artificial-intelligence2) and performs sentiment analysis on the article content. Users can access various endpoints to retrieve article data, view article details, and analyze article sentiment.
 
 ## Run the server:
 To run the project, first install the required packages with the following line:
