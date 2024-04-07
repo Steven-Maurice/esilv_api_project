@@ -31,11 +31,11 @@ Here's some screenshots and explannation for each API endpoints:
 /get_data
 This endpoint returns a list of articles from the Arxiv site. The articles are retrieved using web scraping with BeautifulSoup.
 
-To get a list of articles, send a GET request to http://localhost:8000/get_data. This will return a JSON object containing information about the latest articles in the AI category.
+To get a list of articles, send a GET request to http://localhost:5000/get_data. This will return a JSON object containing information about the latest articles in the AI category.
 
  Request:
 
-    GET request to http://localhost:8000/get_data
+    GET request to http://localhost:5000/get_data
 
 Response:
 
