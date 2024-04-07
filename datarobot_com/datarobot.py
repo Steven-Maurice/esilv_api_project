@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from textblob import TextBlob
 from base.interpretation import interpretation
+from base.summarizer import summarizer
+from base.summarizer import extract_and_summarize
 
 app = Flask(__name__)
 
@@ -103,20 +105,20 @@ def machine_learning(number):
     if number:
         articles = [f"article_{number}.html"]
     else:
-
         articles = [f"article_{i}.html" for i in range(1, 6)]
 
     for article in articles:
         filepath = os.path.join(dossier_html, article)
         try:
+            article_summary = extract_and_summarize(filepath)
             with codecs.open(filepath, "r", "utf-8") as file:
                 soup = BeautifulSoup(file.read(), "html.parser")
-                text = soup.get_text()
+                text = " ".join([p.get_text() for p in soup.find_all("p")])
                 analysis = TextBlob(text)
                 interpretation_resultat = interpretation(
                     analysis.sentiment.polarity, analysis.sentiment.subjectivity
                 )
-                html_response += f"<li><strong>{article}</strong>: Polarity = {analysis.sentiment.polarity}, Subjectivity = {analysis.sentiment.subjectivity}, Interpretation = {interpretation_resultat}</li>"
+                html_response += f"<li><strong>{article}</strong>: Polarity = {analysis.sentiment.polarity}, Subjectivity = {analysis.sentiment.subjectivity}, Interpretation = {interpretation_resultat}, <br>Summary: {article_summary}</li>"
         except FileNotFoundError:
             continue
 
