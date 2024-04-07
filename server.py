@@ -28,3 +28,23 @@ def index():
     mess5='Step 3 : <br> • <a href="/ml">/ml</a> : Display sentiment for all articles <br>'
     mess6='• "/ml/id" : Display sentiment for a specific article (by ID) <br>'
     return mess + mess2 + mess3 + mess4 + mess5 + mess6
+
+@app.route('/articles', methods=['GET'])
+def articles():
+    fetch_stories()
+    articles_info = [
+        {"number": story_id, "title": details["title"], "publication_date": details.get("time")}
+        for story_id, details in news_cache.items()
+    ]
+    return jsonify(articles_info)
+
+@app.route('/article/<int:number>', methods=['GET'])
+def article(number):
+    if number in news_cache:
+        return jsonify(news_cache[number])
+    else:
+        return abort(404, description="Article not found")
+
+def analyze_sentiment(text):
+    analysis = TextBlob(text)
+    return "positif" if analysis.sentiment.polarity > 0 else "négatif" if analysis.sentiment.polarity < 0 else "neutre"
