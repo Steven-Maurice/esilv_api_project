@@ -40,8 +40,6 @@ def get_date_articles():
     dates = [article['date'] for article in data]
     return {'Number of articles': len(data), 'Dates': dates}
 
-
-
-    
+ 
 if __name__ == '__main__':
     app.run()
