@@ -34,6 +34,8 @@ This Flask API interacts with the arXiv API to retrieve and analyze articles rel
 
 ## Endpoints:
 
+home: A Flask route that serves as the homepage and lists available endpoints.
+
 ### get_data
 
     GET /get_data:
@@ -104,3 +106,11 @@ The JSON response is structured as an array of objects, each representing an ana
 For example, the first object in the provided response indicates that the article with the number "2404.03657v1" has a negative sentiment and keywords related to "video instance segmentation" and "important video understanding". The title of the article is "OW-VISCap: Open-World Video Instance Segmentation and Captioning".
 
 This kind of service can be useful for researchers, publishers, and readers who want to quickly understand the sentiment and key topics of a large number of articles without reading them in full. It can also be used to categorize and recommend articles based on user interests.
+
+## Functions:
+
+fetch_arxiv_articles: A function that constructs a query URL and fetches articles from the arXiv API. It can be used to fetch articles by search query or by specific ID.
+
+analyze_sentiment: A function that uses VADER to analyze the sentiment of a given text.
+
+extract_keywords: A function that uses YAKE to extract keywords from a given text.

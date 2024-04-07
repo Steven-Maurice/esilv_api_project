@@ -393,6 +393,8 @@ and extract keywords from the articles.</p>
 </div>
 <div id="endpoints" class="section level2">
 <h2>Endpoints:</h2>
+<p>home: A Flask route that serves as the homepage and lists available
+endpoints.</p>
 <div id="get_data" class="section level3">
 <h3>get_data</h3>
 <pre><code>GET /get_data:
@@ -482,6 +484,16 @@ Instance Segmentation and Captioning”.</p>
 readers who want to quickly understand the sentiment and key topics of a
 large number of articles without reading them in full. It can also be
 used to categorize and recommend articles based on user interests.</p>
+</div>
+<div id="functions" class="section level2">
+<h2>Functions:</h2>
+<p>fetch_arxiv_articles: A function that constructs a query URL and
+fetches articles from the arXiv API. It can be used to fetch articles by
+search query or by specific ID.</p>
+<p>analyze_sentiment: A function that uses VADER to analyze the
+sentiment of a given text.</p>
+<p>extract_keywords: A function that uses YAKE to extract keywords from
+a given text.</p>
 </div>
 </div>
 
