@@ -45,3 +45,9 @@ Ex : /article/1 permet d'afficher tout le contenu écrit du dernier article publ
 
 4. /ml/<number> : Cet endpoint permet de recevoir le contenu écrit résumé de l'article <number>, nous résumons l'article grâce à un modèle de Deep Learning entraîné OpenSource avec Huggingface : https://huggingface.co/facebook/bart-large-cnn
 Ex : /ml/1 permet d'afficher le contenu résumé du dernier article publié par DeepMind.
+
+De plus, nous avons créé un script Python pour faire les installations des dépendances nécessaires ainsi que pour lancer le serveur API.
+
+```bash
+    python start.py
+```
