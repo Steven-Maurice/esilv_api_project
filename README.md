@@ -62,18 +62,12 @@ Implements sentiment analysis on the article content using machine learning mode
 
 Defines routes for the Flask application to handle user requests and responses. Each route corresponds to a specific endpoint:
 
-- **/:** Displays the home page of the website with information about the project and available endpoints;
-`/`
-- **/get_data:** Fetches and displays a list of 5 latest articles from MIT News;
-`/get_data`
-- **/articles:** Displays information about all articles, including titles, dates, links, and images;
-`/articles`
-- **/article/<int number>:** Displays the content of a specified article;
-`/article/<int number>`
-- **/ml:** Executes sentiment analysis on all articles and displays the analysis results;
-`/ml`
-- **/ml/<int number>:** Executes sentiment analysis on a specific article and displays the analysis result.
-`/ml/<int number>`
+- **`/`:** Displays the home page of the website with information about the project and available endpoints;
+- **`/get_data`:** Fetches and displays a list of 5 latest articles from MIT News;
+- **`/articles`:** Displays information about all articles, including titles, dates, links, and images;
+- **`/article/<int number>`:** Displays the content of a specified article;
+- **`/ml`:** Executes sentiment analysis on all articles and displays the analysis results;
+- **`/ml/<int number>`:** Executes sentiment analysis on a specific article and displays the analysis result.
 
 ## Conclusion
 Overall, the project is organized into separate modules for scraping, analysis, routing, and server initialization, following a structured approach to handle different aspects of the web application.
