@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask
 import requests
 from googletrans import Translator
 
@@ -13,7 +13,7 @@ QUERY = "machine learning"
 
 @app.route('/')
 def index():
-    return 'Hello, World!'
+    return 'Welcome to the Machine Learning articles retriever!'
 
 
 def everything_endpoint(query, page_size, page):
