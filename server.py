@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask,send_from_directory, render_template
 from scrape_info import scrape_article,findUrlHref
 from sentiment_analysis import graph
 
@@ -35,9 +35,9 @@ def article(article_id):
 # on définit la root qui pointera sur une du sentiment analysis
 @app.route('/machine_learning')
 def sentiment_analysis():
-    plot_bytes = graph("https://blog-ia.com")
-    graph("https://blog-ia.com")
-    return render_template('ml.html',plot=plot_bytes) 
+   
 
+    return render_template('ml.html')
+    
 if __name__ == '__main__':
     app.run()

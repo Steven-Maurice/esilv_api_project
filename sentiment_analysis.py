@@ -99,6 +99,8 @@ def graph(base_blog_url):
     plt.title('Histogramme du Mapping de Sentiment')
     plt.xlabel('Sentiment')
     plt.ylabel('Nombre d articles')
-    plt.show()
+    # Enregistrement du graphique en tant que fichier PNG
+    plt.savefig('sentiment_plot.png', bbox_inches='tight')  # bbox_inches='tight' pour s'assurer que rien ne soit coupé
 
-graph("https://blog-ia.com")
+    return 'sentiment_plot.png'
+

@@ -50,6 +50,8 @@ Fonctionnalités:
         Pour chaque page, elle extrait les URLs des articles en utilisant BeautifulSoup. Puis retourne une liste d'URLs uniques des articles trouvés sur le site.
 
 
+
+
     Scraping du Blog:
         Le programme commence par importer deux fonctions, scrape_article et findUrlHref, depuis un module nommé scrape_info. Ces fonctions sont utilisées pour extraire les informations pertinentes des articles du blog.
         L'URL du blog à scraper est https://blog-ia.com.
@@ -75,6 +77,9 @@ Ce projet fut très enrichissant :
 
     La partie développement web :
     Même si nous avons bien conscience que notre projet peut paraître ridicule, nous avons compris l'essence du développement web : partir d'une feuille blanche et confectionner. Le champ des possibles est immense.
+
+    La partie sentiment analysis :
+    Je n'ai pas réussi à afficher le graphique du sentiment analysis il sera dans le dossier.(sentiment_analysis.png)
 
 Conclusion : La partie scraping a été plutôt réussie, cependant, nous avons rencontré des difficultés avec l'analyse de sentiment. Nous nous interrogeons même sur la pertinence de ce principe sur nos articles qui ne sont ni des commentaires ni des notations.
 
