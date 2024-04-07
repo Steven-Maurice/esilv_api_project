@@ -50,4 +50,9 @@ This API provides news related to Artificial Intelligence (AI) from ArXiv site b
 
 -Initialisation of our API 
 
--Implementation of our differents endpoints (/get_data,/articles,/article/$<id>$,/ml)
+-Implementation of our differents endpoints : 
+
+    1./get_data : result on http://127.0.0.1:5000/get_data
+    2./articles : result on http://127.0.0.1:5000/articles
+    3./article/$<number>$ : result on http://127.0.0.1:5000/number with number beeing a numbers between 1 and 5
+    4./ml : result on http://127.0.0.1:5000/ml
