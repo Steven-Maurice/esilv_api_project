@@ -27,3 +27,8 @@ You can choose website about many subject like:
     2. Inside the branch, create a working directory named after the chosen site.
     3. Add a file named composition.txt that lists the members of the group.
     4. Add a section below these rules to explain your project, describe the created endpoints and their uses, and provide examples.
+
+### Project 
+    1. Notre projet a pour objectif de créer ou d'utiliser une API existante pour extraire des informations sur des articles autour du sujet de l'intelligence artificielle.
+    Nous avons décidé d'utiliser une API  nommée "NEWSAPI", qui permet d'accéder dirrectement à des articles.
+    
