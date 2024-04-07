@@ -30,4 +30,29 @@ You can choose website about many subject like:
 
 ### Implementation
 
-    In process
+    Rapport Explicatif du Projet
+
+Introduction:
+Le projet consiste à créer une application web utilisant le framework Flask en Python. L'objectif principal de l'application est de scraper un blog  pour récupérer des articles, puis de fournir une interface permettant d'accéder à ces articles et d'effectuer un sentiment analysis sur les articles.
+
+Fonctionnalités:
+
+    Scraping du Blog:
+        Le programme commence par importer deux fonctions, scrape_article et findUrlHref, depuis un module nommé scrape_info. Ces fonctions sont utilisées pour extraire les informations pertinentes des articles du blog.
+        L'URL du blog à scraper est https://blog-ia.com.
+        Les URLs de tous les articles sont récupérés en utilisant la fonction findUrlHref.
+        Pour chaque URL récupéré, les informations telles que le titre, la date, l'auteur et le contenu de l'article sont extraites en utilisant la fonction scrape_article et stockées dans une liste nommée articles.
+
+    Endpoints Flask:
+        /home: Cette root renvoie un template HTML pour la page d'accueil.
+        /get_data: Cette root renvoie un template HTML qui affiche tous les articles récupérés à partir du blog.
+        /article/{article_id}: Cette root prend un identifiant d'article en paramètre et renvoie un template HTML affichant les détails de cet article.
+        /machine_learning: Cette root renvoie un template HTML pour une page dédiée  au sentiment analysis.
+
+    Templates HTML:
+        Les templates HTML (home.html, get_data.html, article.html, ml.html) sont utilisés pour présenter les données récupérées et pour fournir une interface utilisateur.
+
+Exécution:
+Lorsque le script est exécuté, Flask lance un serveur web local. Les utilisateurs peuvent accéder aux différentes roots définies.
+
+
