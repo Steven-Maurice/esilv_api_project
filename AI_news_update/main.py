@@ -2,7 +2,7 @@
 """
 Created on Sun Apr  7 18:13:29 2024
 
-@author: ibrahim
+@author: Ibrahim,Joseph,Paul-Hakim
 """
 
 from flask import Flask, jsonify, request
