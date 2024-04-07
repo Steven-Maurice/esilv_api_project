@@ -115,7 +115,7 @@ def interpret_score(score):
             return "L'article présente un équilibre entre les sentiments positifs et négatifs, sans prédominance claire."
 
 
-#we create the route 'ml/article_number that executes a machine learning script to get the sentiment analysis of the provided article
+#we create the endpoint 'ml/article_number that executes a machine learning script to get the sentiment analysis of the provided article
 @article_blueprint.route('/ml/<int:number>', methods=['GET'])
 def analyse_sentiment(number):
     """

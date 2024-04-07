@@ -6,7 +6,7 @@ import requests
 articles_blueprint = Blueprint('articles', __name__)
 
 #we will use the existing API 'https://newsapi.org' to access articles
-#we create the 'get_data' route that sends an API request to retrieve the top 5 most relevant articles (top-headlines)
+#we create the 'get_data' endpoint that sends an API request to retrieve the top 5 most relevant articles (top-headlines)
 @articles_blueprint.route('/get_data', methods=['GET'])
 def get_data():
     """
@@ -26,7 +26,7 @@ def get_data():
     return jsonify(data)
 
 
-#we create the 'articles' route that provides information about the articles such as the article number, title, and publication date, but not the content
+#we create the 'articles' endpoint that provides information about the articles such as the article number, title, and publication date, but not the content
 @articles_blueprint.route('/articles', methods=['GET'])
 def articles():
     """
