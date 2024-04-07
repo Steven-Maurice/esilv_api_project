@@ -61,14 +61,23 @@ This API provides news related to Artificial Intelligence (AI) from ArXiv site b
 
 This project involves the creation of an API, the AI News Overview API, which fetches and displays information about research papers related to Artificial Intelligence (AI) from the ArXiv API. Users can interact with this API to retrieve articles, view article details, perform sentiment analysis on articles, and search for articles containing specific keywords.
 
+## Details about each endpoints & functions
+
+By default, each endpoint gives article that's related to AI in general.
+
+    </get_data> : Endpoint that gives the title and the link of random article related to AI. It calls the function arxiv_data() and extract its data.
+
+    </articles> : 
+
+
 ### How to run our project
 
 In order to run the project, I recommend to install Flask (for the API), xml.etree (for reading data from arXiv) and vaderSentiment (for our ML function of sentimental analysis). 
 To install them, I recommend to direclty write those codes above in the terminal :
 
-    * pip install vaderSentiment
-    * pip install Flask
-    * pip install xml.etree
+    pip install vaderSentiment
+    pip install Flask
+    pip install xml.etree
 
 After installing the necessary packages, you can download and run the main.py file on Spyder or other EDI (BE CAREFUL TO DOWNLOAD THE MAIN.PY AND THE FUNCTIONS.PY FILE AND RUN THEM TOGETHER !!!)
 
@@ -80,12 +89,14 @@ Here are where you should find locally the result for each endpoints:
 
     /articles : result on http://127.0.0.1:5000/articles
 
-    /article/<number> : result on http://127.0.0.1:5000/number with number beeing a numbers between 1 and 5
+    /article/<number> : result on http://127.0.0.1:5000/1
 
     /ml : result on http://127.0.0.1:5000/ml
 
-    /author/<keyword> : result on http://127.0.0.1:5000/author/<keyword> with keyword a name or surname of authors
+    /author/<keyword> : result on http://127.0.0.1:5000/author/Li
 
-    /summary/<keyword> : result on http://127.0.0.1:5000/summary/<keyword> with keyword the word you are searching and that contains in the abstract of the article
+    /summary/<keyword> : result on http://127.0.0.1:5000/summary/AI
+
+
 
 
