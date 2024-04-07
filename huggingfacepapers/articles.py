@@ -42,12 +42,13 @@ class Articles:
         articles = []
         for article_el in articles_els:
             rounded_els = article_el.select(".rounded-xl")
+            print(article_el.find('h3').text)
             article = Article(
                 title=article_el.find("h3").text,
-                img=rounded_els[0].find("img").attrs["src"],
+                media=(rounded_els[0].find("img") or article_el.find("video")).attrs["src"],
                 upvotes=int(rounded_els[1].text.strip()),
                 n_authors=int(re.findall(r"[0-9]+", article_el.find("ul").text)[0]),
-                id=article_el.find("a").attrs["href"].split("/")[-1],
+                id=article_el.select_one("h3 a").attrs["href"].split("/")[-1],
             )
             articles.append(article)
         return articles
