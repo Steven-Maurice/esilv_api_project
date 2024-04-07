@@ -29,6 +29,12 @@ You can choose website about many subject like:
     4. Add a section below these rules to explain your project, describe the created endpoints and their uses, and provide examples.
 
 ### Endpoint
+
+## Important Note
+
+Before you start using the AI News API, please ensure you have the `eventregistry` Python package installed, as it is crucial for the API's functionality. You can install this package by running the following command in your terminal or command prompt: **pip install eventregistry**
+
+
 Our API is designed to deliver news articles focused on artificial intelligence. To achieve this, we leverage a third-party API (News API) that allows us to aggregate news from various media sources. To ensure the relevance and quality of the retrieved articles, we've implemented a quantum filter that selects only the top 20% of newsletters, thus eliminating articles considered as "useless" or less relevant.
 Here's an overview of the endpoints available through our API:
 * /get_data: Returns the titles of 5 selected articles, providing a quick glimpse into the latest AI news without overwhelming the user with too much information at once.
@@ -42,15 +48,12 @@ Here's an overview of the endpoints available through our API:
 ### Exemple of use
 This guide assumes the AI News API is hosted locally at http://localhost:5000. Below, you'll find examples of how to interact with each endpoint to utilize the full potential of our API for accessing AI-related news and features.
 
-- **Summary of Articles**: Get titles of selected AI news articles.
-
-GET http://localhost:5000/get_data
-
-- **Detailed Articles Information**: Access details on articles, excluding the body.
+*http://localhost:5000/get_data
   
-GET http://localhost:5000/articles
+*http://localhost:5000/articles
 
-- **Specific Article Details**: View information about a specific article by its URI number.
+*http://localhost:5000/article/<number>
 
-GET http://localhost:5000/article/<number>
+*http://localhost:5000/ml_positive
 
+*http://localhost:5000/ml_negative
