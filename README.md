@@ -27,3 +27,17 @@ You can choose website about many subject like:
     2. Inside the branch, create a working directory named after the chosen site.
     3. Add a file named composition.txt that lists the members of the group.
     4. Add a section below these rules to explain your project, describe the created endpoints and their uses, and provide examples.
+
+### Endpoint
+Our API is designed to deliver news articles focused on artificial intelligence. To achieve this, we leverage a third-party API (News API) that allows us to aggregate news from various media sources. To ensure the relevance and quality of the retrieved articles, we've implemented a quantum filter that selects only the top 20% of newsletters, thus eliminating articles considered as "useless" or less relevant.
+Here's an overview of the endpoints available through our API:
+* /get_data: Returns the titles of 5 selected articles, providing a quick glimpse into the latest AI news without overwhelming the user with too much information at once.
+* /articles: Provides details of 5 articles, including the article number (its URI), title, publication date, and other relevant metadata, except for the article's body. This approach allows for a detailed understanding of the articles while maintaining brevity.
+* /article<number>: By inserting the specific URI number of an article, you can access a detailed view of that article, including all its available aspects and information, except for its full content. This enables in-depth exploration of topics of particular interest.
+* /ml_positive: Returns 5 articles that have received a positive score in sentiment analysis. This feature is ideal for users looking for uplifting news or positive developments in the field of artificial intelligence.
+* /ml_negative: Conversely, this endpoint presents 5 articles with a negative score in sentiment analysis, offering insight into the challenges or critical viewpoints associated with artificial intelligence.
+
+
+
+### Exemple of use
+
