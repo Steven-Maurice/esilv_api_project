@@ -1,5 +1,6 @@
 Romann Ivanoff 
 Angelo Pavia-Desmars
+IF3
 
 Nous avons changé de site sur lequel nous scrapons les données. Nous avons finalement choisi actuia.com car le premier site ne nous permettais pas de récupérer le contenu des articles malgré maintes tentatives.
 Pour garder les commit et ainsi que vous puissiez voir l'avancée de nos travaux, nous avons décidé de ne pas recréer un fichier.
