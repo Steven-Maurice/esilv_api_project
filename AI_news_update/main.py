@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 import re
-nltk.download('vader_lexicon')
 
+nltk.download('vader_lexicon')
 
 app = Flask(__name__)
 
@@ -15,19 +15,14 @@ def index():
 
 @app.route('/get_data')
 def get_data():
-    # Fetch the HTML content of the site
     url = 'https://openai.com/blog/'
     response = requests.get(url)
     html = response.text
-
-    # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(html, 'html.parser')
 
-    # Find the articles on the page
     articles = []
     for i, article in enumerate(soup.find_all('h3', {'class': 'f-subhead-2'})):
         title = article.text
-        # Article link = base url + formatted title
         formatted_title = re.sub(r'[^\w\s-]', '', title.lower()).replace(' ', '-')
         article_url = f"{url}{formatted_title}"
         a = article.find('a')
@@ -35,14 +30,10 @@ def get_data():
             article_url = a['href']
         articles.append({'number': i, 'title': title, 'link': article_url})
 
-    # Return the list of articles as a JSON object
     return jsonify(articles)
 
-
-
 @app.route('/articles') 
-def articles(): #Retrieve from the get_data articles :number, title, date, author, categories, link
-
+def articles(): 
     articles_data = get_data().get_json()  
     full_articles = []
     for article in articles_data:
@@ -81,9 +72,6 @@ def articles(): #Retrieve from the get_data articles :number, title, date, autho
 
     return jsonify(full_articles)
 
-
-
-
 @app.route('/ml', methods=['GET'])
 def analyze_all_articles_sentiment():
     articles = get_data().get_json()
@@ -100,6 +88,21 @@ def analyze_all_articles_sentiment():
     
     return jsonify(results)
 
+@app.route('/ml/<int:number>', methods=['GET'])
+def analyze_single_article_sentiment(number):
+    articles = get_data().get_json()
+    if number < 1 or number > len(articles):
+        return jsonify({'error': 'Article number out of range'}), 404
+    
+    article = articles[number - 1]
+    article_content = fetch_article_content(article['link'])
+    sentiment_score = sia.polarity_scores(article_content)
+    
+    return jsonify({
+        'number': article['number'],
+        'title': article['title'],
+        'sentiment': sentiment_score
+    })
 
 def fetch_article_content(url):
     response = requests.get(url)
@@ -109,9 +112,6 @@ def fetch_article_content(url):
 
 sia = SentimentIntensityAnalyzer()
 
-
-
- 
 if __name__ == '__main__':
     app.run(debug=True)
 
