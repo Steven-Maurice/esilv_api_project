@@ -21,6 +21,27 @@ You can choose website about many subject like:
     - Information on new models.
     - Research papers, such as those from ArXiv or Google DeepMind.
 
+
+
+    ###Design
+    
+    Our project uses FastAPI to create the API and BeautifulSoup for web scraping. We have also used the TextBlob library for sentiment analysis.
+
+Endpoints
+Here's some screenshots and explannation for each API endpoints:
+
+/get_data
+This endpoint returns a list of articles from the Arxiv site. The articles are retrieved using web scraping with BeautifulSoup.
+
+To get a list of articles, send a GET request to http://localhost:8000/get_data. This will return a JSON object containing information about the latest articles in the AI category.
+
+Request:
+
+'def function '
+
+
+ ###########################################################################################################
+
 ### Process
 
     1. Each group should create a branch named after the names of the group members.
