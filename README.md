@@ -36,7 +36,7 @@ Introduction:
 Le projet consiste à créer une application web utilisant le framework Flask en Python. L'objectif principal de l'application est de scraper un blog  pour récupérer des articles, puis de fournir une interface permettant d'accéder à ces articles et d'effectuer un sentiment analysis sur les articles.
 Nous avons décider de scrapper  blog- ia.com, un site d'actualité sur l'IA.
 
-Fonctionnalités:
+
 
     Fonctions principales:
 
@@ -48,9 +48,6 @@ Fonctionnalités:
 
         Cette fonction prend l'URL de base du site web en entrée. Elle parcourt les différentes pages du blog en incrémentant le numéro de la page jusqu'à ce qu'elle ne trouve plus de page suivante.
         Pour chaque page, elle extrait les URLs des articles en utilisant BeautifulSoup. Puis retourne une liste d'URLs uniques des articles trouvés sur le site.
-
-
-
 
     Scraping du Blog:
         Le programme commence par importer deux fonctions, scrape_article et findUrlHref, depuis un module nommé scrape_info. Ces fonctions sont utilisées pour extraire les informations pertinentes des articles du blog.
