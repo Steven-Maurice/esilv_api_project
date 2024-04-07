@@ -1,0 +1,9 @@
+Flask
+pandas
+bs4
+scikit-learn
+plotly_express
+tqdm
+requests
+sentence_transformers
+kaleido
