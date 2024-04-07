@@ -433,9 +433,18 @@ Request:
     GET http://127.0.0.1:5000/ml/{article_number}
 
 
-Response:
+Response: (example with article 1) 
 
-    "articles": [{"article_id": "2403.20306", "title": "Towards Greener LLMs: Bringing Energy-Efficiency to the Forefront of LLM Inference", "authors":"Jovan Stojkovic, Esha Choukse, Chaojie Zhang, Inigo Goiri, Josep Torrellas", "abstract_url":
+    {
+      "number": 0,
+      "sentiment": {
+        "compound": 0.9979,
+        "neg": 0.0,
+        "neu": 0.894,
+        "pos": 0.106
+      },
+      "title": "Introducing improvements to the fine-tuning API and expanding our custom models program"
+    }
 
 
 
