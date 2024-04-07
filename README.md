@@ -32,12 +32,6 @@ You can choose website about many subject like:
 
     Rapport Explicatif du Projet
 
-Introduction:
-Le projet consiste à créer une application web utilisant le framework Flask en Python. L'objectif principal de l'application est de scraper un blog  pour récupérer des articles, puis de fournir une interface permettant d'accéder à ces articles et d'effectuer un sentiment analysis sur les articles.
-Nous avons décider de scrapper  blog- ia.com, un site d'actualité sur l'IA.
-
-
-
     Fonctions principales:
 
         scrape_article(url):
