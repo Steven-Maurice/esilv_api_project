@@ -1,3 +1,4 @@
+
 from flask import Flask, jsonify, request
 import requests
 from datetime import datetime
@@ -19,9 +20,6 @@ articles_data = []
 sentiment_analysis = pipeline("sentiment-analysis")
 summarizer = pipeline("summarization")
 ner = pipeline("ner")
-
-#OpenIA Key
-openai.api_key = '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'
 
 
 NEWS_API_KEY = 'b795726f8b0b4da3ab52350844a3a901'
@@ -97,6 +95,7 @@ def fetch_full_article_content(url):
         return "Failed to retrieve the webpage."
 
 
+#analyse sur les articles debut ml
 
 def analyze_trends(text):
     words = word_tokenize(text.lower())  # Tokenize le texte et le convertit en minuscules
