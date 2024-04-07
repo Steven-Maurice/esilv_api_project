@@ -102,7 +102,7 @@ Afin de naviguer à travers les recherches et qu'elles soient afficher en json, 
 
 L'interface utilisateur de notre API utilise HTML pour structurer le contenu et CSS pour le styliser, créant une expérience riche et interactive pour les utilisateurs. Les fichiers HTML définissent la structure de la page, comme l'en-tête, les sections principales, et le pied de page, tandis que le CSS contrôle l'apparence visuelle, telle que les couleurs, les polices, et la disposition des éléments.
 
-La page d'accueil, comme illustrée dans 'index.html', sert de point d'entrée, présentant l'API et ses capacités. Avec des boutons, elle guide les utilisateurs vers des actions clés telles que la recherche dans l'API et la découverte des endpoints disponibles.
+La page d'accueil sert de point d'entrée, présentant l'API et ses capacités. Avec des boutons, elle guide les utilisateurs vers des actions clés telles que la recherche dans l'API et la découverte des endpoints disponibles.
 
 La page de tableau de bord ('dashboard.html') est un espace réservé aux administrateurs pour gérer les utilisateurs. Elle est accessible via une authentification sécurisée et offre des fonctionnalités telles que l'ajout, la modification et la suppression des utilisateurs.
 
