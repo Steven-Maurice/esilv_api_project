@@ -423,7 +423,7 @@ Response:
     ]
 
 
-### /ml/{number}
+### /ml/{number} (JOSEPH)
 
 This endpoint returns the sentiment analysis of a specific article using machine learning with TextBlob.
 To get the sentiment analysis of a specific article, you must send a GET request to http://127.0.0.1:5000/ml/<number>. This is the place where we have the ID of the article. This will return a JSON object containing the sentiment analysis of the article.
