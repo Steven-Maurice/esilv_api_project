@@ -13,6 +13,25 @@ from base.summarizer import extract_and_summarize
 app = Flask(__name__)
 
 
+@app.route("/")
+def home():
+    text_welcome = "<html><head><title>Welcome to our page !</title></head><body>"
+    text_welcome += "<h1>Welcome to our page!</h1>"
+    text_welcome += "<p>This is the home page of our website.</p>"
+    text_welcome += "<h2>Endpoints:</h2>"
+    text_welcome += "<ul>"
+    text_welcome += "<li> First we fetched the 5 most recent articles  <strong>/get_data</strong></li>"
+    text_welcome += (
+        "<li> The route to obtain the articles is here  <strong>/articles</strong></li>"
+    )
+    text_welcome += "<li> Access an individual article by specifying its number  <strong>/article/&lt;article_number&gt;</strong></li>"
+    text_welcome += "<li> Perform sentiment analysis and summarization  <strong>/ml</strong> or <strong>/ml/&lt;article_number&gt;</strong></li>"
+    text_welcome += "</ul>"
+    text_welcome += "</body></html>"
+
+    return Response(text_welcome, mimetype="text/html")
+
+
 @app.route("/get_data")
 def get_data():
     file_path = f"./windows/article_{0}.html"
@@ -46,7 +65,7 @@ def articles():
             if soup.title:
                 title = soup.title.string.split("|")[0].strip()
             else:
-                itle = "Titre non trouvé"
+                title = "Titre non trouvé"
 
             meta_tag = soup.find("meta", property="article:modified_time")
             if meta_tag:
