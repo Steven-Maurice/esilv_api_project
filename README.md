@@ -67,7 +67,15 @@ By default, each endpoint gives article that's related to AI in general.
 
     </get_data> : Endpoint that gives the title and the link of random article related to AI. It calls the function arxiv_data() and extract its data.
 
-    </articles> : 
+    </articles> : Endpoint that extract every relevant information from each articles (title of the article,author,ID,Link,PDF Link, Published Date) from the data retrieve in the arxiv_data() function
+
+    </article/<number>> : Endpoint that gives information for a specific article by giving a number
+
+    </ml> : Endpoint that do a sentimental analysis for each AI related article and gives the title, link and if the abstract of the article is 'positive', 'negative' or 'neutral
+
+    </author/<keyword>> : Endpoint that plays the role of filter by author name/surname. It gives articles information where the name of the author contains the keyword in parameter (example : /author/kevin  ---> results : articles from Kevin Krisciunas/ Kevin Marvel/ Kevin Cahill/ Kevin Lai ...)
+
+    </summary/<keyword>> : Endpoint that plays the role of filter by searching if the article abstract contains our keyword. It gives articles information where the keyword is found in the summary (example : /summary/AI  ---> results : "[...]researchers in AI to some of[...]")
 
 
 ### How to run our project
