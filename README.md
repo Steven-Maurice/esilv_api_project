@@ -30,14 +30,23 @@ You can choose website about many subject like:
 
 ### Project 
 
-    1.  Nous avons mis sur pied un projet dans le cadre de notre cours sur le développement web, où nous avons créé une API en utilisant Flask. Notre but était de simplifier l'accès aux informations récentes sur l'intelligence artificielle, en fournissant non seulement des articles en français mais aussi en analysant le ton de ces articles - positif, négatif ou neutre. Pour cela, nous interrogeons NewsAPI pour récupérer les articles, puis nous utilisons un outil appelé VADER pour l'analyse de sentiment.
+    1.  Nous avons mis sur pied un projet dans le cadre de notre cours sur le développement web, où nous avons créé une API 
+    en utilisant Flask. Notre but était de simplifier l'accès aux informations récentes sur l'intelligence artificielle, en 
+    fournissant non seulement des articles en français mais aussi en analysant le ton de ces articles - positif, négatif ou 
+    neutre. Pour cela, nous interrogeons NewsAPI pour récupérer les articles, puis nous utilisons un outil appelé VADER pour 
+    l'analyse de sentiment.
 
     2. Voici un aperçu des fonctionnalités que nous avons intégrées :
     
-    /get_data : Cette route nous permet de collecter les cinq derniers articles parus sur l'intelligence artificielle. Elle nous donne un aperçu complet incluant le titre, la date de publication, le lien vers l'article, son contenu, et l'auteur, tout cela sous format JSON.
-    /articles : Ici, on peut voir une liste des articles récupérés, sans le contenu, pour avoir un aperçu rapide. Ça retourne le titre, la date, le lien et l'auteur de chaque article.
-    /article/<number> : Cette commande nous donne accès au contenu complet d'un article spécifique, en se basant sur son numéro. Si l'article n'existe pas, une erreur est retournée.
-    /ml : On utilise cette route pour analyser le sentiment de tous les articles qu'on a récupérés. Le résultat est un objet JSON qui liste le titre de chaque article avec le sentiment analysé.
+    /get_data : Cette route nous permet de collecter les cinq derniers articles parus sur l'intelligence artificielle. Elle 
+    nous donne un aperçu complet incluant le titre, la date de publication, le lien vers l'article, son contenu, et l'auteur, 
+    tout cela sous format JSON.
+    /articles : Ici, on peut voir une liste des articles récupérés, sans le contenu, pour avoir un aperçu rapide. Ça retourne 
+    le titre, la date, le lien et l'auteur de chaque article.
+    /article/<number> : Cette commande nous donne accès au contenu complet d'un article spécifique, en se basant sur son numéro. 
+    Si l'article n'existe pas, une erreur est retournée.
+    /ml : On utilise cette route pour analyser le sentiment de tous les articles qu'on a récupérés. Le résultat est un objet JSON 
+    qui liste le titre de chaque article avec le sentiment analysé.
     /ml/<number> : Cela nous permet d'effectuer une analyse de sentiment sur un article en particulier, identifié par son numéro.
 
     3. Voici comment on utilise notre API :
@@ -48,6 +57,7 @@ You can choose website about many subject like:
     Pour une analyse du sentiment de tous les articles, on va sur http://127.0.0.1:5000/ml.
     Et pour l'analyse d'un article spécifique, disons le deuxième, c'est http://127.0.0.1:5000/ml/2.
     
-    Nous pensons que cette API est un excellent outil pour les chercheurs, les journalistes ou toute personne intéressée par les tendances et les perceptions de l'intelligence artificielle dans l'actualité.
+    Nous pensons que cette API est un excellent outil pour les chercheurs, les journalistes ou toute personne intéressée par 
+    les tendances et les perceptions de l'intelligence artificielle dans l'actualité.
 
     
