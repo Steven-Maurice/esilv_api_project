@@ -219,7 +219,208 @@ Request:
 
 Response:
 
-    "articles": [{"article_id": "2403.20306", "title": "Towards Greener LLMs: Bringing Energy-Efficiency to the Forefront of LLM Inference", "authors":"Jovan Stojkovic, Esha Choukse, Chaojie Zhang, Inigo Goiri, Josep Torrellas", "abstract_url":
+    [
+      {
+        "number": 0,
+        "sentiment": {
+          "compound": 0.9979,
+          "neg": 0.0,
+          "neu": 0.894,
+          "pos": 0.106
+        },
+        "title": "Introducing improvements to the fine-tuning API and expanding our custom models program"
+      },
+      {
+        "number": 1,
+        "sentiment": {
+          "compound": 0.9668,
+          "neg": 0.008,
+          "neu": 0.84,
+          "pos": 0.153
+        },
+        "title": "Start using ChatGPT instantly"
+      },
+      {
+        "number": 2,
+        "sentiment": {
+          "compound": 0.9959,
+          "neg": 0.013,
+          "neu": 0.841,
+          "pos": 0.147
+        },
+        "title": "Navigating the Challenges and Opportunities of Synthetic Voices"
+      },
+      {
+        "number": 3,
+        "sentiment": {
+          "compound": 0.9993,
+          "neg": 0.022,
+          "neu": 0.803,
+          "pos": 0.175
+        },
+        "title": "Sora: first impressions"
+      },
+      {
+        "number": 4,
+        "sentiment": {
+          "compound": 0.9971,
+          "neg": 0.004,
+          "neu": 0.868,
+          "pos": 0.128
+        },
+        "title": "Global news partnerships: Le Monde and Prisa Media"
+      },
+      {
+        "number": 5,
+        "sentiment": {
+          "compound": 0.9868,
+          "neg": 0.017,
+          "neu": 0.897,
+          "pos": 0.087
+        },
+        "title": "OpenAI announces new members to board of directors"
+      },
+      {
+        "number": 6,
+        "sentiment": {
+          "compound": 0.0,
+          "neg": 0.0,
+          "neu": 0.0,
+          "pos": 0.0
+        },
+        "title": "Review completed & Altman, Brockman to continue to lead OpenAI"
+      },
+      {
+        "number": 7,
+        "sentiment": {
+          "compound": 0.0,
+          "neg": 0.0,
+          "neu": 0.0,
+          "pos": 0.0
+        },
+        "title": "OpenAI and Elon Musk"
+      },
+      {
+        "number": 8,
+        "sentiment": {
+          "compound": 0.3818,
+          "neg": 0.106,
+          "neu": 0.775,
+          "pos": 0.119
+        },
+        "title": "Disrupting malicious uses of AI by state-affiliated threat actors"
+      },
+      {
+        "number": 9,
+        "sentiment": {
+          "compound": 0.9945,
+          "neg": 0.012,
+          "neu": 0.887,
+          "pos": 0.101
+        },
+        "title": "Memory and new controls for ChatGPT"
+      },
+      {
+        "number": 10,
+        "sentiment": {
+          "compound": 0.9982,
+          "neg": 0.008,
+          "neu": 0.893,
+          "pos": 0.099
+        },
+        "title": "New embedding models and API updates"
+      },
+      {
+        "number": 11,
+        "sentiment": {
+          "compound": 0.0,
+          "neg": 0.0,
+          "neu": 0.0,
+          "pos": 0.0
+        },
+        "title": "Democratic inputs to AI grant program: lessons learned and implementation plans"
+      },
+      {
+        "number": 12,
+        "sentiment": {
+          "compound": 0.9947,
+          "neg": 0.045,
+          "neu": 0.814,
+          "pos": 0.141
+        },
+        "title": "How OpenAI is approaching 2024 worldwide elections"
+      },
+      {
+        "number": 13,
+        "sentiment": {
+          "compound": 0.994,
+          "neg": 0.006,
+          "neu": 0.875,
+          "pos": 0.12
+        },
+        "title": "Introducing ChatGPT Team"
+      },
+      {
+        "number": 14,
+        "sentiment": {
+          "compound": 0.995,
+          "neg": 0.0,
+          "neu": 0.829,
+          "pos": 0.171
+        },
+        "title": "Introducing the GPT Store"
+      },
+      {
+        "number": 15,
+        "sentiment": {
+          "compound": 0.9909,
+          "neg": 0.055,
+          "neu": 0.834,
+          "pos": 0.11
+        },
+        "title": "OpenAI and journalism"
+      },
+      {
+        "number": 16,
+        "sentiment": {
+          "compound": 0.9963,
+          "neg": 0.061,
+          "neu": 0.741,
+          "pos": 0.198
+        },
+        "title": "Superalignment Fast Grants"
+      },
+      {
+        "number": 17,
+        "sentiment": {
+          "compound": 0.0,
+          "neg": 0.0,
+          "neu": 0.0,
+          "pos": 0.0
+        },
+        "title": "Partnership with Axel Springer to deepen beneficial use of AI in journalism"
+      },
+      {
+        "number": 18,
+        "sentiment": {
+          "compound": 0.9999,
+          "neg": 0.032,
+          "neu": 0.727,
+          "pos": 0.24
+        },
+        "title": "Sam Altman returns as CEO, OpenAI has a new initial board"
+      },
+      {
+        "number": 19,
+        "sentiment": {
+          "compound": 0.9946,
+          "neg": 0.012,
+          "neu": 0.859,
+          "pos": 0.129
+        },
+        "title": "OpenAI announces leadership transition"
+      }
+    ]
 
 
 ### /ml/{number}
