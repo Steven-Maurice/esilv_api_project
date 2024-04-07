@@ -15,3 +15,4 @@ index : bienvenu
 /ml/keywords/<id> : Renvoie les Mots uqi apparaissent le plus fréquemment dans l'artcile avec leur nombre d'occurence
 /ml/wordcloud/<id> : Renvoie un bel affichage de ces mots clés
 /ml/compare/<id1>/<id2> : Renvoie la similarité de contenu entre les 2 articles 
+/ml/resume/<id> : renvoie un résumé de l'article identifié par son id, avec la bibliothèque spacy
