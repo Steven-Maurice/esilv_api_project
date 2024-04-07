@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header .logout-button,
+header .button {
+    padding: 5px 10px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #555;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px; 
+}
+
+header .button:hover,
+header .logout-button:hover {
+    background-color: #777;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}
+
+td {
+    background-color: #fff;
+    color: #333;
+}
+
+td .button {
+    padding: 5px 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+td .button.edit {
+    background-color: #f0ad4e;
+}
+
+td .button.delete {
+    background-color: #d9534f;
+}
+
+td .button:hover {
+    opacity: 0.8;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    header, footer {
+        text-align: center;
+    }
+
+    header .logout-button,
+    header .button {
+        display: block;
+        margin: 10px auto;
+    }
+
+    td .button {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+h1, p, thead {
+    text-align: center;
+    color: #333;
+}
+
+.nav-links {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 20px;
+    box-sizing: border-box;
+}
+
+.nav-links a {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    margin: 10px 0;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+td a {
+    padding: 5px 5px;
+    margin-right: 5px;
+    background-color: #2f67a3;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none; 
+}
