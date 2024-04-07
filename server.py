@@ -6,11 +6,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from transformers import pipeline
 
-app = Flask(__name__)
+app = Flask(_name_)
 
 @app.route('/get_data')
 def get_data():
-    response = requests.get('https://www.forbes.com/ai/')
+    response = requests.get('https://arxiv.org/list/cs.AI/recent')
     soup = BeautifulSoup(response.text, 'html.parser')
     articles = soup.find_all('article', limit=5)
 
@@ -24,7 +24,7 @@ def get_data():
 
 @app.route('/articles')
 def articles():
-    response = requests.get('https://www.forbes.com/ai/')
+    response = requests.get('https://arxiv.org/list/cs.AI/recent')
     soup = BeautifulSoup(response.text, 'html.parser')
     articles = soup.find_all('article')
 
@@ -38,7 +38,7 @@ def articles():
 
 @app.route('/article/<int:number>')
 def article(number):
-    response = requests.get('https://www.forbes.com/ai/')
+    response = requests.get('https://arxiv.org/list/cs.AI/recent')
     soup = BeautifulSoup(response.text, 'html.parser')
     articles = soup.find_all('article')
 
@@ -54,7 +54,7 @@ def article(number):
 
 @app.route('/ml')
 def ml():
-    response = requests.get('https://www.forbes.com/ai/')
+    response = requests.get('https://arxiv.org/list/cs.AI/recent')
     soup = BeautifulSoup(response.text, 'html.parser')
     articles = soup.find_all('article')
 
@@ -73,8 +73,20 @@ def ml():
 
 @app.route('/ml/<int:number>')
 def ml_number(number):
-    # Implement your machine learning script here
-    pass
+    response = requests.get('https://arxiv.org/list/cs.AI/recent')
+    soup = BeautifulSoup(response.text, 'html.parser')
+    articles = soup.find_all('article')
 
-if __name__ == '__main__':
+    if number <= 0 or number > len(articles):
+        return jsonify({'error': 'Article number out of range'}), 404
+
+    article = articles[number-1]
+    content = article.find('div', class_='article-body').text
+
+    sentiment_analyzer = pipeline('sentiment-analysis')
+    sentiment = sentiment_analyzer(content)[0]['label']
+
+    return jsonify({'number': number, 'sentiment': sentiment})
+
+if _name_ == '_main_':
     app.run(debug=True)
