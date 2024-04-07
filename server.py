@@ -20,7 +20,7 @@ def fetch_articles(article_number):
         soup = BeautifulSoup(response.text, 'html.parser')
         list_articles = soup.findAll('ul', {'class': 'cards'})
         articles = list_articles[0].findAll('li', {'class': 'glue-grid__col'})
-        # empêche de dépasser le nombre d'article demandé
+        # empêche de dépasser le nombre d'articles demandés
         if len(articles) < 12:
             blog_end = True
         if len(articles_data) + len(articles) > article_number:
@@ -42,7 +42,7 @@ def fetch_articles(article_number):
                 "date": date
             })
             article_counter += 1
-        # blog_end permet d'arreter la boucle si il n'y a plus d'article disponible
+        # blog_end permet d'arrêter la boucle si il n'y a plus d'article disponible
         if blog_end:
             break
         page_number += 1
@@ -128,12 +128,12 @@ def articles_number(number):
         blog_str += f"{p.text.strip()}\n\n"
     return blog_str
 
-# Cette requête peux prendre un certain temps en fonction de la puissance de l'ordinateur
+# Cette requête peut prendre un certain temps en fonction de la puissance de l'ordinateur
 @app.route('/ml/<number>')
 def resume_article(number):
     link = find_blog(int(number))
     (title, p_elements_with_data_block_key) = scrap_content(link)
-    # Transformer les données en chaîne pour le traîtement
+    # Transformer les données en chaîne pour le traitement
     blog_str = ""
     blog_str += f"{title.text.strip()}\n"
     for p in p_elements_with_data_block_key:
