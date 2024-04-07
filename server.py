@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from scrape_info import scrape_article,findUrlHref
+from sentiment_analysis import graph
 
 app = Flask(__name__)
 # url de notre blog que l'on va scrapper
@@ -33,9 +34,10 @@ def article(article_id):
 
 # on définit la root qui pointera sur une du sentiment analysis
 @app.route('/machine_learning')
-def test_article():
-
-    return render_template('ml.html') 
+def sentiment_analysis():
+    plot_bytes = graph("https://blog-ia.com")
+    graph("https://blog-ia.com")
+    return render_template('ml.html',plot=plot_bytes) 
 
 if __name__ == '__main__':
     app.run()
