@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EndPoints with Json Outputs</title>
+</head>
+<body>
+    <h1>API for ArXiv Scraping</h1>
+    <h2>Endpoints</h2>
+    <div>
+        <h3>/get_data/ - Default AI Topic</h3>
+        <p>Fetches a list of articles related to AI. Returns the ID and title of up to 10 articles.</p>
+        <pre>GET /get_data/</pre>
+        <pre>GET /get_data/{topic}</pre>
+        <p>Replace {topic} with your search term to get related articles.</p>
+    </div>
+    <div>
+        <h3>/articles - List of Articles</h3>
+        <p>Displays a list of articles including arxiv_id, title, authors, published date, and link of up to 10 articles.</p>
+        <pre>GET /articles</pre>
+    </div>
+    <div>
+        <h3>/article/{number} - Specific Article by ID</h3>
+        <p>Accesses a specific article's content by ID and returns detailed information.</p>
+        <pre>GET /article/{number}</pre>
+        <p>Replace {number} with the article ID you want to retrieve.</p>
+    </div>
+    <div>
+        <h3>/ml/{article_id} - Sentiment Analysis</h3>
+        <p>Performs sentiment analysis on the abstract of the specified article and returns the result with an overall estimation.</p>
+        <pre>GET /ml/{article_id}</pre>
+        <p>Replace {article_id} with the article ID to analyze.</p>
+    </div>
+
+    <h2>How to Use</h2>
+    <p>
+        To access the endpoints, you can use a browser or tools like curl or Postman. 
+        Simply append the endpoint to the base URL of this service and include the required parameters if needed. 
+        For instance, to get articles related to machine learning, you would access:
+    </p>
+    <pre>GET /get_data/machine learning</pre>
+
+    <p>
+        To get sentiment analysis for a specific article, for example you would access:
+    </p>
+    <pre>GET /ml/2404.03624v1</pre>
+
+    <footer style="background-color: #202020; color: #f8f8f8; text-align: center; padding: 10px 0; font-size: 1em;">
+        All endpoints return data in JSON format.</footer>
+</body>
+</html>

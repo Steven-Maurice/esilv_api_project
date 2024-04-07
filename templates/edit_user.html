@@ -1,0 +1,23 @@
+<!-- edit_user.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_edit_user.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <h2>Edit User</h2>
+        <form action="" method="post">
+            <input type="email" id="email" name="email" placeholder="Email" value="{{ user.email }}" required>
+            
+            <input type="password" id="password" name="password" placeholder="New Password (leave blank if you do not want to change it)">
+            
+            <input type="submit" value="Update">
+        </form>
+    </div>
+    
+</body>
+</html>
