@@ -1,17 +1,85 @@
 from os import abort
-from flask import Flask, jsonify, redirect, render_template
-import json
+from flask import Flask, jsonify, redirect
 import requests 
 import xml.etree.ElementTree as ET
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Rainie0000: Yufei Li
-
-# _getdata
 
 # création de l'instance de Flask
 app = Flask(__name__)
+
+
+##########################################################################################################################################
+
+# 1. getdata
+@app.route('/get_data')
+def get_data():
+    articles = retrieve_articles()
+    # On récupère les 25 premiers articles
+    twenty_five_articles = articles[:25]
+    # On retourne les articles en tant que réponse JSON
+    return jsonify(twenty_five_articles)
+
+
+
+# 2. articles
+@app.route('/articles')
+def articles():
+    articles = retrieve_articles()
+    # Transformer les articles pour n'inclure que les informations demandées sans le résumé
+    articles_info = [{
+        'number': i+1,
+        'title': article['title'],
+        'author': article['author'],
+        'published': article['published']
+    } for i, article in enumerate(articles)]
+    
+    return jsonify(articles_info)
+
+
+# 3. article/<number>
+# Ici si on veut avoir accès à un article, on remplace <int:number> par son numéro 
+# par exemple "3" pour le troisième article
+@app.route('/articles/<int:number>')
+def article(number):
+    articles = retrieve_articles()
+    if 1 <= number <= len(articles):
+        article_link = articles[number-1]['link']
+        return redirect(article_link)  # Rediriger l'utilisateur vers le lien de l'article
+    else:
+        abort(404)  # Si l'article n'existe pas, renvoie une erreur 404
+
+
+# 4. ml
+
+# Ici on utilise des elements de machine learning 
+# comme TfidfVectorizer,Cosine Similarity, perform_recommendation()
+
+# Remarque: il y a 2 updates pour cet endpoint (voir section README), vous pouvez tester séparément
+
+# 1er update: commit fait avant par moi (Yufei) => en prenant par exemple le mot clé "image processing"
+# Idée est qu'on extrait 100 articles 
+# On donne un mot clé et je veux qu'on me 
+# recommende l'article (parmi les 100) qui contient plus probablement les éléments 
+# qui m'intéressent
+
+# 2ème update: celui que je viens de faire, qui correspond à l'update le plus récent
+# On part de la même idée mais on essaie de donner 1 thématique cette fois-ci et demande d'avoir une liste des 
+# articles recommendés avec le lien, le titre et le résumé, permettant à l'utilisateur de choisir le ou les articles qui l'interessent
+@app.route('/ml/<string:recommendation>')
+def recommend_article(recommendation):
+    articles, vectorizer, X = prepare_vector_space(recommendation)
+    top_n = 5  # Nombre d'articles à recommander
+    recommended_articles = perform_recommendation(recommendation, vectorizer, X, articles, top_n)
+
+    # Return the list of recommended articles as JSON data
+    return jsonify(recommended_articles)
+
+# par exemple quand je fais /ml/image ca m'affiche toutes les articles recommendés ainsi que leur résumé
+
+#########################################################################################################################################
+
 
 # Je récupère les articles à partir de l'API ArXiv
 # J'ai initialement pris 5 articles mais finalement on décide de prendre 25 articles
@@ -31,8 +99,6 @@ def retrieve_articles():
         id = entry.find('{http://www.w3.org/2005/Atom}id').text
         link = entry.find('{http://www.w3.org/2005/Atom}link').attrib['href']
         
-
-
         article = {
             'title': title,
             'author': author,
@@ -45,69 +111,8 @@ def retrieve_articles():
 
     return articles
 
-
-@app.route('/get_data')
-def get_data():
-    articles = retrieve_articles()
-
-
-    # On récupère les 25 premiers articles
-
-    five_articles = articles[:25]
-
-    # On retourne les articles en tant que réponse JSON
-    return jsonify(five_articles)
-
-
-
-
-# valentinf75 : Valentin Fried
-
-@app.route('/articles')
-def articles():
-    articles = retrieve_articles()
-    # Transformer les articles pour n'inclure que les informations demandées sans le résumé
-    articles_info = [{
-        'number': i+1,
-        'title': article['title'],
-        'author': article['author'],
-        'published': article['published']
-    } for i, article in enumerate(articles)]
-    
-    return jsonify(articles_info)
-
-# Ici si on veut avoir accès à un article, on remplace <int:number> par son numéro 
-# par exemple "3" pour le troisième article
-@app.route('/articles/<int:number>')
-# def article(number):
-#     articles = retrieve_articles()
-#     if 1 <= number <= len(articles):
-#         return jsonify(articles[number-1])  # Les indices de liste commencent à 0
-#     else:
-#         abort(404)  # Si l'article n'existe pas, renvoie une erreur 404
-def article(number):
-    articles = retrieve_articles()
-    if 1 <= number <= len(articles):
-        article_link = articles[number-1]['link']
-        return redirect(article_link)  # Rediriger l'utilisateur vers le lien de l'article
-    else:
-        abort(404)  # Si l'article n'existe pas, renvoie une erreur 404
-
-
-
-
-# Rainie0000 : Yufei Li
-
-# 4. /ml 
-
-# Ici j'utilise des elements de machine learning 
-# comme TfidfVectorizer,Cosine Similarity, perform_recommendation()
-
-# Idée est que j'extrais 100 articles 
-# je donne un mot clé et je veux qu'on me 
-# recommende l'article (parmi les 100) qui contient plus probablement les éléments 
-# qui m'intéressent
-
+        
+# ici on prend 100 articles pour le 4 /ml
 def retrieve_4_articles(recommendation):
 
     recommendation_formatted = recommendation.replace(' ', '+')
@@ -141,17 +146,7 @@ def prepare_vector_space(recommendation):
     X = vectorizer.fit_transform(corpus)
     return articles, vectorizer, X
 
-@app.route('/ml/<string:recommendation>')
-def recommend_article(recommendation):
-    articles, vectorizer, X = prepare_vector_space(recommendation)
-    top_n = 5  # Nombre d'articles à recommander
-    recommended_articles = perform_recommendation(recommendation, vectorizer, X, articles, top_n)
-    
-    pretty_json = json.dumps(recommended_articles, indent=4)
 
-    
-    # Retourne la liste des articles recommandés sous forme de JSON
-    return render_template('pretty_json.html', json_data=pretty_json)
 
 def perform_recommendation(content, vectorizer, X, articles, top_n):
     content_vector = vectorizer.transform([content])
