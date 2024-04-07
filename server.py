@@ -1,5 +1,8 @@
 from flask import Flask, jsonify, request
 import requests
+from googletrans import Translator
+
+translator = Translator()
 
 app = Flask(__name__)
 
@@ -55,10 +58,11 @@ def get_article(number):
     return response["content"]
 
 
-@app.route('/ml', methods=['GET'])
+@app.route('/ml/<number>', methods=['GET'])
 def ml(number):
-    response = everything_endpoint(QUERY, 5, 1)["articles"][int(number)]
-    return response
+    summary = everything_endpoint(QUERY, 5, 1)["articles"][int(number)]["summary"]
+    text = translator.translate(summary, src="en", dest="fr").text
+    return text
 
 
 if __name__ == '__main__':
