@@ -116,7 +116,9 @@ if we take the number one, we have :
 }
 
 - To get sentiment analysis for the second article: `/ml/1`
+
 0.137981977372221
+
 A positive score suggests a positive sentiment, while a negative score indicates a negative sentiment. In this context, the score suggests a slightly positive sentiment in the analyzed article.
 
 
