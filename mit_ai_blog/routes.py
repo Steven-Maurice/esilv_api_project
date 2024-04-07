@@ -19,18 +19,28 @@ def index():
 def get_data():
     articles = scrape_mit_news()
     if articles:
-        data = [{"title": article["title"]} for article in articles]
-        return data #jsonify(data)
+        data_info = "<h1>Data</h1>"
+        for article in articles:
+            data_info += f"<p>Title: {article['title']}</p>"
+            data_info += "<hr>"
+        return data_info
     else:
-        return jsonify({"error": "Failed to retrieve data from MIT News."}), 500
+        return "<h1>Error</h1><p>Failed to retrieve data from MIT News.</p>", 500
 
 def get_articles():
     articles = scrape_mit_news()
     if articles:
-        article_info = [{"Article number" : article["Article number"], "title": article["title"], "date": article["date"], "link": article["link"]} for article in articles]
-        return jsonify(article_info)
+        article_info = "<h1>Articles</h1>"
+        for article in articles:
+            article_info += f"<p>Article number: {article['Article number']}</p>"
+            article_info += f"<p>Title: {article['title']}</p>"
+            article_info += f"<p>Date: {article['date']}</p>"
+            article_info += f"<p>Link: <a href='{article['link']}'>{article['link']}</a></p>"
+            article_info += f"<img src='{article['Image']}' alt='Article image'>"
+        return article_info
     else:
-        return jsonify({"error": "Failed to retrieve data from MIT News."}), 500
+        return "<h1>Error</h1><p>Failed to retrieve data from MIT News.</p>", 500
+
 
 def get_article(number):
     articles = scrape_mit_news()

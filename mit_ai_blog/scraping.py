@@ -15,7 +15,9 @@ def scrape_mit_news():
             title = article_tag.find("h3", class_="term-page--news-article--item--title").text.strip()
             link = "https://news.mit.edu" + article_tag.find("a", class_="term-page--news-article--item--title--link")["href"]
             date = article_tag.find("time").text.strip()
-            articles.append({"Article number" : number, "title": title, "date": date, "link": link})
+            image_tag = article_tag.find("div", class_="term-page--news-article--item--cover-image")
+            image_url = image_tag.find("img")["src"] if image_tag else None
+            articles.append({"Article number" : number, "title": title, "date": date, "link": link, "Image": image_url})
         return articles
     except Exception as e:
         print("Error fetching data from MIT News:", e)
