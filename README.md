@@ -59,5 +59,7 @@ You can choose website about many subject like:
     
     Nous pensons que cette API est un excellent outil pour les chercheurs, les journalistes ou toute personne intéressée par 
     les tendances et les perceptions de l'intelligence artificielle dans l'actualité.
-
+    
+    Notre code, le fichier composition.txt ainsi que des captures d'écran de nos requêtes se situe dans le directory NEWSAPI. 
+    Nous vous avons fourni les captures d'écran dans le cas de figure où les liens ne marchent pas. 
     
