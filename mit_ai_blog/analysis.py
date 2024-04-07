@@ -4,6 +4,9 @@ from sklearn.svm import SVC
 from textblob import TextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+#Script to perform sentiment analysis
+# - Polarity: refers to the emotional intensity or sentiment expressed in text ;
+# - Subjectivity: refers to the degree to which a statement is opinionated or expresses personal feelings.
 def analyze_sentiment(articles, article_texts):
     model = Pipeline([
         ('vectorizer', CountVectorizer()),

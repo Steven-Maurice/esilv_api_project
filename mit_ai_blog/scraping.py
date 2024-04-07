@@ -1,11 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 
+#This function scrape the information about the MIT News website (title/number/link/image)
 def scrape_mit_news():
     try:
         url = "https://news.mit.edu/topic/artificial-intelligence2"
         response = requests.get(url)
-        response.raise_for_status()  # Gérer les erreurs HTTP
+        response.raise_for_status()
         soup = BeautifulSoup(response.content, "html.parser")
         articles = []
         article_tags = soup.find_all("div", class_="term-page--news-article--item--descr")
@@ -23,10 +24,11 @@ def scrape_mit_news():
         print("Error fetching data from MIT News:", e)
         return []
 
+#This function scrape the content of each articles 
 def scrape_article_content(url):
     try:
         response = requests.get(url)
-        response.raise_for_status()  # Gérer les erreurs HTTP
+        response.raise_for_status() 
         soup = BeautifulSoup(response.content, "html.parser")
         article_content = soup.find("div", class_="paragraph--type--content-block-text")
         if article_content:

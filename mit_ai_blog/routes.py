@@ -2,6 +2,7 @@ from flask import jsonify, Response
 from mit_ai_blog.scraping import scrape_mit_news, scrape_article_content
 from mit_ai_blog.analysis import analyze_sentiment
 
+#Welcome page
 def index():
     text = "<html><head><title>Page of Antoine and Leo !</title></head><body>"
     text += "<p>Made by Antoine BUFFANDEAU and Leo DROUIN.</p>"
@@ -16,6 +17,7 @@ def index():
     text += "</body></html>"
     return Response(text, mimetype="text/html")
 
+#Function which prints the title of the articles
 def get_data():
     articles = scrape_mit_news()
     if articles:
@@ -27,6 +29,7 @@ def get_data():
     else:
         return "<h1>Error</h1><p>Failed to retrieve data from MIT News.</p>", 500
 
+#Function which print the data of the articles (title/number/link/image)
 def get_articles():
     articles = scrape_mit_news()
     if articles:
@@ -41,6 +44,7 @@ def get_articles():
     else:
         return "<h1>Error</h1><p>Failed to retrieve data from MIT News.</p>", 500
 
+#Function which retrieve artciel content
 def get_article(number):
     articles = scrape_mit_news()
     if 0 < number <= len(articles):
@@ -53,6 +57,9 @@ def get_article(number):
     else:
         return f"<h1>Error</h1><p>Article number {number} not found.</p>", 404
 
+#Funtion which perform the sentiment analysis:
+# - Polarity: refers to the emotional intensity or sentiment expressed in text ;
+# - Subjectivity: refers to the degree to which a statement is opinionated or expresses personal feelings.
 def ml_analysis_all():
     articles = scrape_mit_news()
     if articles:
@@ -71,6 +78,7 @@ def ml_analysis_all():
     else:
         return "<h1>Error</h1><p>Failed to retrieve data from MIT News.</p>", 500
 
+#Function which perform sentiment analysis on the article specified
 def ml_analysis_one(number):
     articles = scrape_mit_news()
     if articles:
