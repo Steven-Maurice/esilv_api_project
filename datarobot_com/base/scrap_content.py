@@ -2,6 +2,13 @@ from bs4 import BeautifulSoup
 
 
 def return_5_most_recent(html_content):
+    """
+    return_5_most_recent scraps the content of a html code to get all the urls of Generative AI and AI in the news articles
+
+    :html_content: The html code of the main webpage
+
+    :return: A list of the first 5 urls in str format
+    """
 
     soup = BeautifulSoup(html_content, "lxml")
 

@@ -1,4 +1,12 @@
 def interpretation(polarite, subjectivite):
+    """
+    interpretation is a function that converts a polarite and sujectivite number into a phrase
+
+    polarite: a number generated with TextBlob library, a sentiment analysis library
+    subjectivite: a number generated with TextBlob library, a sentiment analysis library
+
+    return a concatenated str of polarity and subjectivity about an article
+    """
 
     if -1 <= polarite < -0.5:
         avis_polarite = "l'avis de l'auteur sur le sujet est négatif."
@@ -16,9 +24,3 @@ def interpretation(polarite, subjectivite):
         avis_subjectivite = "Le texte est complètement subjectif."
 
     return avis_polarite + " " + avis_subjectivite
-
-
-polarite_exemple = 0.1275343162175902
-subjectivite_exemple = 0.36195611426928137
-interpretation_resultat = interpretation(polarite_exemple, subjectivite_exemple)
-print(interpretation_resultat)
