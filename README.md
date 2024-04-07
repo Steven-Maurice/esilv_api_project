@@ -52,7 +52,7 @@ This guide assumes the AI News API is hosted locally at http://localhost:5000. B
   
 *http://localhost:5000/articles
 
-*http://localhost:5000/article/<number>
+*http://localhost:5000/article/2024-04-314965128
 
 *http://localhost:5000/ml_positive
 
