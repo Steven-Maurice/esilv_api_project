@@ -40,7 +40,108 @@ To get a list of articles, send a GET request to http://localhost:5000/get_data.
 
 Response:
 
-    {"articles": [{"article_id": "2403.20306", "title": "Towards Greener LLMs: Bringing Energy-Efficiency to the Forefront of LLM Inference", "authors":"Jovan Stojkovic, Esha Choukse, Chaojie Zhang, Inigo Goiri, Josep Torrellas", "abstract_url":"https://arxiv.org/abs/2403.20306"},{"article_id": "2403.20234","title":"Artificial Neural Networks-based Real-time Classification of ENG Signals for Implanted Nerve Interfaces", "authors":"ntonio Coviello , Francesco Linsalata, Umberto Spagnolini, Maurizio Magarini", "abstract_url":"https://arxiv.org/abs/2403.20234"}, {"article_id": "2403.20212", "title": "On Size and Hardness Generalization in Unsupervised Learning for theTravelling Salesman Problem", "authors"; "Yimeng Min, Carla P. Gomes", "abstract_url":"https://arxiv.org/abs/2403.20212"},{"article_id": "2403.20204","title":"The Future ofCombating Rumors? Retrieval, Discrimination, and Generation", "authors":"Junhao Xu, Longdi Xian, Zening Liu, Mingliang Chen, Qiuyang Yin, Fenghua
+    [
+      {
+        "link": "https://openai.com/blog/introducing-improvements-to-the-fine-tuning-api-and-expanding-our-custom-models-program",
+        "number": 0,
+        "title": "Introducing improvements to the fine-tuning API and expanding our custom models program"
+      },
+      {
+        "link": "https://openai.com/blog/start-using-chatgpt-instantly",
+        "number": 1,
+        "title": "Start using ChatGPT instantly"
+      },
+      {
+        "link": "https://openai.com/blog/navigating-the-challenges-and-opportunities-of-synthetic-voices",
+        "number": 2,
+        "title": "Navigating the Challenges and Opportunities of Synthetic Voices"
+      },
+      {
+        "link": "https://openai.com/blog/sora-first-impressions",
+        "number": 3,
+        "title": "Sora: first impressions"
+      },
+      {
+        "link": "https://openai.com/blog/global-news-partnerships-le-monde-and-prisa-media",
+        "number": 4,
+        "title": "Global news partnerships: Le Monde and Prisa Media"
+      },
+      {
+        "link": "https://openai.com/blog/openai-announces-new-members-to-board-of-directors",
+        "number": 5,
+        "title": "OpenAI announces new members to board of directors"
+      },
+      {
+        "link": "https://openai.com/blog/review-completed--altman-brockman-to-continue-to-lead-openai",
+        "number": 6,
+        "title": "Review completed & Altman, Brockman to continue to lead OpenAI"
+      },
+      {
+        "link": "https://openai.com/blog/openai-and-elon-musk",
+        "number": 7,
+        "title": "OpenAI and Elon Musk"
+      },
+      {
+        "link": "https://openai.com/blog/disrupting-malicious-uses-of-ai-by-state-affiliated-threat-actors",
+        "number": 8,
+        "title": "Disrupting malicious uses of AI by state-affiliated threat actors"
+      },
+      {
+        "link": "https://openai.com/blog/memory-and-new-controls-for-chatgpt",
+        "number": 9,
+        "title": "Memory and new controls for ChatGPT"
+      },
+      {
+        "link": "https://openai.com/blog/new-embedding-models-and-api-updates",
+        "number": 10,
+        "title": "New embedding models and API updates"
+      },
+      {
+        "link": "https://openai.com/blog/democratic-inputs-to-ai-grant-program-lessons-learned-and-implementation-plans",
+        "number": 11,
+        "title": "Democratic inputs to AI grant program: lessons learned and implementation plans"
+      },
+      {
+        "link": "https://openai.com/blog/how-openai-is-approaching-2024-worldwide-elections",
+        "number": 12,
+        "title": "How OpenAI is approaching 2024 worldwide elections"
+      },
+      {
+        "link": "https://openai.com/blog/introducing-chatgpt-team",
+        "number": 13,
+        "title": "Introducing ChatGPT Team"
+      },
+      {
+        "link": "https://openai.com/blog/introducing-the-gpt-store",
+        "number": 14,
+        "title": "Introducing the GPT Store"
+      },
+      {
+        "link": "https://openai.com/blog/openai-and-journalism",
+        "number": 15,
+        "title": "OpenAI and journalism"
+      },
+      {
+        "link": "https://openai.com/blog/superalignment-fast-grants",
+        "number": 16,
+        "title": "Superalignment Fast Grants"
+      },
+      {
+        "link": "https://openai.com/blog/partnership-with-axel-springer-to-deepen-beneficial-use-of-ai-in-journalism",
+        "number": 17,
+        "title": "Partnership with Axel Springer to deepen beneficial use of AI in journalism"
+      },
+      {
+        "link": "https://openai.com/blog/sam-altman-returns-as-ceo-openai-has-a-new-initial-board",
+        "number": 18,
+        "title": "Sam Altman returns as CEO, OpenAI has a new initial board"
+      },
+      {
+        "link": "https://openai.com/blog/openai-announces-leadership-transition",
+        "number": 19,
+        "title": "OpenAI announces leadership transition"
+      }
+    ]
 
 
 ### /articles (PAUL-HAKIM)
