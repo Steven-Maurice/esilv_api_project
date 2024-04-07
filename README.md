@@ -33,6 +33,7 @@ You can choose website about many subject like:
 We chose the website datarobot.com and expecially the articles about Generative AI and AI in the News.
 We chose to retrieve only the 5 most recent articlesabout those 2 subjects.
 We created the following endpoints : 
+
     - get_data: Retrieving the 5 most recent articles, storing them in the windows folder
     - articles: Displays information about the articles: title, publication date and author
     - article/number: Accesses the content of a specified article (number goes from 1 to 5 included)
