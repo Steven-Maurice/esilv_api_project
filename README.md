@@ -82,9 +82,11 @@ Afterwards we defined the perform_recommendation(content) function takes the spe
 
 Then, it calculates the cosine similarities between the content and the article summaries. The index of the article with the highest similarity is returned as the recommendation.
 
-For example we use "image processing" here but of course we can choose other keywords based on our needs.  Then we are redirected to the user to the recommended article link thanks to redirect_article(number) function.
+=>For example we use "image processing" here but of course we can choose other keywords based on our needs.  Then we are redirected to the user to the recommended article link thanks to redirect_article(number) function.
 
-- The second one is based on the idea of the first one, what we added here is to give for example a thematic and ask it to give me different articles arount this topic.
+- The second one is based on the idea of the first one, the difference is that this time we wanted to be able to give a list of articles recommended with their title, summary and link based on a specific topic, so that the user can choose from the list of articles recommended the best one or several that he is interested in.
 
-For example we can do /ml/esg to get recommendations of articles around esg
+=>For example we can do /ml/image to get recommendations of articles around image
+
+The most recent update is the second one but you can see the first update in the history commit, the one that I (Yufei) did.
 
