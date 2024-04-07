@@ -40,4 +40,17 @@ Here's an overview of the endpoints available through our API:
 
 
 ### Exemple of use
+This guide assumes the AI News API is hosted locally at http://localhost:5000. Below, you'll find examples of how to interact with each endpoint to utilize the full potential of our API for accessing AI-related news and features.
+
+- **Summary of Articles**: Get titles of selected AI news articles.
+
+GET http://localhost:5000/get_data
+
+- **Detailed Articles Information**: Access details on articles, excluding the body.
+  
+GET http://localhost:5000/articles
+
+- **Specific Article Details**: View information about a specific article by its URI number.
+
+GET http://localhost:5000/article/<number>
 
