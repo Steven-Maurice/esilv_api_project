@@ -24,3 +24,38 @@ def get_data():
     response = requests.get(url)
     data = response.json()
     return jsonify(data)
+
+
+#we create the 'articles' route that provides information about the articles such as the article number, title, and publication date, but not the content
+@articles_blueprint.route('/articles', methods=['GET'])
+def articles():
+    """
+    Retrieves information about articles from the News API.
+
+    Returns:
+        dict: JSON response containing information about articles.
+    """
+    url = ('https://newsapi.org/v2/top-headlines?'
+            'q=Artificial Intelligence&'
+            'pageSize=5&'
+            'apiKey=2dc9629039304cbd8d0a69e75a3509ee')
+    
+    #we send the get request to the API
+    response = requests.get(url)
+    data = response.json()
+    articles_data = data['articles']
+
+    #we simplify the articles data
+    simplified_articles = [
+        {
+            'article_number': idx + 1,
+            'title': article['title'],
+            'publication_date': article['publishedAt'],
+            'description': article['description'],
+            'author': article.get('author'),
+            'source_name': article['source']['name'],
+            'url': article['url']
+        }
+        for idx, article in enumerate(articles_data)
+    ]
+    return jsonify(simplified_articles)
