@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, Blueprint
-from eventregistry import *
+
 
 
 get_data = Blueprint('get_data', __name__)

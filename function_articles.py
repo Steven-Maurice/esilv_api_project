@@ -1,6 +1,6 @@
 
 from flask import Flask, jsonify, Blueprint
-from eventregistry import *
+
 
 articles = Blueprint('articles', __name__)
 
