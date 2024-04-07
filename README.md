@@ -72,7 +72,7 @@ For example if we want to get access to the 3rd article within the 25 articles, 
 
 Here we did 2 updates.
 
-The first one's objective is to give a keyword and the endpoint will provides me with the recommended article (best one among 100 articles) and give us the link that allows us to get access to that article directly. We used elements of machine learning such as TfidfVectorizer, Cosine Similarity, perform_recommendation().
+- The first one's objective is to give a keyword and the endpoint will provides me with the recommended article (best one among 100 articles) and give us the link that allows us to get access to that article directly. We used elements of machine learning such as TfidfVectorizer, Cosine Similarity, perform_recommendation().
 
 We used a vector representation is created for the article summaries using the TfidfVectorizer class from the scikit-learn library. This transforms the text into numerical vectors representing their content.
 
@@ -83,4 +83,8 @@ Afterwards we defined the perform_recommendation(content) function takes the spe
 Then, it calculates the cosine similarities between the content and the article summaries. The index of the article with the highest similarity is returned as the recommendation.
 
 For example we use "image processing" here but of course we can choose other keywords based on our needs.  Then we are redirected to the user to the recommended article link thanks to redirect_article(number) function.
+
+- The second one is based on the idea of the first one, what we added here is to give for example a thematic and ask it to give me different articles arount this topic.
+
+For example we can do /ml/esg to get recommendations of articles around esg
 
