@@ -32,5 +32,16 @@ def get_scraped_data():
     
     return jsonify(data)
 
+@app.route('/date_articles')  
+def get_date_articles():
+    with open('articles.json') as json_file:
+        data = json.load(json_file)
+
+    dates = [article['date'] for article in data]
+    return {'Number of articles': len(data), 'Dates': dates}
+
+
+
+    
 if __name__ == '__main__':
     app.run()
