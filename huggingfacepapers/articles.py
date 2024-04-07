@@ -25,7 +25,7 @@ class Articles:
         if end is None:
             end = datetime.date.today()
         for date in date_range(start=start, end=end, freq="D"):
-            print(date)
+            print(f"Fetching highlighted papers for date : {date}")
             response = requests.get(f"https://huggingface.co/papers?date={date}")
             if response.status_code != 200:
                 raise Exception("Request error")
@@ -42,7 +42,6 @@ class Articles:
         articles = []
         for article_el in articles_els:
             rounded_els = article_el.select(".rounded-xl")
-            print(article_el.find('h3').text)
             article = Article(
                 title=article_el.find("h3").text,
                 media=(rounded_els[0].find("img") or article_el.find("video")).attrs["src"],
@@ -90,7 +89,6 @@ class Articles:
                     "score": util.cos_sim(queryEmbedding, article.embedding).tolist()[0][0],
                 }
             )
-        print(results)
         return sorted(results, key=lambda result: result["score"], reverse=True)
 
     def viz(self): 

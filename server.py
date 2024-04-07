@@ -1,5 +1,7 @@
 from flask import Flask, request, make_response
 from huggingfacepapers.articles import Articles
+import time
+
 
 app = Flask(__name__)
 
@@ -17,15 +19,13 @@ def get_data():
     start = request.args.get("start")
     end = request.args.get("end")
     cached_articles.loadArticles(start, end)
-    return cached_articles.preview()
-    # return {"number_of_articles":len(cached_articles)}
-    return ""
+    return {"number_of_articles":len(cached_articles.articles)}
 
 
 @app.route("/articles")
 def articles():
     global cached_articles
-    return cached_articles
+    return cached_articles.details()
 
 
 @app.route("/article/<id>")
@@ -37,8 +37,10 @@ def article(id):
 @app.route("/ml")
 def ml():
     global cached_articles
+    start_time = time.time()
     cached_articles.compute_embeddings()
-    return cached_articles.details()
+    end_time = time.time()
+    return {"message":f"{len(cached_articles.articles)} embeddings computed in {round(end_time-start_time, 2)} seconds"}
 
 @app.route("/ml/<id>")
 def ml_article(id):

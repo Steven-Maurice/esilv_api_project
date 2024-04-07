@@ -21,7 +21,6 @@ class Article:
         self.authors = [
             author.text.strip() for author in soup.select("span.author button")
         ]
-        print(self.id)
         self.abstract = soup.select_one("h2 + p").text
         self.pdfUrl = soup.select_one("div a + a").attrs["href"]
         self.loaded=True

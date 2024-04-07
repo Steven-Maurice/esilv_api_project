@@ -1,5 +1,9 @@
 Flask
 pandas
 bs4
-sklearn
+scikit-learn
 plotly_express
+tqdm
+requests
+sentence_transformers
+kaleido
