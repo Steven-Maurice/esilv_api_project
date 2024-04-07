@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Apr  7 18:13:29 2024
+
+@author: ibrahim
+"""
+
 from flask import Flask, jsonify, request
 import requests
 from bs4 import BeautifulSoup
@@ -72,6 +79,21 @@ def articles():
 
     return jsonify(full_articles)
 
+@app.route('/article/<int:number>', methods=['GET'])
+def article_content(number):
+    articles = get_data().get_json()
+    if number < 1 or number > len(articles):
+        return jsonify({'error': 'Article number out of range'}), 404
+
+    article = articles[number - 1]
+    content = fetch_article_content(article['link'])
+    return jsonify({
+        'number': article['number'],
+        'title': article['title'],
+        'content': content
+    })
+
+
 @app.route('/ml', methods=['GET'])
 def analyze_all_articles_sentiment():
     articles = get_data().get_json()
@@ -114,4 +136,3 @@ sia = SentimentIntensityAnalyzer()
 
 if __name__ == '__main__':
     app.run(debug=True)
-
