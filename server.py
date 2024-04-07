@@ -48,3 +48,20 @@ def article(number):
 def analyze_sentiment(text):
     analysis = TextBlob(text)
     return "positif" if analysis.sentiment.polarity > 0 else "négatif" if analysis.sentiment.polarity < 0 else "neutre"
+
+@app.route('/ml', methods=['GET'])
+@app.route('/ml/<int:number>', methods=['GET'])
+def ml(number=None):
+    if number and number in news_cache:
+        article = news_cache[number]
+        sentiment = analyze_sentiment(article['title'])
+        return jsonify({"number": number, "sentiment": sentiment})
+    elif not number:
+        sentiments = {story_id: analyze_sentiment(details['title']) for story_id, details in news_cache.items()}
+        return jsonify(sentiments)
+    else:
+        return abort(404, description="Article not found for ML analysis")
+
+if __name__ == '__main__':
+    port = 5001 
+    app.run(port=port)
