@@ -1,0 +1,19 @@
+# Esilv_Api_Project PARGUEY MINIAU KHENNOUF
+
+### Project
+
+Le projet se constitue en deux fichier python. Le premier projetGIT, va venir lancer un serveur flask et scraper le site actuia.com. 
+Dans ce fichier on a aussi un algo de machine learning qui est entrainé.
+Puis 4 branche vont etre crée :  getdATA renvoir les 5 premier article. 
+                                articles display les info des 5 premier articles 
+                                article/{getnumber} display le contenue d'un article choisis. 
+                                ml/{getnumber} applique un algorythme de machine learning qui renvoie le sentiment positifs ou negatifs de l'article sur l'IA.
+
+
+puis le fichier client viens tester le fichier python. 
+il se connecte au serveur flasket test les différentes roots.
+
+pous faire marcher notre projet il faut tout d'abord compiler le fichier projetGIT puis le fichier client qu va venir tester le premier fichier.
+
+
+tout les membre du groupe ont participé autant. 
