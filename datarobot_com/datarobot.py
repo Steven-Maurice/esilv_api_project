@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from textblob import TextBlob
 from base.interpretation import interpretation
-from base.summarizer import summarizer
 from base.summarizer import extract_and_summarize
 
 app = Flask(__name__)

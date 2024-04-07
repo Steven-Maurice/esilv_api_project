@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-import os
 import codecs
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
@@ -12,6 +11,13 @@ nltk.download("stopwords")
 
 
 def summarizer(text, n_sentences=3):
+    """
+    text: a str you want to summarize
+    n_sentences: lenght of the summary
+
+    return a summary of a text
+    """
+
     sentences = sent_tokenize(text)
     if len(sentences) < n_sentences:
         return text
@@ -36,6 +42,14 @@ def summarizer(text, n_sentences=3):
 
 
 def extract_and_summarize(filepath):
+    """
+    extract the text of an html file
+
+    filepath: path of the html file
+
+    return the summary
+    """
+
     with codecs.open(filepath, "r", "utf-8") as file:
         soup = BeautifulSoup(file.read(), "html.parser")
         paragraphs = soup.find_all("p")
