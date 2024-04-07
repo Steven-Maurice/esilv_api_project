@@ -39,20 +39,53 @@ This API provides news related to Artificial Intelligence (AI) from ArXiv site b
 
 -Accesses the content of a specified article.  
 
--Executes a Machine Learning script  
+-Executes a Machine Learning script that give a sentimental analysis 
 
+-Filter by author name or surname
+
+-Filter by keyword in the abstrat
 
 ### How the code is organised:
                               
 -Installation of Packages
 
--Importation of required libraries (flack for the creation of our API)
+-Importation of required libraries (Flack for the creation of our API)
 
 -Initialisation of our API 
 
--Implementation of our differents endpoints : 
+-Implementation of our differents endpoints 
 
-    1./get_data : result on http://127.0.0.1:5000/get_data
-    2./articles : result on http://127.0.0.1:5000/articles
-    3./article/$<number>$ : result on http://127.0.0.1:5000/number with number beeing a numbers between 1 and 5
-    4./ml : result on http://127.0.0.1:5000/ml
+-Run the API with app.run(port=5000) from Flask library
+
+### Overview
+
+This project involves the creation of an API, the AI News Overview API, which fetches and displays information about research papers related to Artificial Intelligence (AI) from the ArXiv API. Users can interact with this API to retrieve articles, view article details, perform sentiment analysis on articles, and search for articles containing specific keywords.
+
+### How to run our project
+
+In order to run the project, I recommend to install Flask (for the API), xml.etree (for reading data from arXiv) and vaderSentiment (for our ML function of sentimental analysis). 
+To install them, I recommend to direclty write those codes above in the terminal :
+
+    * pip install vaderSentiment
+    * pip install Flask
+    * pip install xml.etree
+
+After installing the necessary packages, you can download and run the main.py file on Spyder or other EDI (BE CAREFUL TO DOWNLOAD THE MAIN.PY AND THE FUNCTIONS.PY FILE AND RUN THEM TOGETHER !!!)
+
+Here are where you should find locally the result for each endpoints:
+
+    / : result on http://127.0.0.1:5000/
+
+    /get_data : result on http://127.0.0.1:5000/get_data
+
+    /articles : result on http://127.0.0.1:5000/articles
+
+    /article/<number> : result on http://127.0.0.1:5000/number with number beeing a numbers between 1 and 5
+
+    /ml : result on http://127.0.0.1:5000/ml
+
+    /author/<keyword> : result on http://127.0.0.1:5000/author/<keyword> with keyword a name or surname of authors
+
+    /summary/<keyword> : result on http://127.0.0.1:5000/summary/<keyword> with keyword the word you are searching and that contains in the abstract of the article
+
+
