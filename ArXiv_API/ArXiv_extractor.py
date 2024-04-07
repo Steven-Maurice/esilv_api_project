@@ -1,5 +1,3 @@
-
-
 from os import abort
 from flask import Flask, jsonify, redirect, render_template
 import json
