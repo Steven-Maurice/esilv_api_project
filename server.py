@@ -110,15 +110,11 @@ def article(artid):
     print("Searching for papers...")
     import datetime
     today = datetime.datetime.now()
-    print("artid is : " + str(artid))
 
     date = today.strftime("%Y-%m-%d")
     response = requests.get(f'http://export.arxiv.org/api/query?id_list={artid}')
 
     soup = BeautifulSoup(response.content, 'xml')
-    print("response is : " + str(soup))
-
-    
 
     authors = soup.find_all('author')
     authors = [author.find('name').text for author in authors]
@@ -152,7 +148,6 @@ def ml():
     response = requests.get('http://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=lastUpdatedDate&sortOrder=descending')
 
     soup = BeautifulSoup(response.content, 'xml')
-    print("step 1")
     entries = soup.find_all('entry')
 
     papers = []
@@ -187,16 +182,11 @@ def ml_number(artid):
     print("Searching for papers...")
     import datetime
     today = datetime.datetime.now()
-    print("artid is : " + str(artid))
 
     date = today.strftime("%Y-%m-%d")
     response = requests.get(f'http://export.arxiv.org/api/query?id_list={artid}')
 
     soup = BeautifulSoup(response.content, 'xml')
-    print("response is : " + str(soup))
-
-    
-
     authors = soup.find_all('author')
     authors = [author.find('name').text for author in authors]
     paper = (soup.find('title').text, soup.find('summary').text, authors, soup.find('id').text, soup.find('published').text)
