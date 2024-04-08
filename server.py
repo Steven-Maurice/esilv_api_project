@@ -1,92 +1,224 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, request
 from bs4 import BeautifulSoup
 import requests
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
 from transformers import pipeline
 
-app = Flask(_name_)
+arxiv_url = "http://export.arxiv.org/api/query"
+
+app = Flask(__name__)
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+@app.route("/")
+def home():
+    return render_template("home.html")
 
 @app.route('/get_data')
 def get_data():
-    response = requests.get('https://arxiv.org/list/cs.AI/recent')
-    soup = BeautifulSoup(response.text, 'html.parser')
-    articles = soup.find_all('article', limit=5)
+    print("Searching for papers...")
+    import datetime
+    today = datetime.datetime.now()
 
-    data = []
-    for i, article in enumerate(articles):
-        title = article.find('h2').text
-        date = article.find('time')['datetime']
-        data.append({'number': i+1, 'title': title, 'date': date})
+    date = today.strftime("%Y-%m-%d")
+    response = requests.get('http://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=lastUpdatedDate&sortOrder=descending')
 
-    return jsonify(data)
+    soup = BeautifulSoup(response.content, 'xml')
+
+    entries = soup.find_all('entry')
+
+    papers = []
+    for entry in entries:
+        title = entry.find('title').text
+        summary = entry.find('summary').text
+        authors = entry.find_all('author')
+        authors = [author.find('name').text for author in authors]
+        link = entry.find('id').text
+        date = entry.find('published').text
+        papers.append((title, summary, authors, link, date))
+
+    html = "<html><body>"
+    for paper in papers:
+        html += f"<h1>{paper[0]}</h1>"
+        html += f"<p>Authors: {paper[2]}</p>"
+        date = paper[4].split('T')[0]
+        html += f"<p>Published: {date}</p>"
+        html += f"<p>{paper[1]}</p>"
+        html += f"<a href={papers[3]}>{paper[3]}</a>"
+    html += "</body></html>"
+
+    headlines = []
+    for paper in papers:
+        headlines.append(paper[0])
+    html += "</body></html>\n"
+    html += "<br>"
+    html += "<a href='/'>Return to Home</a>"
+    with open('./templates/page.html', 'w') as file:
+        file.write(html)
+    return render_template("page.html", headlines=headlines)
+
 
 @app.route('/articles')
 def articles():
-    response = requests.get('https://arxiv.org/list/cs.AI/recent')
-    soup = BeautifulSoup(response.text, 'html.parser')
-    articles = soup.find_all('article')
+    
+    print("Searching for papers...")
+    import datetime
+    today = datetime.datetime.now()
 
-    data = []
-    for i, article in enumerate(articles):
-        title = article.find('h2').text
-        date = article.find('time')['datetime']
-        data.append({'number': i+1, 'title': title, 'date': date})
+    date = today.strftime("%Y-%m-%d")
+    response = requests.get('http://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=lastUpdatedDate&sortOrder=descending')
 
-    return jsonify(data)
+    soup = BeautifulSoup(response.content, 'xml')
 
-@app.route('/article/<int:number>')
-def article(number):
-    response = requests.get('https://arxiv.org/list/cs.AI/recent')
-    soup = BeautifulSoup(response.text, 'html.parser')
-    articles = soup.find_all('article')
+    entries = soup.find_all('entry')
 
-    if number <= 0 or number > len(articles):
-        return jsonify({'error': 'Article number out of range'}), 404
+    papers = []
+    for entry in entries:
+        title = entry.find('title').text
+        summary = entry.find('summary').text
+        authors = entry.find_all('author')
+        authors = [author.find('name').text for author in authors]
+        link = entry.find('id').text
+        date = entry.find('published').text
+        papers.append((title, summary, authors, link, date))
 
-    article = articles[number-1]
-    title = article.find('h2').text
-    date = article.find('time')['datetime']
-    content = article.find('div', class_='article-body').text
+    html = "<html><body>"
+    for paper in papers:
+        html += f"<h1><a href='http://127.0.0.1:5000/articles/artid={paper[3].split('/')[-1]}'>{paper[0]}</a></h1>"
+        html += f"<p>Authors: {paper[2]}</p>"
+        date = paper[4].split('T')[0]
+        html += f"<p>Published: {date}</p>"
+        html += f"<p>{paper[1]}</p>"
+        html += f"<a href={papers[3]}>{paper[3]}</a>\n<br>"
+        html += f"<a href='http://127.0.0.1:5000/ml/artid={paper[3].split('/')[-1]}'>ID : {paper[3].split('/')[-1]}</a>\n"
+    html += "</body></html>"
 
-    return jsonify({'number': number, 'title': title, 'date': date, 'content': content})
+    headlines = []
+    for paper in papers:
+        headlines.append(paper[0])
+    html += "</body></html>\n"
+    html += "<br>"
+    html += "<a href='/'>Return to Home</a>"
+    with open('./templates/browsearticles.html', 'w') as file:
+        file.write(html)
+    return render_template("browsearticles.html", headlines=headlines)
+
+@app.route('/articles/artid=<artid>')
+def article(artid):
+    
+    print("Searching for papers...")
+    import datetime
+    today = datetime.datetime.now()
+    print("artid is : " + str(artid))
+
+    date = today.strftime("%Y-%m-%d")
+    response = requests.get(f'http://export.arxiv.org/api/query?id_list={artid}')
+
+    soup = BeautifulSoup(response.content, 'xml')
+    print("response is : " + str(soup))
+
+    
+
+    authors = soup.find_all('author')
+    authors = [author.find('name').text for author in authors]
+    paper = (soup.find('entry').find('title').text, soup.find('summary').text, authors, soup.find('id').text, soup.find('published').text)
+    html = "<html><body>"
+    html += f"<h1>{paper[0]}</h1>"
+    html += f"<p>Authors: {''.join([str(autor + ', ') for autor in paper[2]])[:-2]}</p>"
+    date = paper[4].split('T')[0]
+    html += f"<p>Published: {date}</p>"
+    html += f"<p>{paper[1]}</p>"
+    html += f"<a href={paper[3]}>{paper[3]}</a>"
+    sentiment_analyzer = pipeline('sentiment-analysis', model='nlptown/bert-base-multilingual-uncased-sentiment', use_fast=False)
+    sentiment = sentiment_analyzer(paper[1])[0]['label']
+    html += f"<p>Sentiment: {sentiment}</p>"
+    html += "</body></html>"
+
+    
+    html += "</body></html>\n"
+    html += "<br>"
+    html += "<a href='/'>Return to Home</a>"
+    with open('./templates/article.html', 'w') as file:
+        file.write(html)
+    return render_template("article.html", headlines=paper)
 
 @app.route('/ml')
 def ml():
-    response = requests.get('https://arxiv.org/list/cs.AI/recent')
-    soup = BeautifulSoup(response.text, 'html.parser')
-    articles = soup.find_all('article')
+    import datetime
+    today = datetime.datetime.now()
 
-    data = []
-    sentiment_analyzer = pipeline('sentiment-analysis')
+    date = today.strftime("%Y-%m-%d")
+    response = requests.get('http://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=lastUpdatedDate&sortOrder=descending')
 
-    for i, article in enumerate(articles):
-        title = article.find('h2').text
-        date = article.find('time')['datetime']
-        content = article.find('div', class_='article-body').text
+    soup = BeautifulSoup(response.content, 'xml')
+    print("step 1")
+    entries = soup.find_all('entry')
 
-        sentiment = sentiment_analyzer(content)[0]['label']
-        data.append({'number': i+1, 'title': title, 'date': date, 'sentiment': sentiment})
+    papers = []
+    for entry in entries:
+        title = entry.find('title').text
+        summary = entry.find('summary').text
+        authors = entry.find_all('author')
+        authors = [author.find('name').text for author in authors]
+        link = entry.find('id').text
+        date = entry.find('published').text
+        papers.append((title, summary, authors, link, date))
+    html = "<html><body>"
+    for paper in papers:
+        html += f"<h1>{paper[0]}</h1>"
+        html += f"<p>Authors: {paper[2]}</p>"
+        date = paper[4].split('T')[0]
+        html += f"<p>Published: {date}</p>"
+        html += f"<a href={papers[3]}>{paper[3]}</a>"
+        sentiment_analyzer = pipeline('sentiment-analysis', model='nlptown/bert-base-multilingual-uncased-sentiment', use_fast=False)
+        sentiment = sentiment_analyzer(paper[1])[0]['label']
+        html += f"<p>Sentiment: {sentiment}</p>"
+    html += "</body></html>\n"
+    html += "<br>"
+    html += "<a href='/'>Return to Home</a>"
+    
+    with open('./templates/machinelearning.html', 'w') as file:
+        file.write(html)
+    return render_template("machinelearning.html", papers=papers, sentiment=sentiment)
 
-    return jsonify(data)
+@app.route('/ml/artid=<artid>')
+def ml_number(artid):
+    print("Searching for papers...")
+    import datetime
+    today = datetime.datetime.now()
+    print("artid is : " + str(artid))
 
-@app.route('/ml/<int:number>')
-def ml_number(number):
-    response = requests.get('https://arxiv.org/list/cs.AI/recent')
-    soup = BeautifulSoup(response.text, 'html.parser')
-    articles = soup.find_all('article')
+    date = today.strftime("%Y-%m-%d")
+    response = requests.get(f'http://export.arxiv.org/api/query?id_list={artid}')
 
-    if number <= 0 or number > len(articles):
-        return jsonify({'error': 'Article number out of range'}), 404
+    soup = BeautifulSoup(response.content, 'xml')
+    print("response is : " + str(soup))
 
-    article = articles[number-1]
-    content = article.find('div', class_='article-body').text
+    
 
-    sentiment_analyzer = pipeline('sentiment-analysis')
-    sentiment = sentiment_analyzer(content)[0]['label']
+    authors = soup.find_all('author')
+    authors = [author.find('name').text for author in authors]
+    paper = (soup.find('title').text, soup.find('summary').text, authors, soup.find('id').text, soup.find('published').text)
+    html = "<html><body>"
+    html += f"<h1>{paper[0]}</h1>"
+    html += f"<p>Authors: {''.join([str(autor + ', ') for autor in paper[2]])[:-2]}</p>"
+    date = paper[4].split('T')[0]
+    html += f"<p>Published: {date}</p>"
+    html += f"<p>{paper[1]}</p>"
+    html += f"<a href={paper[3]}>{paper[3]}</a>"
+    sentiment_analyzer = pipeline('sentiment-analysis', model='nlptown/bert-base-multilingual-uncased-sentiment', use_fast=False)
+    sentiment = sentiment_analyzer(paper[1])[0]['label']
+    html += f"<p>Sentiment: {sentiment}</p>"
+    html += "</body></html>"
 
-    return jsonify({'number': number, 'sentiment': sentiment})
+    
+    html += "</body></html>\n"
+    html += "<br>"
+    html += "<a href='/'>Return to Home</a>"
+    with open('./templates/article.html', 'w') as file:
+        file.write(html)
+    return render_template("article.html", headlines=paper)
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(debug=True)
