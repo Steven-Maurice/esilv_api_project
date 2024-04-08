@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Welcome to this data scrapping website</h1>
+    <p>This is the home page of my website.</p>
+    <div>
+        <a href="{{ url_for('get_data') }}"><button>Get Data</button></a>
+        <a href="{{ url_for('articles') }}"><button>Articles</button></a>
+        <a href="{{ url_for('ml') }}"><button>ML</button></a>
+        <a href="{{ url_for('about') }}"><button>About</button></a>
+    </div>
+    {% for headline in headlines %}
+        <p>{{ headline }}</p>
+    {% endfor %}
+</body>
+</html>

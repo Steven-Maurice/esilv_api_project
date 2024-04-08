@@ -1,29 +1,22 @@
 # Esilv_Api_Project
 
-### Project
-**Create an API for AI News Overview**
+## Project Overview
 
-This project involves creating an API that provides news related to Artificial Intelligence (AI). Each group will select an AI-related site (e.g., OpenAI blog) as their source.
+Pour notre projet nous avons utiliser Flask. Dans ce projet nous allons récupérer des données du site Arxiv qui rassemble les derniers articles écrit sur l'IA et les analyser grâce à plusieurs Endpoints. Grâce à cela nous pourrons obtenir facilement des informations sur chaque article ou même rechercher es articles dans leur base de données.
 
-### Objective
+## Les Endpoints
 
-The goal is to fetch information from the chosen site, either by scraping or through an existing API. You will create several endpoints for different purposes:
+Pour ce projet nous avons créé plusieurs Endpoints :
+1/ '/get_data'--> permet de récupérer les 5 premières lignes de l'article.
+2/ '/articles'--> permet d'afficher' les informations liées à l'article comme le Titre ou encore la date de publication.
+3/ '/article/'--> permet d'accéder aux informations (contenues dans '/articles') d'un article à partir de son numéro.
+4/ '/ml'--> permet d'analyser le sentiment de l'article grâce au machine learning en utilisant transformers.
+5/ '/ml/<int:number>' --> permet de rechercher un article grâce à son numéro et d'analyser le sentiment de cleui-ci.
 
-    - /get_data: Fetches a list of articles from the site. Retrieving 5 articles might be sufficient.
-    - /articles: Displays information about the articles, including the article number, title, publication date, etc., but not the content itself.
-    - /article/<number>: Accesses the content of a specified article.
-    - /ml or /ml/<number>: Executes a machine learning script. Depending on the desired goal, it applies to either all articles or a single one. For example, sentiment analysis.
+## Guide d'utilisation
 
-You can choose website about many subject like:
+Pour utiliser notre code vous allez devoir commencer par clôner notre repository et installer toutes les bibliothèques utilisées dans le code. Vous allez ensuite devoir exécuter notre code (la partie intitulée server.py). Vous pourrez ensuite utiliser les différentes fonctionnalités que nous avons codées avec les Endpoints.
 
-    - Updates on new AI tools.
-    - News about image generation.
-    - Information on new models.
-    - Research papers, such as those from ArXiv or Google DeepMind.
+## Tests
 
-### Process
-
-    1. Each group should create a branch named after the names of the group members.
-    2. Inside the branch, create a working directory named after the chosen site.
-    3. Add a file named composition.txt that lists the members of the group.
-    4. Add a section below these rules to explain your project, describe the created endpoints and their uses, and provide examples.
+Vous trouverez ici un exemple d'utilisation de notre projet sur la base de données de Axiv en utilisant nos différents Endpoints.
