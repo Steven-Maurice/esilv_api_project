@@ -1,5 +1,7 @@
 # Esilv_Api_Project
 
+## Instructions 
+
 ### Project
 **Create an API for AI News Overview**
 
@@ -27,3 +29,40 @@ You can choose website about many subject like:
     2. Inside the branch, create a working directory named after the chosen site.
     3. Add a file named composition.txt that lists the members of the group.
     4. Add a section below these rules to explain your project, describe the created endpoints and their uses, and provide examples.
+
+
+## Our Article Analysis API
+
+This API provides functionality to fetch articles from the OpenAI blog, analyze their sentiment, and generate summaries.
+
+
+### Setup
+
+Before you can run the API, you need to install the required dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+PyTorch is also required for the transformers library. The installation of PyTorch can vary depending on your system's CUDA version if using a GPU, or you can install the CPU-only version. For the CPU-version it is already specified in the requirements.txt file. 
+
+
+### Running the API
+
+Execute the following command to run the API:
+
+```
+python server.py
+```
+
+The API will start and be accessible at `http://127.0.0.1:5000`.
+
+
+### Endpoints
+
+- `/`: Returns a 'Welcome to the OpenAI Blog API!' message to confirm that the API is operational.
+- `/get_data`: Fetches a list of articles from the OpenAI blog.
+- `/articles`: Provides metadata for articles, such as title, publication date, and URL.
+- `/article/<number>`: Retrieves the content of the article specified by its number.
+- `/ml/<number>`: Performs sentiment analysis and summarization on the content of the specified article. It may take a little time for your local machine to sumarize an article. 
+

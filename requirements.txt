@@ -1,0 +1,8 @@
+Flask==2.1.2
+beautifulsoup4==4.11.1
+requests==2.27.1
+textblob==0.15.3
+transformers==4.19.2
+torch==2.2.2
+torchvision==0.17.2
+torchaudio==2.2.2
