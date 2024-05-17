@@ -12,6 +12,133 @@ def display_X_article(num_articles=3):
         articles_list = []
 
         for article in articles:
+            link = article.find('a', href=True)
+            article_url = f"https://paperswithcode.com{link['href']}" if link else None
+
+            title_element = article.find('h1')
+            title = title_element.a.text.strip() if title_element and title_element.a else None
+
+            date_element = article.find('span', class_='author-name-text item-date-pub')
+            date_text = date_element.text if date_element else None
+            date = datetime.strptime(date_text, '%d %b %Y').date() if date_text else None
+
+            if article_url and title and date:
+                articles_list.append({
+                    'title': title,
+                    'url': article_url,
+                    'date': date.isoformat()
+                })
+
+        articles_list.sort(key=lambda x: x['date'], reverse=True)
+        return articles_list[:num_articles]  # Retourne les articles demandés sous forme de dictionnaire
+
+    else:
+        return {'error': 'Failed to retrieve the page'}
+
+def top_rated_articles():
+    url = 'https://paperswithcode.com/'
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        articles = soup.find_all('div', class_='row infinite-item item paper-card')
+        articles_data = []
+
+        for article in articles:
+            title_element = article.find('h1')
+            title = title_element.a.text.strip() if title_element and title_element.a else None
+
+            link = article.find('a', href=True)
+            article_url = f"https://paperswithcode.com{link['href']}" if link else None
+
+            date_element = article.find('span', class_='author-name-text item-date-pub')
+            date_text = date_element.text if date_element else None
+            try:
+                article_date = datetime.strptime(date_text, '%d %b %Y').date()
+            except ValueError:
+                article_date = None
+
+            stars_element = article.find('div', class_='entity-stars')
+            stars_text = stars_element.text.strip() if stars_element else "0"
+            stars_text = stars_text.split()[0].replace(',', '')  
+            stars = float(stars_text) if stars_text != "0" else 0
+
+            if article_url and title and article_date:
+                articles_data.append({
+                    'title': title,
+                    'url': article_url,
+                    'date': article_date.isoformat(),
+                    'stars': stars
+                })
+
+        articles_data.sort(key=lambda x: x['stars'], reverse=True)
+        return articles_data[:5]  # Retourne les 5 articles les mieux notés sous forme de dictionnaire
+
+    else:
+        return {'error': 'Failed to retrieve the page'}
+
+def articles_by_keyword(keyword):
+    url = 'https://paperswithcode.com/'
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        articles = soup.find_all('div', class_='row infinite-item item paper-card')
+        found_articles = []
+
+        for article in articles:
+            title_element = article.find('h1')
+            if title_element and title_element.a:
+                title = title_element.a.text.strip()
+                if keyword.lower() in title.lower():
+                    link = title_element.a['href']
+                    article_url = f"https://paperswithcode.com{link}"
+                    found_articles.append({
+                        'title': title,
+                        'url': article_url
+                    })
+
+        return found_articles if found_articles else {'message': 'No articles found with the keyword'}
+
+    else:
+        return {'error': 'Failed to retrieve the page'}
+
+def article_abstract(search_title):
+    url = 'https://paperswithcode.com/'
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        articles = soup.find_all('div', class_='row infinite-item item paper-card')
+        
+        for article in articles:
+            title_element = article.find('h1')
+            if title_element and title_element.a:
+                title = title_element.a.text.strip()
+                if title.lower() == search_title.lower():
+                    abstract_element = article.find('p', class_='item-strip-abstract')
+                    abstract = abstract_element.text.strip() if abstract_element else "Abstract not available"
+                    return {
+                        'title': search_title,
+                        'abstract': abstract
+                    }
+
+        return {'message': 'Article not found'}
+
+    else:
+        return {'error': 'Failed to retrieve the page'}
+
+
+"""def display_X_article(num_articles=3):  
+    url = 'https://paperswithcode.com/'
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        articles = soup.find_all('div', class_='row infinite-item item paper-card')
+        articles_list = []
+
+        for article in articles:
             # Extraction de l'URL
             link = article.find('a', href=True)
             article_url = f"https://paperswithcode.com{link['href']}" if link else None
@@ -186,3 +313,4 @@ def run_interactive_report():
 
 
 run_interactive_report()
+"""
