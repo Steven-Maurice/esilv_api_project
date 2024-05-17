@@ -2,40 +2,36 @@
 
 ## Objectif du Projet
 
-Le but de ce projet est de fournir une interface utilisateur interactive pour interroger et visualiser des informations sur des articles scientifiques issus du site "Papers with Code"
-L'application permet aux utilisateurs de :
+Nous avons mis sur pied un projet dans le cadre de notre cours sur le développement web, où nous avons créé une API en utilisant Flask. Notre objectif est de fournir une interface utilisateur interactive pour interroger et visualiser des informations sur des articles scientifiques issus du site "Papers with Code". L'application permet aux utilisateurs de :
 
 - Afficher les articles récents.
 - Afficher les 5 articles les mieux notés.
 - Rechercher des articles basés sur des mots-clés.
 - Obtenir un résumé pour un article spécifique.
 
-## Organisation du Code
+## Fonctionnalités
 
-Le projet contient 4 fonctions citées juste au dessus et une fonction principale ayant pour rôle l'interaction avec l'utilisateur.
+- **/api/display_articles/<num_articles>** : Cette route permet d'afficher les articles récents. Elle renvoie les titres, dates et liens des articles les plus récents sous forme de JSON, en fonction du nombre spécifié.
+  
+- **/api/top_rated_articles** : Cette route met en lumière les articles les plus appréciés de la communauté. Elle classe les articles en fonction de leur nombre d'étoiles et renvoie les 5 articles les mieux notés sous forme de JSON.
+  
+- **/api/articles_by_keyword?keyword=<keyword>** : Cette route permet une recherche ciblée d'articles par mots-clés dans les titres. Elle renvoie les titres et liens des articles correspondant aux critères de recherche sous forme de JSON.
+  
+- **/api/article_abstract?title=<title>** : Cette route permet d'accéder rapidement au résumé d'un article spécifique. Elle identifie et extrait l'abstract basé sur le titre complet fourni et le renvoie sous forme de JSON.
 
-## Explication des fonctions
+## Utilisation de l'API
 
-1. **Display Recent Articles (`display_X_article`)** :
-   - Permet de visualiser rapidement les dernières publications.
-   - Sélectionne les articles les plus récents en se basant sur leur date de publication.
-   - Fournit les titres, dates et liens directement à l'utilisateur.
+- Pour afficher les articles récents, lancez un GET sur `http://127.0.0.1:5000/api/display_articles/<num_articles>`.
+  
+- Pour afficher les 5 articles les mieux notés, lancez un GET sur `http://127.0.0.1:5000/api/top_rated_articles`.
+  
+- Pour rechercher des articles par mots-clés, lancez un GET sur `http://127.0.0.1:5000/api/articles_by_keyword?keyword=<keyword>`.
+  
+- Pour obtenir le résumé d'un article spécifique, lancez un GET sur `http://127.0.0.1:5000/api/article_abstract?title=<title>`.
 
-2. **Top Rated Articles (`top_rated_articles`)** :
-   - Met en lumière les articles les plus appréciés de la communauté.
-   - Classe les articles en fonction de leur nombre d'étoiles.
 
-3. **Articles by Keyword (`articles_by_keyword`)** :
-   - Recherche ciblée d'articles par mots-clés dans les titres.
-   - Renvoie les titres et liens des articles correspondants aux critères de recherche,idéal pour trouver des articles sur des sujets spécifiques rapidement.
-
-4. **Article Abstract (`article_abstract`)** :
-   - Accès rapide au résumé d'un article spécifique.
-   - Identifie et extrait l'abstract basé sur le titre complet fourni.
-
-### Modules et Dépendances
+## Modules et Dépendances
 
 - Utilisation de **Requests** pour les requêtes HTTP.
 - Utilisation de **BeautifulSoup** pour le parsing du HTML.
 - Le projet utilise également **datetime** pour gérer les dates des articles.
-
